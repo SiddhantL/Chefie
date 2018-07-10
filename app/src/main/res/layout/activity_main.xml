@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#263238"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    tools:context=".DatabaseSource.MainActivity">
+
+    <EditText
+        android:id="@+id/editTextName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#81C784"
+        android:hint="Enter ingredient name"
+        android:textColor="#ffffff"
+        android:textColorHint="#dfdfdf" />
+
+    <Spinner
+        android:id="@+id/spinnerGenres"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/editTextName"
+        android:background="#000000"
+        android:backgroundTint="#CCCCCC"
+        android:entries="@array/ingredientType"></Spinner>
+
+    <Button
+        android:id="@+id/buttonAddArtist"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="75dp"
+        android:background="@drawable/circular_button"
+        android:backgroundTint="#81C784"
+        android:text="Add" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/buttonAddArtist"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="Ingredients"
+        android:textAlignment="center"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        android:textColor="#ffffff" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView"
+        android:text="Tap on an Ingredient to edit"
+        android:textAlignment="center"
+        android:textColor="#CCCCCC" />
+
+    <ListView
+        android:id="@+id/listViewArtists"
+        android:layout_width="match_parent"
+        android:layout_height="351dp"
+        android:layout_above="@+id/recipeButton"
+        android:layout_below="@+id/textView1"
+        android:layout_marginTop="3dp"
+        android:dividerHeight="0.4dip"
+        android:divider="#81C784"></ListView>
+
+    <Button
+        android:id="@+id/recipeButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/circular_button"
+        android:backgroundTint="#81C784"
+        android:text="Check Recipes" />
+</RelativeLayout>

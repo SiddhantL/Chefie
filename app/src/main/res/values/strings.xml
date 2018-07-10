@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Chefie</string>
+    <array name="ingredientType">
+        <item>Vegetable</item>
+        <item>Fruits</item>
+        <item>Spice</item>
+        <item>Liquids</item>
+        <item>Sweets</item>
+        <item>Pulses</item>
+        <item>Meat</item>
+        <item>Others</item>
+    </array>
+
+    <array name="recipeType">
+        <item>Breakfast</item>
+        <item>Lunch</item>
+        <item>Dinner</item>
+        <item>Snack</item>
+    </array>
+
+</resources>

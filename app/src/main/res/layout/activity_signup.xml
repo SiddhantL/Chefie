@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#263238"
+    tools:context=".SignUpActivity">
+
+    <EditText
+        android:id="@+id/EmailEdittext"
+        android:layout_width="259dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:backgroundTint="#CCCCCC"
+        android:inputType="textPersonName"
+        android:textColor="#CCCCCC"
+        android:textColorHint="#CCCCCC"
+        tools:layout_editor_absoluteX="84dp"
+        tools:layout_editor_absoluteY="155dp" />
+
+
+    <EditText
+        android:id="@+id/PasswordeditText"
+        android:layout_width="259dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="222dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#CCCCCC"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:paddingTop="35dp"
+        android:textColor="#CCCCCC"
+        android:textColorHint="#CCCCCC"
+        android:textColorLink="#CCCCCC" />
+
+    <Button
+        android:id="@+id/CreateBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="85dp"
+        android:background="@drawable/circular_button"
+        android:backgroundTint="#81C784"
+        android:src="#81C784"
+        android:text="Create Account"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/textView"
+        android:layout_marginEnd="76dp"
+        android:text="Log In"
+        android:textColor="#81C784"
+        android:textSize="18sp" />
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="333dp"
+        android:layout_height="147dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="44dp"
+        android:src="@drawable/chefiepossiblelogo1" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="49dp"
+        android:layout_marginStart="74dp"
+        android:text="Already have an account?"
+        android:textColor="#CCCCCC"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/EmailEdittext"
+        android:layout_alignStart="@+id/PasswordeditText"
+        android:text="E-mail"
+        android:textColor="#CCCCCC" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/PasswordeditText"
+        android:layout_marginBottom="259dp"
+        android:text="Password"
+        android:textColor="#CCCCCC" />
+</RelativeLayout>

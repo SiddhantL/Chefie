@@ -35,7 +35,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_recipe);
         mDatabase = FirebaseDatabase.getInstance().getReference("recipes");
         listView=(ListView) findViewById(R.id.listView);
-        editText=(EditText)findViewById(R.id.RecipeName);
+        editText=(EditText)findViewById(R.id.RecipeName); 
         ContinueBtn=(Button)findViewById(R.id.continueBtn);
         context=this;
         FillListView();

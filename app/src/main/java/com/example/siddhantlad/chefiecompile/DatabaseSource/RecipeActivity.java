@@ -39,10 +39,14 @@ public class RecipeActivity extends AppCompatActivity {
     RecipeArtistList artistAdapter;
     ListView listViewRecipes;
     List<RecipeArtist> recipes;
+    ArrayList<String> my_array_of_selected_ingredients;
+    int Count;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
+        Intent intent = getIntent();
+        my_array_of_selected_ingredients = intent.getStringArrayListExtra("my_array_of_selected_ingredients");
         mDatabase = FirebaseDatabase.getInstance().getReference("recipes");
         context=this;
         spinnerType = (Spinner) findViewById(R.id.spinnerGenres);
@@ -51,7 +55,6 @@ public class RecipeActivity extends AppCompatActivity {
         listViewRecipes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
                 Intent intent = new Intent(getApplicationContext(), ArtistActivity.class);
                 startActivity(intent);
             }
@@ -77,10 +80,12 @@ public class RecipeActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+Count=0;
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 recipes.clear();
+
                 for (final DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     RecipeArtist recipeartist = postSnapshot.getValue(RecipeArtist.class);
                     recipes.add(recipeartist);
@@ -90,17 +95,28 @@ public class RecipeActivity extends AppCompatActivity {
                     dataref.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
+                            Count=Count+1;
+   //                         Toast.makeText(context, Count, Toast.LENGTH_SHORT).show();
                             for (DataSnapshot postSnapshot1 : dataSnapshot1.getChildren()) {
+                                final int CountSave=Count;
                                 final String names = postSnapshot1.getKey().toString().trim();
                     dataref.child(names).addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot2) {
+                                        Boolean removeCheck=false;
                                         if (dataSnapshot2.getValue() != null) {
                                             if (!names.equals("artistName")){
                                             String ingredientName=dataSnapshot2.getValue().toString().trim();
                                             String recipeName=nameFinal;
                                             Toast.makeText(RecipeActivity.this, recipeName+": "+ingredientName, Toast.LENGTH_SHORT).show();
-                                        } else {
+                                      if (!my_array_of_selected_ingredients.isEmpty()){
+                                        if(my_array_of_selected_ingredients.contains(ingredientName)){
+                                            Toast.makeText(context, recipeName+": Yes", Toast.LENGTH_SHORT).show();
+                                        }else{
+                                            Toast.makeText(context, recipeName+": No"+" "+CountSave, Toast.LENGTH_SHORT).show();
+                                           recipes.remove(listViewRecipes.getItemAtPosition(CountSave));
+                                        }}
+                                            } else {
                                            //---@@   Toast.makeText(context, "null value", Toast.LENGTH_SHORT).show();
                                           }
                                         }

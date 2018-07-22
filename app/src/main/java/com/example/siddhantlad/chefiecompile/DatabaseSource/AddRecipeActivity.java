@@ -35,7 +35,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_recipe);
         mDatabase = FirebaseDatabase.getInstance().getReference("recipes");
         listView=(ListView) findViewById(R.id.listView);
-        editText=(EditText)findViewById(R.id.RecipeName); 
+        editText=(EditText)findViewById(R.id.RecipeName);
         ContinueBtn=(Button)findViewById(R.id.continueBtn);
         context=this;
         FillListView();
@@ -59,6 +59,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                 }else{
                     Toast.makeText(context, "Add a name for the new recipe", Toast.LENGTH_SHORT).show();
                     Intent AllRecipe=new Intent(AddRecipeActivity.this,RecipeActivity.class);
+                    AllRecipe.putExtra("my_array_of_selected_ingredients",my_array_of_selected_ingredients);
                     startActivity(AllRecipe);
                 }
             }

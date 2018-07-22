@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -114,8 +115,14 @@ Count=0;
                                             Toast.makeText(context, recipeName+": Yes", Toast.LENGTH_SHORT).show();
                                         }else{
                                             Toast.makeText(context, recipeName+": No"+" "+CountSave, Toast.LENGTH_SHORT).show();
-                                           recipes.remove(listViewRecipes.getItemAtPosition(CountSave));
-                                        }}
+                                            /*try {
+                                                recipes.remove(recipes.get(CountSave));
+                                                listViewRecipes.invalidate();
+                                              //  ((BaseAdapter) listViewRecipes.getAdapter()).notifyDataSetChanged();
+                                                Toast.makeText(context, "Crash", Toast.LENGTH_SHORT).show();
+                                                //  recipes.remove(listViewRecipes.getItemAtPosition(CountSave));
+                                            }catch (Exception e){}*/
+                                            }}
                                             } else {
                                            //---@@   Toast.makeText(context, "null value", Toast.LENGTH_SHORT).show();
                                           }

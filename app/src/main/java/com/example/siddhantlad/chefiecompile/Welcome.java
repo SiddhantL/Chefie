@@ -3,12 +3,14 @@ package com.example.siddhantlad.chefiecompile;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.siddhantlad.chefiecompile.DatabaseSource.MainActivity;
+import com.example.siddhantlad.chefiecompile.DatabaseSource.MainActivity2;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -17,6 +19,7 @@ Button logOutBtn;
 TextView breakfastActivity;
     //FireBase Authentication Field
     FirebaseAuth mAuth;
+    FloatingActionButton addRecipeFab;
     FirebaseAuth.AuthStateListener mAuthListener;
     //TextView display;
     @Override
@@ -24,6 +27,15 @@ TextView breakfastActivity;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         breakfastActivity=(TextView)findViewById(R.id.breakfastOpt);
+        addRecipeFab=(FloatingActionButton)findViewById(R.id.addRecipeFab);
+        addRecipeFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent addRecipeFabIntent=new Intent(Welcome.this,MainActivity2.class);
+                startActivity(addRecipeFabIntent);
+
+            }
+        });
     logOutBtn=(Button)findViewById(R.id.logoutbtn);
      //   display=(TextView)findViewById(R.id.textView);
 
@@ -40,7 +52,8 @@ startActivity(new Intent(Welcome.this,SignUpActivity.class));
         breakfastActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Welcome.this, MainActivity.class));
+                Intent MainAct=new Intent(Welcome.this,MainActivity.class);
+                startActivity(MainAct);
             }
         });
 

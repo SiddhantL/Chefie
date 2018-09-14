@@ -56,4 +56,20 @@
         android:textStyle="bold|italic"
         app:fontFamily="serif" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/addRecipeFab"
+        android:layout_width="129dp"
+        android:layout_height="95dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="17dp"
+        android:clickable="true"
+        android:visibility="visible"
+        app:backgroundTint="@android:color/background_dark"
+        app:elevation="10dp"
+        app:fabSize="normal"
+        app:srcCompat="@android:drawable/ic_input_add" />
+
+
 </RelativeLayout>

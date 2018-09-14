@@ -21,7 +21,6 @@ import android.widget.Toast;
 
 import com.example.siddhantlad.chefiecompile.AddRecipeFab;
 import com.example.siddhantlad.chefiecompile.R;
-import com.example.siddhantlad.chefiecompile.Welcome;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,7 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity2 extends AppCompatActivity {
 
             //we will use these constants later to pass the artist name and id to another activity
             //view objects
@@ -54,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main2);
         //getting the reference of artists node
         databaseArtists = FirebaseDatabase.getInstance().getReference("artists");
         //getting views
@@ -74,16 +73,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int TotalItems=listViewArtists.getAdapter().getCount();
-                Intent recipeActivityIntent = new Intent(MainActivity.this, RecipeActivity.class);
-                Intent addRecipeFab = new Intent(MainActivity.this, AddRecipeFab.class);
-                Intent newRecipe=new Intent(MainActivity.this,AddRecipeActivity.class);
+                Intent addRecipeFab = new Intent(MainActivity2.this, AddRecipeFab.class);
+                Intent newRecipe=new Intent(MainActivity2.this,AddRecipeActivity.class);
                 Bundle bun = new Bundle();
                 bun.putSerializable("myMap", (Serializable) myMap);
-                recipeActivityIntent.putExtra("bundle",bun);
-                recipeActivityIntent.putExtra("my_array_of_selected_ingredients",my_array_of_selected_ingredients);
-                newRecipe.putExtra("my_array_of_selected_ingredients",my_array_of_selected_ingredients);
+                addRecipeFab.putExtra("bundle",bun);
                 addRecipeFab.putExtra("my_array_of_selected_ingredients",my_array_of_selected_ingredients);
-                    startActivity(newRecipe);
+                addRecipeFab.putExtra("my_array_of_selected_ingredients",my_array_of_selected_ingredients);
+                startActivity(addRecipeFab);
                 my_array_of_selected_ingredients.clear();
 
                 //Checking all true booleans
@@ -133,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                 myMap.put("Banana",true);
                 myMap.put(Checks, true);
                 myMap.put("Orange",true);
-                Toast.makeText(MainActivity.this, Checks, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity2.this, Checks, Toast.LENGTH_SHORT).show();
            /* try {
                 if (myMap.get("Sugar")==true){
                     Toast.makeText(MainActivity.this, "Yes", Toast.LENGTH_SHORT).show();
@@ -159,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Animation animation = AnimationUtils.loadAnimation(MainActivity.this,  R.anim.push_up_in);
+        Animation animation = AnimationUtils.loadAnimation(MainActivity2.this,  R.anim.push_up_in);
        listViewArtists.startAnimation(animation);
     }
 
@@ -200,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         //attaching value event listener
-        Animation animation = AnimationUtils.loadAnimation(MainActivity.this,  R.anim.push_up_in);
+        Animation animation = AnimationUtils.loadAnimation(MainActivity2.this,  R.anim.push_up_in);
         listViewArtists.startAnimation(animation);
         databaseArtists.addValueEventListener(new ValueEventListener() {
             @Override
@@ -218,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 //creating adapter
-                ArtistList artistAdapter = new ArtistList(MainActivity.this, artists);
+                ArtistList artistAdapter = new ArtistList(MainActivity2.this, artists);
                 //attaching adapter to the listview
                 listViewArtists.setAdapter(artistAdapter);
             }
@@ -288,7 +285,7 @@ public class MainActivity extends AppCompatActivity {
         TextView c = (TextView) v.findViewById(R.id.listViewArtists);
         String playerChanged = c.getText().toString();
 
-        Toast.makeText(MainActivity.this, playerChanged, Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity2.this, playerChanged, Toast.LENGTH_SHORT).show();
     }
 
     private boolean deleteArtist(String id) {

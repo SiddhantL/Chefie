@@ -101,7 +101,7 @@ Count=0;
                 recipes.clear();
 
                 for (final DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    RecipeArtist recipeartist = postSnapshot.getValue(RecipeArtist.class);
+                    final RecipeArtist recipeartist = postSnapshot.getValue(RecipeArtist.class);
                     recipes.add(recipeartist);
                     remove=true;
                     final String name =postSnapshot.getKey().toString().trim();
@@ -117,9 +117,10 @@ Count=0;
                                 final int CountSave=Count;
                                 final String names = postSnapshot1.getKey().toString().trim();
                     dataref.child(names).addValueEventListener(new ValueEventListener() {
-                                    @Override
+                        @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot2) {
                                         Boolean removeCheck=false;
+                            remove=true;
                                         if (dataSnapshot2.getValue() != null) {
                                             if (!names.equals("artistName")) {
                                                 String ingredientName = dataSnapshot2.getValue().toString().trim();
@@ -130,7 +131,12 @@ Count=0;
                                                         if (my_array_of_selected_ingredients.contains(ingredientName)) {
                                                    //9/14         Toast.makeText(context, recipeName + ": Yes", Toast.LENGTH_SHORT).show();
                                                         } else {
-                                                         //9/14 Toast.makeText(context, recipeName + ": No" + " " + CountSave, Toast.LENGTH_SHORT).show();
+                                                            if (remove){
+                                                                Toast.makeText(context, recipeName + ": No" + " " + CountSave, Toast.LENGTH_SHORT).show();
+                                                                recipes.remove(recipeartist);
+                                                                //recipes.remove(CountSave-1);
+                                                                 artistAdapter.notifyDataSetChanged();
+                                                            remove=false;}else{}
                                                            /*9/14 removeList.add(CountSave);
                                                                HashSet<Integer> hashSet = new HashSet<Integer>();
                                                                hashSet.addAll(removeList);

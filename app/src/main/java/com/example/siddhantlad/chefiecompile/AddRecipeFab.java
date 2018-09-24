@@ -71,7 +71,24 @@ public class AddRecipeFab extends AppCompatActivity {
         my_array_of_selected_ingredients = intent.getStringArrayListExtra("my_array_of_selected_ingredients");
         ArrayAdapter<String> adapter_Selected = new ArrayAdapter<String>(context,R.layout.simple_list_item_white,my_array_of_selected_ingredients);
         try {
-            listView.setAdapter(adapter_Selected);
+            ArrayList<String> mSpinnerData = new ArrayList<>();
+            mSpinnerData.add("Select Action");
+            mSpinnerData.add("Add");
+            mSpinnerData.add("Boil");
+            mSpinnerData.add("Chop");
+            mSpinnerData.add("Dice");
+            mSpinnerData.add("Bake");
+            mSpinnerData.add("Heat");
+            mSpinnerData.add("Cool");
+            mSpinnerData.add("Microwave");
+            mSpinnerData.add("Soak");
+            mSpinnerData.add("Dry");
+            mSpinnerData.add("Bake");
+            mSpinnerData.add("Fry");
+
+            SpinnerAdapter adapter = new SpinnerAdapter(my_array_of_selected_ingredients, mSpinnerData, this);
+            listView.setAdapter(adapter);
+           // listView.setAdapter(adapter_Selected);
         }catch (Exception e){}
 
     }

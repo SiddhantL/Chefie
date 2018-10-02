@@ -8,16 +8,26 @@
 
     <TextView
         android:id="@+id/row_item_textview"
-        android:layout_width="match_parent"
+        android:layout_width="240dp"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
         android:textColor="@android:color/white"
-        android:textSize="25sp"/>
+        android:textSize="25sp" />
 
     <Spinner
         android:id="@+id/row_item_spinner"
-        android:layout_width="wrap_content"
+        android:layout_width="130dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:padding="2dp"/>
+        android:layout_centerVertical="true"
+        android:padding="2dp" />
+
+    <Spinner
+        android:id="@+id/row_item_spinner_position"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@+id/row_item_spinner"
+        android:padding="2dp" />
 </RelativeLayout>

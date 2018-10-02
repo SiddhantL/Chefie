@@ -46,7 +46,7 @@ public class RecipeActivity extends AppCompatActivity {
     RecipeArtistList artistAdapter;
     String name;
     ListView listViewRecipes;
-    List<RecipeArtist> recipes;
+    List<RecipeArtist> recipes,filter;
     ArrayList<String> my_array_of_selected_ingredients;
     ArrayList<String> adapterListName;
     int Count,CountSave;
@@ -70,6 +70,7 @@ public class RecipeActivity extends AppCompatActivity {
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getApplicationContext(), DisplayRecipeInfo.class);
                 intent.putExtra("RecipeName",adapterListName.get(i).toString().trim()/*"CheckImage"*/);
+                Toast.makeText(RecipeActivity.this, adapterListName.get(i), Toast.LENGTH_SHORT).show();
                 startActivity(intent);
             }
         });
@@ -132,7 +133,7 @@ Count=0;
                                                    //9/14         Toast.makeText(context, recipeName + ": Yes", Toast.LENGTH_SHORT).show();
                                                         } else {
                                                             if (remove){
-                                                                Toast.makeText(context, recipeName + ": No" + " " + CountSave, Toast.LENGTH_SHORT).show();
+                                                              //  Toast.makeText(context, recipeName + ": No" + " " + CountSave, Toast.LENGTH_SHORT).show();
                                                                 recipes.remove(recipeartist);
                                                                 //recipes.remove(CountSave-1);
                                                                  artistAdapter.notifyDataSetChanged();

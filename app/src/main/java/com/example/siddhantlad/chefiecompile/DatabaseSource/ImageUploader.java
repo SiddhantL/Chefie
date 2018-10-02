@@ -114,9 +114,10 @@ imageSelect.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Log.d(TAG, "onClick: Uploading Image.");
-                    mProgressDialog.setMessage("Uploading Image...");
+                    if (!TextUtils.isEmpty(imageName.getText().toString())) {
+                        mProgressDialog.setMessage("Uploading Image...");
                     mProgressDialog.show();
-
+                    }
                     //get the signed in user
                     FirebaseUser user = auth.getCurrentUser();
                     String userID = user.getUid();

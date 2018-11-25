@@ -65,16 +65,6 @@ public class RecipeActivity extends AppCompatActivity {
         spinnerType = (Spinner) findViewById(R.id.spinnerGenres);
         listViewRecipes = (ListView) findViewById(R.id.listViewArtists);
         recipes = new ArrayList<>();
-        listViewRecipes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getApplicationContext(), DisplayRecipeInfo.class);
-                intent.putExtra("RecipeName",adapterListName.get(i).toString().trim()/*"CheckImage"*/);
-                Toast.makeText(RecipeActivity.this, adapterListName.get(i), Toast.LENGTH_SHORT).show();
-                startActivity(intent);
-            }
-        });
-
     }
 
     private void addArtist() {
@@ -135,6 +125,17 @@ Count=0;
                                                             if (remove){
                                                               //  Toast.makeText(context, recipeName + ": No" + " " + CountSave, Toast.LENGTH_SHORT).show();
                                                                 recipes.remove(recipeartist);
+                                                                adapterListName.remove(recipeName);
+                                                                listViewRecipes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                                                    @Override
+                                                                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                                                        Intent intent = new Intent(getApplicationContext(), DisplayRecipeInfo.class);
+                                                                        intent.putExtra("RecipeName",adapterListName.get(i).toString().trim()/*"CheckImage"*/);
+                                                                        Toast.makeText(RecipeActivity.this, adapterListName.get(i), Toast.LENGTH_SHORT).show();
+                                                                        startActivity(intent);
+                                                                    }
+                                                                });
+
                                                                 //recipes.remove(CountSave-1);
                                                                  artistAdapter.notifyDataSetChanged();
                                                             remove=false;}else{}

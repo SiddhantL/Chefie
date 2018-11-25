@@ -70,30 +70,19 @@ public class MainActivity extends AppCompatActivity {
         buttonAddArtist = (Button) findViewById(R.id.buttonAddArtist);
         //list to store artists
         artists = new ArrayList<>();
+     //   IntentTransfer();
         RecipeActivityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int TotalItems=listViewArtists.getAdapter().getCount();
-                Intent recipeActivityIntent = new Intent(MainActivity.this, RecipeActivity.class);
-                Intent addRecipeFab = new Intent(MainActivity.this, AddRecipeFab.class);
-                Intent newRecipe=new Intent(MainActivity.this,AddRecipeActivity.class);
-                Bundle bun = new Bundle();
-                bun.putSerializable("myMap", (Serializable) myMap);
-                recipeActivityIntent.putExtra("bundle",bun);
-                recipeActivityIntent.putExtra("my_array_of_selected_ingredients",my_array_of_selected_ingredients);
-                newRecipe.putExtra("my_array_of_selected_ingredients",my_array_of_selected_ingredients);
-                addRecipeFab.putExtra("my_array_of_selected_ingredients",my_array_of_selected_ingredients);
-                    startActivity(newRecipe);
-                my_array_of_selected_ingredients.clear();
-
                 //Checking all true booleans
                 for(int AtItem = 0; AtItem < TotalItems; AtItem++){
                     Artist artist = artists.get(AtItem);
                     String CheckingName=artist.getArtistName().toString();
                     try{
                         if (myMap.get(CheckingName)){
-                           //Toast.makeText(MainActivity.this, CheckingName+" was added", Toast.LENGTH_SHORT).show();
-                           my_array_of_selected_ingredients.add(CheckingName);
+                            //Toast.makeText(MainActivity.this, CheckingName+" was added", Toast.LENGTH_SHORT).show();
+                            my_array_of_selected_ingredients.add(CheckingName);
                         }
                     }catch (Exception e){
 
@@ -101,7 +90,8 @@ public class MainActivity extends AppCompatActivity {
 
                 }
 
-            }
+                IntentTransfer();
+               }
         });
 
 
@@ -159,8 +149,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        /*
+        ListView Animation
         Animation animation = AnimationUtils.loadAnimation(MainActivity.this,  R.anim.push_up_in);
-       listViewArtists.startAnimation(animation);
+       listViewArtists.startAnimation(animation);*/
     }
 
     /*
@@ -200,8 +192,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         //attaching value event listener
+       /*ListView Animation
         Animation animation = AnimationUtils.loadAnimation(MainActivity.this,  R.anim.push_up_in);
-        listViewArtists.startAnimation(animation);
+        listViewArtists.startAnimation(animation);*/
         databaseArtists.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -307,4 +300,18 @@ public class MainActivity extends AppCompatActivity {
 
         return true;
     }
+public void IntentTransfer(){
+    Intent recipeActivityIntent = new Intent(MainActivity.this, RecipeActivity.class);
+    Intent addRecipeFab = new Intent(MainActivity.this, AddRecipeFab.class);
+    Intent newRecipe=new Intent(MainActivity.this,AddRecipeActivity.class);
+    Bundle bun = new Bundle();
+    bun.putSerializable("myMap", (Serializable) myMap);
+    recipeActivityIntent.putExtra("bundle",bun);
+    recipeActivityIntent.putExtra("my_array_of_selected_ingredients",my_array_of_selected_ingredients);
+    newRecipe.putExtra("my_array_of_selected_ingredients",my_array_of_selected_ingredients);
+    addRecipeFab.putExtra("my_array_of_selected_ingredients",my_array_of_selected_ingredients);
+    startActivity(newRecipe);
+    my_array_of_selected_ingredients.clear();
+
+}
 }

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#263238"
     tools:context=".DisplayRecipeInfo">
 
     <TextView
@@ -13,7 +14,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:text="Name of Recipe"
-        android:textColor="#000000"
+        android:textColor="#ffffff"
         android:textSize="30sp"
         tools:layout_editor_absoluteX="85dp"
         tools:layout_editor_absoluteY="16dp" />

@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -43,6 +44,15 @@ public class AddRecipeFab extends AppCompatActivity {
         context=this;
         FillListView();
         id = mDatabase.push().getKey();
+        //Adding Multiple Action for one Item
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+              my_array_of_selected_ingredients.add(my_array_of_selected_ingredients.get(position));
+                return false;
+            }
+        });
+        //---
         ContinueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

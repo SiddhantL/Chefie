@@ -4,19 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#263238"
+    android:background="#DFE3EA"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
     tools:context=".DatabaseSource.MainActivity">
 
+
+    <SearchView
+        android:id="@+id/editTextName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#000000"
+        android:hint="Search Ingredient"
+        android:layout_below="@+id/textView"
+        android:textColor="#000000"
+        android:textColorHint="#000000" />
+<!--
     <EditText
         android:id="@+id/editTextName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#81C784"
-        android:hint="Enter ingredient name"
-        android:textColor="#ffffff"
-        android:textColorHint="#dfdfdf" />
+        android:backgroundTint="#000000"
+        android:hint="Search Ingredient"
+        android:layout_below="@+id/textView"
+        android:textColor="#000000"
+        android:textColorHint="#000000" />
+-->
 
     <Spinner
         android:id="@+id/spinnerGenres"
@@ -25,8 +38,9 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/editTextName"
         android:background="#000000"
-        android:backgroundTint="#CCCCCC"
-        android:entries="@array/ingredientType"></Spinner>
+        android:backgroundTint="#ffffff"
+        android:entries="@array/ingredientType"
+        android:visibility="gone"></Spinner>
 
     <Button
         android:id="@+id/buttonAddArtist"
@@ -36,8 +50,10 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="75dp"
         android:background="@drawable/circular_button"
-        android:backgroundTint="#81C784"
-        android:text="Add" />
+        android:backgroundTint="#38444f"
+        android:text="Add"
+        android:textColor="#ffffff"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/textView"
@@ -48,7 +64,7 @@
         android:text="Ingredients"
         android:textAlignment="center"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-        android:textColor="#ffffff" />
+        android:textColor="#000000" />
 
     <TextView
         android:id="@+id/textView1"
@@ -58,17 +74,20 @@
         android:layout_below="@+id/textView"
         android:text="Tap on an Ingredient to edit"
         android:textAlignment="center"
-        android:textColor="#CCCCCC" />
+        android:textColor="#444444"
+        android:visibility="gone" />
 
     <ListView
         android:id="@+id/listViewArtists"
         android:layout_width="match_parent"
-        android:layout_height="351dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/editTextName"
         android:layout_above="@+id/recipeButton"
-        android:layout_below="@+id/textView1"
-        android:layout_marginTop="3dp"
-        android:dividerHeight="0.4dip"
-        android:divider="#81C784"></ListView>
+        android:background="@drawable/gradient"
+        android:divider="#DFE3EA"
+        android:dividerHeight="8dp"
+        android:visibility="visible" />
 
     <Button
         android:id="@+id/recipeButton"
@@ -77,6 +96,8 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:background="@drawable/circular_button"
-        android:backgroundTint="#81C784"
+        android:backgroundTint="#38444f"
+        android:textColor="#ffffff"
         android:text="Check Recipes" />
+
 </RelativeLayout>

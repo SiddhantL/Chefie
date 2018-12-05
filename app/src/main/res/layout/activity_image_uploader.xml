@@ -3,65 +3,54 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
+    android:background="#DFE3EA"
     android:layout_height="match_parent">
 
     <Button
-        android:text="Upload"
+        android:id="@+id/btnUploadImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="13dp"
-        android:id="@+id/btnUploadImage"/>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/buttonSelect"
-        android:layout_centerHorizontal="true">
-
-        <Button
-            android:id="@+id/btnBackImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="13dp"
-            android:text="Back" />
-
-        <Button
-            android:id="@+id/btnNextImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="13dp"
-            android:layout_toRightOf="@+id/btnBackImage"
-            android:text="Next" />
-
-
-    </RelativeLayout>
+        android:layout_marginBottom="17dp"
+        android:background="@drawable/circular_button"
+        android:backgroundTint="#38444f"
+        android:text="Upload"
+        android:textColor="#ffffff" />
 
 
     <ImageView
+        android:id="@+id/uploadImage"
         android:layout_width="250dp"
         android:layout_height="250dp"
+        android:src="@drawable/lunchpic"
         android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/nameRec"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/uploadImage"
-        />
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_marginBottom="102dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="TextView"
         android:layout_below="@+id/uploadImage"
-        android:id="@+id/imageName"
-        android:hint="Enter image name"/>
+        android:textAppearance="@android:style/TextAppearance.Material.Large" />
 
     <Button
         android:id="@+id/buttonSelect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/uploadImage"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:text="Select" />
+        android:layout_marginTop="22dp"
+        android:background="@drawable/circular_button"
+        android:backgroundTint="#38444f"
+        android:text="Select Image"
+        android:textColor="#ffffff" />
+
 
 
 </RelativeLayout>

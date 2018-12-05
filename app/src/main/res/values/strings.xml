@@ -1,9 +1,11 @@
 <resources>
     <string name="app_name">Chefie</string>
     <array name="ingredientType">
+        <item>Type:</item>
         <item>Vegetable</item>
         <item>Fruits</item>
         <item>Spice</item>
+        <item>Dairy</item>
         <item>Liquids</item>
         <item>Sweets</item>
         <item>Pulses</item>

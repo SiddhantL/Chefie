@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -19,8 +21,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.siddhantlad.chefiecompile.DisplayRecipeInfo;
 import com.example.siddhantlad.chefiecompile.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -45,10 +49,11 @@ import java.util.ArrayList;
 
         //declare variables
         private ImageView image;
-        private EditText imageName;
-        private Button btnUpload, btnNext, btnBack,imageSelect;
+       // private EditText imageName;
+        private Button btnUpload/*, btnNext, btnBack*/,imageSelect;
         private ProgressDialog mProgressDialog;
 String picturePath;
+TextView nameRec;
         private final static int mWidth = 512;
         private final static int mLength = 512;
         public static final int PICK_IMAGE = 1;
@@ -67,16 +72,18 @@ String picturePath;
             setContentView(R.layout.activity_image_uploader);
             image = (ImageView) findViewById(R.id.uploadImage);
             imageSelect = (Button) findViewById(R.id.buttonSelect);
-            btnBack = (Button) findViewById(R.id.btnBackImage);
-            btnNext = (Button) findViewById(R.id.btnNextImage);
+            nameRec=(TextView)findViewById(R.id.nameRec);
+            /*btnBack = (Button) findViewById(R.id.btnBackImage);
+            btnNext = (Button) findViewById(R.id.btnNextImage);*/
             btnUpload = (Button) findViewById(R.id.btnUploadImage);
-            imageName = (EditText) findViewById(R.id.imageName);
+           // imageName = (EditText) findViewById(R.id.imageName);
             pathArray = new ArrayList<>();
             mProgressDialog = new ProgressDialog(ImageUploader.this);
             auth = FirebaseAuth.getInstance();
-
             mStorageRef = FirebaseStorage.getInstance().getReference();
-
+            Intent intent = getIntent();
+            final String nameOfRecipe = intent.getStringExtra("nameOfRecipe");
+nameRec.setText(nameOfRecipe);
             checkFilePermissions();
 
             addFilePaths();
@@ -88,7 +95,7 @@ imageSelect.setOnClickListener(new View.OnClickListener() {
 
     }
 });
-            btnBack.setOnClickListener(new View.OnClickListener() {
+         /*   btnBack.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (array_position > 0) {
@@ -108,42 +115,51 @@ imageSelect.setOnClickListener(new View.OnClickListener() {
                         loadImageFromStorage();
                     }
                 }
-            });
+            });*/
 
             btnUpload.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.d(TAG, "onClick: Uploading Image.");
-                    if (!TextUtils.isEmpty(imageName.getText().toString())) {
+                    try {
+                        Log.d(TAG, "onClick: Uploading Image.");
                         mProgressDialog.setMessage("Uploading Image...");
-                    mProgressDialog.show();
+                        mProgressDialog.show();
+
+                        //get the signed in user
+                        FirebaseUser user = auth.getCurrentUser();
+                        String userID = user.getUid();
+
+                        String name = nameOfRecipe;
+                        if (!TextUtils.isEmpty(name)) {
+                            Uri uri = Uri.fromFile(new File(picturePath));
+                            StorageReference storageReference = mStorageRef.child("images/" + name + ".jpg");
+                            storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                    // Get a URL to the uploaded content
+                                    //   Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                                    toastMessage("Recipe Uploaded");
+                                    mProgressDialog.dismiss();
+                                    Intent displayYourRecipe=new Intent(ImageUploader.this, DisplayRecipeInfo.class);
+                                   displayYourRecipe.putExtra("RecipeName",nameOfRecipe);
+                                    startActivity(displayYourRecipe);
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    toastMessage("Upload Failed");
+                                    mProgressDialog.dismiss();
+                                }
+                            })
+                            ;
+                        } else {
+                            toastMessage("Add A Name");
+                        }
+
+                    }catch (Exception E){mProgressDialog.dismiss();
+                        Toast.makeText(ImageUploader.this, "Image Not Selected", Toast.LENGTH_SHORT).show();
+
                     }
-                    //get the signed in user
-                    FirebaseUser user = auth.getCurrentUser();
-                    String userID = user.getUid();
-
-                    String name = imageName.getText().toString();
-                    if (!TextUtils.isEmpty(name)) {
-                        Uri uri = Uri.fromFile(new File(picturePath));
-                        StorageReference storageReference = mStorageRef.child("images/" + name + ".jpg");
-                        storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                // Get a URL to the uploaded content
-                                //   Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                                toastMessage("Upload Success");
-                                mProgressDialog.dismiss();
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                toastMessage("Upload Failed");
-                                mProgressDialog.dismiss();
-                            }
-                        })
-                        ;
-                    }else {toastMessage("Add A Name");}
-
                 }
             });
 

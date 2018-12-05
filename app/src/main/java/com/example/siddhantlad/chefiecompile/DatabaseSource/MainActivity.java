@@ -2,10 +2,13 @@ package com.example.siddhantlad.chefiecompile.DatabaseSource;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
@@ -15,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
             //we will use these constants later to pass the artist name and id to another activity
             //view objects
-    EditText editTextName;
+    SearchView editTextName;
     Spinner spinnerGenre;
     Button buttonAddArtist, RecipeActivityButton;
     TextView artistname;
@@ -47,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     public static String Checks;
     //a list to store all the artist from firebase database
     List<Artist> artists;
-    ArrayList<String> my_array_of_selected_ingredients;
+    ArrayList<String> my_array_of_selected_ingredients,all_ingredients;
 
     //our database reference object
     public static DatabaseReference databaseArtists;
@@ -59,10 +63,11 @@ public class MainActivity extends AppCompatActivity {
         databaseArtists = FirebaseDatabase.getInstance().getReference("artists");
         //getting views
         my_array_of_selected_ingredients = new ArrayList<String>();
+        all_ingredients = new ArrayList<String>();
         Context context = this;
-        final ArrayAdapter<String> adapter_Selected = new ArrayAdapter<String>(context,android.R.layout.simple_list_item_1,my_array_of_selected_ingredients);
+        final ArrayAdapter<String> adapter_Selected = new ArrayAdapter<String>(context,R.layout.layout_artist_list,my_array_of_selected_ingredients);
         myMap = new HashMap();
-        editTextName = (EditText) findViewById(R.id.editTextName);
+        editTextName = (SearchView) findViewById(R.id.editTextName);
         spinnerGenre = (Spinner) findViewById(R.id.spinnerGenres);
         artistname=(TextView)findViewById(R.id.textView1);
         listViewArtists = (ListView) findViewById(R.id.listViewArtists);
@@ -107,17 +112,7 @@ public class MainActivity extends AppCompatActivity {
         listViewArtists.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                /*//getting the selected artist
-
-
-                //creating an intent
-                Intent intent = new Intent(getApplicationContext(), ArtistActivity.class);
-
-                //putting artist name and id to intent
-
-                //starting the activity with intent
-                startActivity(intent);
-                */
+                view.setBackgroundColor(Color.rgb(42,182,247));
                 Artist artist = artists.get(i);
                 Checks=artist.getArtistName().toString();
                 myMap.put("Banana",true);
@@ -145,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
                 //calling the method addArtist()
                 //the method is defined below
                 //this method is actually performing the write operation
-                addArtist();
+             //   addArtist();
             }
         });
 
@@ -159,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
      * This method is saving a new artist to the
      * Firebase Realtime Database
      * */
-    private void addArtist() {
+   /* private void addArtist() {
         //getting the values to save
         String name = editTextName.getText().toString().trim();
         String genre = spinnerGenre.getSelectedItem().toString();
@@ -187,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Please enter a name", Toast.LENGTH_LONG).show();
         }
     }
-
+*/
     @Override
     protected void onStart() {
         super.onStart();
@@ -198,7 +193,6 @@ public class MainActivity extends AppCompatActivity {
         databaseArtists.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
                 //clearing the previous artist list
                 artists.clear();
 
@@ -211,14 +205,32 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 //creating adapter
-                ArtistList artistAdapter = new ArtistList(MainActivity.this, artists);
+                final ArtistList artistAdapter = new ArtistList(MainActivity.this, artists);
                 //attaching adapter to the listview
+                //Checking all true booleans
+                for(int AtItems = 0; AtItems < artistAdapter.getCount(); AtItems++){
+                    Artist artist = artists.get(AtItems);
+                    String CheckingName=artist.getArtistName().toString();
+                all_ingredients.add(CheckingName);
+                }
+                final ArrayAdapter arrayAdapt=new ArrayAdapter(MainActivity.this,android.R.layout.simple_list_item_1,all_ingredients);
                 listViewArtists.setAdapter(artistAdapter);
+                editTextName.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        artistAdapter.getFilter().filter(newText);
+                        return true;
+                    }
+                });
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
         });
     }
@@ -226,7 +238,6 @@ public class MainActivity extends AppCompatActivity {
     private boolean updateArtist(String id, String name, String genre) {
         //getting the specified artist reference
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("artists").child(id);
-
         //updating artist
         Artist artist = new Artist(id, name, genre);
         dR.setValue(artist);
@@ -240,7 +251,6 @@ public class MainActivity extends AppCompatActivity {
         LayoutInflater inflater = getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.update_dialog, null);
         dialogBuilder.setView(dialogView);
-
         final EditText editTextName = (EditText) dialogView.findViewById(R.id.editTextName);
         final Spinner spinnerGenre = (Spinner) dialogView.findViewById(R.id.spinnerGenres);
         final Button buttonUpdate = (Button) dialogView.findViewById(R.id.buttonUpdateArtist);
@@ -249,7 +259,6 @@ public class MainActivity extends AppCompatActivity {
         dialogBuilder.setTitle(artistName);
         final AlertDialog b = dialogBuilder.create();
         b.show();
-
 
         buttonUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -275,6 +284,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
     }
 
     public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
@@ -313,5 +323,5 @@ public void IntentTransfer(){
     startActivity(newRecipe);
     my_array_of_selected_ingredients.clear();
 
-}
+   }
 }

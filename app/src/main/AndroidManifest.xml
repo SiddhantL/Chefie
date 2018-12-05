@@ -22,15 +22,24 @@
         </activity>
         <activity android:name=".SignUpActivity" />
         <activity android:name=".Welcome" />
-        <activity android:name=".DatabaseSource.ArtistActivity" />
-        <activity android:name=".DatabaseSource.SelectedItems" />
-        <activity android:name=".DatabaseSource.AddRecipeActivity" />
-        <activity android:name=".DatabaseSource.RecipeActivity" />
-        <activity android:name=".DatabaseSource.MainActivity" />
-        <activity android:name=".DatabaseSource.MainActivity2" />
-        <activity android:name=".AddRecipeFab" />
-        <activity android:name=".DatabaseSource.ImageUploader" />
-        <activity android:name=".DisplayRecipeInfo"></activity>
+        <activity android:name=".DatabaseSource.ArtistActivity"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".DatabaseSource.SelectedItems"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".DatabaseSource.AddRecipeActivity"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".DatabaseSource.RecipeActivity"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".DatabaseSource.MainActivity"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".DatabaseSource.MainActivity2"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".AddRecipeFab"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".DatabaseSource.ImageUploader"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".DisplayRecipeInfo"
+            android:windowSoftInputMode="stateHidden"></activity>
     </application>
 
 </manifest>

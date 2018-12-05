@@ -2,6 +2,7 @@ package com.example.siddhantlad.chefiecompile.DatabaseSource;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -115,6 +116,7 @@ IntentTransfer();
                 //starting the activity with intent
                 startActivity(intent);
                 */
+                view.setBackgroundColor(Color.rgb(42,182,247));
                 Artist artist = artists.get(i);
                 Checks=artist.getArtistName().toString();
                 myMap.put("Banana",true);
@@ -148,6 +150,7 @@ IntentTransfer();
 
         Animation animation = AnimationUtils.loadAnimation(MainActivity2.this,  R.anim.push_up_in);
        listViewArtists.startAnimation(animation);
+
     }
 
     /*

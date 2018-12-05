@@ -1,8 +1,10 @@
 package com.example.siddhantlad.chefiecompile;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -48,10 +50,10 @@ private ArrayList<String> arrayList=new ArrayList<String>();
         nameDisplayTV.setText(RecipeName);
         Toast.makeText(this, RecipeName, Toast.LENGTH_SHORT).show();
         StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images/"+RecipeName+".jpg");
-adapter=new ArrayAdapter<String>(this, R.layout.simple_list_item_white,arrayList);
+        StorageReference storageReferencePlaceholder = FirebaseStorage.getInstance().getReference().child("images/Empty.jpg");
+adapter=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,arrayList);
 // ImageView in your Activity
         ImageView imageView = (ImageView)findViewById(R.id.imageDisplay);
-
         Glide.with(this /* context */)
                 .load(storageReference)
                 .into(imageView);

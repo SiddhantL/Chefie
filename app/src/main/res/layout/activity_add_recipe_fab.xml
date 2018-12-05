@@ -4,28 +4,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#263238"
+    android:background="#DFE3EA"
     tools:context=".AddRecipeFab">
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/buttonAddArtist"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="Select Required Steps"
+        android:textAlignment="center"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        android:textColor="#000000" />
 
     <EditText
         android:id="@+id/RecipeName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/listView"
         android:layout_alignParentStart="true"
-        android:backgroundTint="#81C784"
+        android:layout_below="@+id/textView"
+        android:backgroundTint="#000000"
         android:ems="10"
         android:hint="Recipe Name"
         android:inputType="textPersonName"
-        android:textColor="#ffffff"
-        android:textColorHint="#cccccc"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
         tools:layout_editor_absoluteX="11dp"
         tools:layout_editor_absoluteY="3dp" />
 
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:layout_height="418dp"
+        android:layout_height="506dp"
+        android:divider="#DFE3EA"
+        android:dividerHeight="8dp"
         android:layout_above="@+id/continueBtn"
         android:layout_alignParentStart="true" />
 
@@ -37,16 +49,7 @@
         android:layout_alignParentStart="true"
         android:layout_marginBottom="13dp"
         android:background="@drawable/circular_button"
-        android:backgroundTint="#81C784"
-        android:text="Continue" />
-
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/RecipeName"
-        android:layout_centerHorizontal="true"
-        android:text="Select Required Ingredients"
+        android:backgroundTint="#38444f"
         android:textColor="#ffffff"
-        android:textSize="24sp" />
+        android:text="Continue" />
 </RelativeLayout>

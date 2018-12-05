@@ -15,15 +15,13 @@ import java.util.ArrayList;
 public class SpinnerAdapter extends BaseAdapter {
 
     private ArrayList<String> mSpinnerItems;
-    private ArrayList<String> mSpinnerItemsPosition;
     private ArrayList<String> mData;
     private Context mContext;
 
-    public SpinnerAdapter(ArrayList<String> data, ArrayList<String> spinnerItems,ArrayList<String> spinnerItemsPosition, Context context) {
+    public SpinnerAdapter(ArrayList<String> data, ArrayList<String> spinnerItems, Context context) {
         mData = data;
         mContext = context;
         mSpinnerItems = spinnerItems;
-        mSpinnerItemsPosition = spinnerItemsPosition;
     }
     @Override
     public int getCount() {
@@ -50,12 +48,12 @@ public class SpinnerAdapter extends BaseAdapter {
 
         TextView textView = (TextView) view.findViewById(R.id.row_item_textview);
         Spinner spinner = (Spinner) view.findViewById(R.id.row_item_spinner);
-        Spinner spinnerPos = (Spinner) view.findViewById(R.id.row_item_spinner_position);
+        //Spinner spinnerPos = (Spinner) view.findViewById(R.id.row_item_spinner_position);
         textView.setText(mData.get(position));
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, mSpinnerItems);
-        ArrayAdapter<String> adapterPos = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, mSpinnerItemsPosition);
+        ArrayAdapter<String> adapterPos = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item);
         spinner.setAdapter(adapter);
-        spinnerPos.setAdapter(adapterPos);
+       // spinnerPos.setAdapter(adapterPos);
         return view;
     }
 }

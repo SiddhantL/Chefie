@@ -24,7 +24,7 @@ TextView breakfastActivity;
     FirebaseAuth mAuth;
     FloatingActionButton addRecipeFab;
     FirebaseAuth.AuthStateListener mAuthListener;
-    //TextView display;
+    //TextView display; 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

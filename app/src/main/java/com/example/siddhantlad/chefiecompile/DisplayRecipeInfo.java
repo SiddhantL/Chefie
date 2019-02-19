@@ -51,7 +51,7 @@ private ArrayList<String> arrayList=new ArrayList<String>();
         Toast.makeText(this, RecipeName, Toast.LENGTH_SHORT).show();
         StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images/"+RecipeName+".jpg");
         StorageReference storageReferencePlaceholder = FirebaseStorage.getInstance().getReference().child("images/Empty.jpg");
-adapter=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,arrayList);
+adapter=new ArrayAdapter<String>(this, R.layout.simple_list_item_green,arrayList);
 // ImageView in your Activity
         ImageView imageView = (ImageView)findViewById(R.id.imageDisplay);
         Glide.with(this /* context */)

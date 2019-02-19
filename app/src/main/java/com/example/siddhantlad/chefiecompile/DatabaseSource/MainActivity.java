@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -30,6 +31,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.Serializable;
@@ -46,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     Spinner spinnerGenre;
     Button buttonAddArtist, RecipeActivityButton;
     TextView artistname;
+    String newText;
     ListView listViewArtists;
     public Map<String, Boolean> myMap;
     public static String Checks;
@@ -112,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
         listViewArtists.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+               view.setSelected(true);
                 view.setBackgroundColor(Color.rgb(42,182,247));
                 Artist artist = artists.get(i);
                 Checks=artist.getArtistName().toString();
@@ -190,12 +194,122 @@ public class MainActivity extends AppCompatActivity {
        /*ListView Animation
         Animation animation = AnimationUtils.loadAnimation(MainActivity.this,  R.anim.push_up_in);
         listViewArtists.startAnimation(animation);*/
+
+       /* editTextName.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+              //  artists.clear();
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference("artists");
+                Query query = reference.orderByChild("artistName").equalTo(newText);
+                query.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        artists.clear();
+                        if (dataSnapshot.exists()) {
+
+                            for (DataSnapshot issue : dataSnapshot.getChildren()) {
+                                // do with your result
+                                Artist artist = issue.getValue(Artist.class);
+                                //adding artist to the list
+                                artists.add(artist);
+                            }
+                            final ArtistList artistAdapter = new ArtistList(MainActivity.this, artists);
+                            //attaching adapter to the listview
+                            //Checking all true booleans
+                            for (int AtItems = 0; AtItems < artistAdapter.getCount(); AtItems++) {
+                                Artist artist = artists.get(AtItems);
+                                String CheckingName = artist.getArtistName().toString();
+                                all_ingredients.add(CheckingName);
+                            }
+                            final ArrayAdapter arrayAdapt = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, all_ingredients);
+                            listViewArtists.setAdapter(artistAdapter);
+                        }
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+                return false;
+            }
+        });*/
+
         databaseArtists.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(final DataSnapshot dataSnapshot) {
                 //clearing the previous artist list
                 artists.clear();
+                editTextName.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        return false;
+                    }
 
+                    @Override
+                    public boolean onQueryTextChange(String newTexts) {
+                        newText = newTexts;
+                        if (!TextUtils.isEmpty(newText)) {
+                            artists.clear();
+                            Query querys = databaseArtists.orderByChild("artistName").equalTo(newText);
+                            querys.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    for (DataSnapshot filter : dataSnapshot.getChildren()) {
+                                        //getting artist
+                                        Artist artist = filter.getValue(Artist.class);
+                                        //adding artist to the list
+                                        artists.add(artist);
+                                        final ArtistList artistAdapter = new ArtistList(MainActivity.this, artists);
+                                        artistAdapter.notifyDataSetChanged();
+                                        //attaching adapter to the listview
+                                        //Checking all true booleans
+                                        for (int AtItems = 0; AtItems < artistAdapter.getCount(); AtItems++) {
+                                            artist = artists.get(AtItems);
+                                            String CheckingName = artist.getArtistName().toString();
+                                            all_ingredients.add(CheckingName);
+                                        }
+                                        final ArrayAdapter arrayAdapt = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, all_ingredients);
+                                        listViewArtists.setAdapter(artistAdapter);
+                                    }
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+                        } if (TextUtils.isEmpty(newText)) {
+                            for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                                //getting artist
+                                Artist artist = postSnapshot.getValue(Artist.class);
+                                //adding artist to the list
+                                artists.add(artist);
+                            }
+
+                            //creating adapter
+                            final ArtistList artistAdapter = new ArtistList(MainActivity.this, artists);
+                            artistAdapter.notifyDataSetChanged();
+                            //attaching adapter to the listview
+                            //Checking all true booleans
+                            for (int AtItems = 0; AtItems < artistAdapter.getCount(); AtItems++) {
+                                Artist artist = artists.get(AtItems);
+                                String CheckingName = artist.getArtistName().toString();
+                                all_ingredients.add(CheckingName);
+                            }
+                            final ArrayAdapter arrayAdapt = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, all_ingredients);
+                            listViewArtists.setAdapter(artistAdapter);
+                        }
+
+                        return false;
+                    }
+                });
                 //iterating through all the nodes
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     //getting artist
@@ -206,34 +320,24 @@ public class MainActivity extends AppCompatActivity {
 
                 //creating adapter
                 final ArtistList artistAdapter = new ArtistList(MainActivity.this, artists);
+                artistAdapter.notifyDataSetChanged();
                 //attaching adapter to the listview
                 //Checking all true booleans
-                for(int AtItems = 0; AtItems < artistAdapter.getCount(); AtItems++){
+                for (int AtItems = 0; AtItems < artistAdapter.getCount(); AtItems++) {
                     Artist artist = artists.get(AtItems);
-                    String CheckingName=artist.getArtistName().toString();
-                all_ingredients.add(CheckingName);
+                    String CheckingName = artist.getArtistName().toString();
+                    all_ingredients.add(CheckingName);
                 }
-                final ArrayAdapter arrayAdapt=new ArrayAdapter(MainActivity.this,android.R.layout.simple_list_item_1,all_ingredients);
+                final ArrayAdapter arrayAdapt = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, all_ingredients);
                 listViewArtists.setAdapter(artistAdapter);
-                editTextName.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                    @Override
-                    public boolean onQueryTextSubmit(String query) {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onQueryTextChange(String newText) {
-                        artistAdapter.getFilter().filter(newText);
-                        return true;
-                    }
-                });
-            }
-
+                           }
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+
     }
+
 
     private boolean updateArtist(String id, String name, String genre) {
         //getting the specified artist reference

@@ -21,10 +21,9 @@
     <ListView
         android:id="@+id/listViewArtists"
         android:layout_width="match_parent"
-        android:layout_height="533dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:background="@drawable/gradient3"
         android:divider="#DFE3EA"
         android:dividerHeight="8dp"
         android:layout_below="@id/textView"></ListView>

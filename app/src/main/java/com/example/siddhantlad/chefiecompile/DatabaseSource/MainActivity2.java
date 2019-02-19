@@ -48,6 +48,7 @@ public class MainActivity2 extends AppCompatActivity {
     //a list to store all the artist from firebase database
     List<Artist> artists;
     ArrayList<String> my_array_of_selected_ingredients;
+    View row;
 
     //our database reference object
     public static DatabaseReference databaseArtists;
@@ -116,13 +117,15 @@ IntentTransfer();
                 //starting the activity with intent
                 startActivity(intent);
                 */
-                view.setBackgroundColor(Color.rgb(42,182,247));
+                row=view;
+                row.setBackgroundColor(Color.rgb(42,182,247));
                 Artist artist = artists.get(i);
                 Checks=artist.getArtistName().toString();
                 myMap.put("Banana",true);
                 myMap.put(Checks, true);
                 myMap.put("Orange",true);
                 Toast.makeText(MainActivity2.this, Checks, Toast.LENGTH_SHORT).show();
+
            /* try {
                 if (myMap.get("Sugar")==true){
                     Toast.makeText(MainActivity.this, "Yes", Toast.LENGTH_SHORT).show();
@@ -309,4 +312,5 @@ IntentTransfer();
         my_array_of_selected_ingredients.clear();
 
     }
+
 }

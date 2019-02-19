@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.siddhantlad.chefiecompile.DatabaseSource.RecipeActivity;
 import com.example.siddhantlad.chefiecompile.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -68,7 +69,7 @@ public class AddRecipeActivity extends AppCompatActivity {
     public void FillListView(){
         Intent intent = getIntent();
         my_array_of_selected_ingredients = intent.getStringArrayListExtra("my_array_of_selected_ingredients");
-        ArrayAdapter<String> adapter_Selected = new ArrayAdapter<String>(context,android.R.layout.simple_list_item_1,my_array_of_selected_ingredients);
+        ArrayAdapter<String> adapter_Selected = new ArrayAdapter<String>(context,R.layout.simple_list_item_white,my_array_of_selected_ingredients);
         try {
             listView.setAdapter(adapter_Selected);
         }catch (Exception e){}

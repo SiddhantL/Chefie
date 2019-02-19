@@ -8,38 +8,65 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="ChefieImage"
-        android:roundIcon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_chefie_round"
+        android:label="Chefie"
+        android:roundIcon="@mipmap/ic_launcher_chefie_round_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity">
+        <activity
+            android:name=".LoginActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SignUpActivity" />
-        <activity android:name=".Welcome" />
-        <activity android:name=".DatabaseSource.ArtistActivity"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".DatabaseSource.SelectedItems"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".DatabaseSource.AddRecipeActivity"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".DatabaseSource.RecipeActivity"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".DatabaseSource.MainActivity"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".DatabaseSource.MainActivity2"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".AddRecipeFab"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".DatabaseSource.ImageUploader"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".DisplayRecipeInfo"
-            android:windowSoftInputMode="stateHidden"></activity>
+        <activity
+            android:name=".SignUpActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Welcome"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".DatabaseSource.ArtistActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".DatabaseSource.SelectedItems"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".DatabaseSource.AddRecipeActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".DatabaseSource.RecipeActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".DatabaseSource.MainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".DatabaseSource.MainActivity2"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".AddRecipeFab"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".DatabaseSource.ImageUploader"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".DisplayRecipeInfo"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".NextActivity"></activity>
     </application>
 
 </manifest>

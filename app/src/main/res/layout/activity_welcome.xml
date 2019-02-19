@@ -4,72 +4,78 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#263238"
+    android:background="#DFE3EA"
     tools:context=".Welcome">
 
     <Button
         android:id="@+id/logoutbtn"
-        android:layout_width="66dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="14dp"
+        android:layout_below="@+id/addRecipeFab"
+        android:layout_centerHorizontal="true"
         android:background="@drawable/circular_button"
-        android:backgroundTint="#81C784"
-        android:text="⚙"
-        android:textSize="30sp" />
+        android:backgroundTint="#38444f"
+        android:text="Log Out"
+        android:layout_margin="25dp"
+        android:textColor="#ffffff"
+        android:textSize="20dp"
+        android:textStyle="bold|italic"
+        app:fontFamily="serif" />
 
-    <TextView
+    <Button
         android:id="@+id/breakfastOpt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/circular_button"
+        android:backgroundTint="#38444f"
+        android:text="Search Recipes"
+        android:layout_margin="25dp"
+        android:textColor="#ffffff"
+        android:textSize="20dp"
+        android:textStyle="bold|italic"
+        app:fontFamily="serif" />
+
+    <Button
+        android:id="@+id/addRecipeFab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/breakfastOpt"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="25dp"
+        android:background="@drawable/circular_button"
+        android:backgroundTint="#38444f"
+        android:text="Add Recipes"
+        android:textColor="#ffffff"
+        android:textSize="20dp"
+        android:textStyle="bold|italic"
+        app:fontFamily="serif" />
+
+    <TextView
+        android:id="@+id/textViewGreet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="103dp"
-        android:text="Breakfast"
-        android:textColor="#ffffff"
-        android:textSize="50sp"
-        android:textStyle="bold|italic"
-        app:fontFamily="serif" />
+        android:layout_marginTop="138dp"
+        android:fontFamily="cursive"
+        android:textStyle="bold"
+        android:text="Let's Get Cookin'"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        android:textColor="#000000"
+        android:textSize="40dp" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="Lunch"
-        android:textColor="#ffffff"
-        android:textSize="50sp"
-        android:textStyle="bold|italic"
-        app:fontFamily="serif" />
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="99dp"
-        android:text="Dinner"
-        android:textColor="#ffffff"
-        android:textSize="50sp"
-        android:textStyle="bold|italic"
-        app:fontFamily="serif" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/addRecipeFab"
-        android:layout_width="129dp"
-        android:layout_height="95dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="17dp"
-        android:clickable="true"
-        android:visibility="visible"
-        app:backgroundTint="@android:color/background_dark"
-        app:elevation="10dp"
-        app:fabSize="normal"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        android:layout_marginTop="72dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="Hello, "
+        android:textAlignment="center"
+        android:textSize="40dp" />
 
 
 </RelativeLayout>

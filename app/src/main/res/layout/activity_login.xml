@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#263238"
+    android:background="#DFE3EA"
     tools:context=".LoginActivity">
 
     <EditText
@@ -12,10 +12,10 @@
         android:layout_width="259dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:backgroundTint="#CCCCCC"
+        android:backgroundTint="#000000"
         android:inputType="textPersonName"
-        android:textColor="#CCCCCC"
-        android:textColorHint="#CCCCCC"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
         tools:layout_editor_absoluteX="84dp"
         tools:layout_editor_absoluteY="155dp" />
 
@@ -28,13 +28,13 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="222dp"
         android:layout_marginTop="20dp"
-        android:backgroundTint="#CCCCCC"
+        android:backgroundTint="#000000"
         android:ems="10"
         android:inputType="textPassword"
         android:paddingTop="35dp"
-        android:textColor="#CCCCCC"
-        android:textColorHint="#CCCCCC"
-        android:textColorLink="#CCCCCC" />
+        android:textColor="#000000"
+        android:textColorHint="#000000"
+        android:textColorLink="#000000" />
 
     <Button
         android:id="@+id/loginbtn"
@@ -43,8 +43,9 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="85dp"
+        android:textColor="#ffffff"
         android:background="@drawable/circular_button"
-        android:backgroundTint="#81C784"
+        android:backgroundTint="#38444f"
         android:src="#81C784"
         android:text="Login"
         android:textSize="15sp" />
@@ -57,7 +58,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="128dp"
         android:text="Sign Up"
-        android:textColor="#81C784"
+        android:textColor="#000000"
         android:textSize="18sp" />
 
 
@@ -79,7 +80,7 @@
         android:layout_marginBottom="55dp"
         android:layout_marginStart="110dp"
         android:text="New user?"
-        android:textColor="#CCCCCC"
+        android:textColor="#000000"
         android:textSize="16sp" />
 
     <TextView
@@ -89,7 +90,7 @@
         android:layout_above="@+id/EmailEdittext"
         android:layout_alignStart="@+id/PasswordeditText"
         android:text="E-mail"
-        android:textColor="#CCCCCC" />
+        android:textColor="#000000" />
 
     <TextView
         android:id="@+id/textView6"
@@ -99,5 +100,5 @@
         android:layout_alignStart="@+id/PasswordeditText"
         android:layout_marginBottom="259dp"
         android:text="Password"
-        android:textColor="#CCCCCC" />
+        android:textColor="#000000" />
 </RelativeLayout>

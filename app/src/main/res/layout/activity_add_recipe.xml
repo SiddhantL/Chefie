@@ -36,7 +36,6 @@
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@drawable/gradient2"
         android:divider="#DFE3EA"
         android:dividerHeight="8dp"
         android:layout_above="@+id/continueBtn"

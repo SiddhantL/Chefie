@@ -1,5 +1,71 @@
 package com.example.siddhantlad.chefiecompile;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
+
+import com.example.siddhantlad.chefiecompile.DatabaseSource.ImageUploader;
+
+import java.util.ArrayList;
+
+public class AddRecipeFab extends AppCompatActivity {
+
+    private Button btn;
+    private ListView lv;
+    private SpinnerAdapter customeAdapter;
+    public ArrayList<EditModel> editModelArrayList;
+    ArrayList<String> my_array_of_selected_ingredients;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_add_recipe_fab);
+
+        lv = (ListView) findViewById(R.id.listView);
+        btn = (Button) findViewById(R.id.btn);
+
+        editModelArrayList = populateList();
+        customeAdapter = new SpinnerAdapter(this,editModelArrayList);
+        lv.setAdapter(customeAdapter);
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AddRecipeFab.this,ImageUploader.class);
+                startActivity(intent);
+            }
+        });
+
+    }
+
+    private ArrayList<EditModel> populateList(){
+
+        ArrayList<EditModel> list = new ArrayList<>();
+
+      /*  for(int i = 0; i < 8; i++){
+            EditModel editModel = new EditModel();
+            editModel.setEditTextValue(String.valueOf(i));
+            list.add(editModel);
+        }*/
+        Intent intent = getIntent();
+        my_array_of_selected_ingredients = intent.getStringArrayListExtra("my_array_of_selected_ingredients");
+        for(int i = 0; i < my_array_of_selected_ingredients.size(); i++){
+            EditModel editModel = new EditModel();
+            editModel.setEditTextValue(my_array_of_selected_ingredients.get(i).toString());
+            list.add(editModel);
+        }
+
+        return list;
+    }
+
+}
+
+/*
+
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -82,7 +148,9 @@ public class AddRecipeFab extends AppCompatActivity {
                     Spinner spinner = (Spinner)findViewById(R.id.row_item_spinner);
                    // Spinner spinnerPos = (Spinner)findViewById(R.id.row_item_spinner_position);
                     mNewDatabase.child(editText.getText().toString()).child(Integer.toString(i)).setValue(
-                            spinner.getSelectedItem().toString()+" "+listView.getItemAtPosition(i-1)/*+spinnerPos.getSelectedItem().toString()*/);
+                            spinner.getSelectedItem().toString()+" "+listView.getItemAtPosition(i-1)*/
+/*+spinnerPos.getSelectedItem().toString()*//*
+);
                 }
             }
 
@@ -107,15 +175,19 @@ public class AddRecipeFab extends AppCompatActivity {
             mSpinnerData.add("Dry");
             mSpinnerData.add("Bake");
             mSpinnerData.add("Fry");
-           /* ArrayList<String> mSpinnerDataPosition = new ArrayList<>();
+           */
+/* ArrayList<String> mSpinnerDataPosition = new ArrayList<>();
             mSpinnerDataPosition.add("Position");
             for (int x=1;x<=my_array_of_selected_ingredients.size();x++){
                 mSpinnerDataPosition.add(Integer.toString(x));
-            }*/
-           /* mSpinnerDataPosition.add("1");
+            }*//*
+
+           */
+/* mSpinnerDataPosition.add("1");
             mSpinnerDataPosition.add("2");
             mSpinnerDataPosition.add("3");
-            mSpinnerDataPosition.add("4");*/
+            mSpinnerDataPosition.add("4");*//*
+
             SpinnerAdapter adapterPosition = new SpinnerAdapter(my_array_of_selected_ingredients, mSpinnerData,this);
             listView.setAdapter(adapterPosition);
          //   SpinnerAdapter adapter = new SpinnerAdapter(my_array_of_selected_ingredients, mSpinnerData, this);
@@ -125,3 +197,4 @@ public class AddRecipeFab extends AppCompatActivity {
 
     }
 }
+*/

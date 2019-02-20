@@ -6,9 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.siddhantlad.chefiecompile.DatabaseSource.ImageUploader;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -17,9 +21,10 @@ public class AddRecipeFab extends AppCompatActivity {
     private Button btn;
     private ListView lv;
     private SpinnerAdapter customeAdapter;
+    EditText editText;
     public ArrayList<EditModel> editModelArrayList;
     ArrayList<String> my_array_of_selected_ingredients;
-
+    DatabaseReference mDatabase,mNewDatabase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,16 +32,33 @@ public class AddRecipeFab extends AppCompatActivity {
 
         lv = (ListView) findViewById(R.id.listView);
         btn = (Button) findViewById(R.id.btn);
-
+        mDatabase = FirebaseDatabase.getInstance().getReference("recipes");
+        mNewDatabase= FirebaseDatabase.getInstance().getReference("steps");
         editModelArrayList = populateList();
         customeAdapter = new SpinnerAdapter(this,editModelArrayList);
         lv.setAdapter(customeAdapter);
-
+editText=(EditText)findViewById(R.id.editText);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(AddRecipeFab.this,ImageUploader.class);
+                intent.putExtra("nameOfRecipe",editText.getText().toString());
                 startActivity(intent);
+                //int CountLast = lv.getAdapter().getCount();
+                String RecipeNameNew = "-" + editText.getText().toString().trim();
+                /*for (int Count = 0; Count <= CountLast - 1; Count++) {
+                    String name = my_array_of_selected_ingredients.get(Count);
+                    mDatabase.child(RecipeNameNew).push().setValue(name);
+
+                }*/
+                for (int counter=0;counter<my_array_of_selected_ingredients.size();counter++){
+                    String name = my_array_of_selected_ingredients.get(counter);
+                    mDatabase.child(RecipeNameNew).push().setValue(name);
+                    mDatabase.child(RecipeNameNew).child("artistName").setValue(editText.getText().toString());
+                    EditModel editModel = new EditModel();
+                    editModel.setEditTextValue(String.valueOf(counter));
+                   mNewDatabase.child(editText.getText().toString().trim()).child(Integer.toString(counter)).setValue(my_array_of_selected_ingredients.get(counter)+": "+editModelArrayList.get(counter).getEditTextValue());
+                    }
             }
         });
 

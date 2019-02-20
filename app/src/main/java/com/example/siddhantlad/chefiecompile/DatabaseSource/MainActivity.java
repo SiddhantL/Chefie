@@ -256,7 +256,9 @@ public class MainActivity extends AppCompatActivity {
                         newText = newTexts;
                         if (!TextUtils.isEmpty(newText)) {
                             artists.clear();
-                            Query querys = databaseArtists.orderByChild("artistName").equalTo(newText);
+                            int filter;
+                            filter=newText.length();
+                            Query querys = (databaseArtists.orderByChild("artistName").equalTo(newText));
                             querys.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

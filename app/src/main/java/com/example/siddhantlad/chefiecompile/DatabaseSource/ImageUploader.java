@@ -74,7 +74,7 @@ TextView nameRec;
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_image_uploader);
             image = (ImageView) findViewById(R.id.uploadImage);
-
+checkFilePermissions();
             imageSelect = (Button) findViewById(R.id.buttonSelect);
             nameRec=(TextView)findViewById(R.id.nameRec);
             /*btnBack = (Button) findViewById(R.id.btnBackImage);

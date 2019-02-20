@@ -5,7 +5,11 @@ Then add Filter to listview to search ingredients faster.
 
 Finally Add Database
 
+20/2/19
+EditText in Listview added, for action and To Database (Can be added for quantity too).
+Then add Filter to listview to search ingredients faster.
 
+Finally Add Database
  */
 
 

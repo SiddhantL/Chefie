@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.siddhantlad.chefiecompile.DatabaseSource.Artist;
 import com.example.siddhantlad.chefiecompile.DatabaseSource.ArtistList;
 import com.example.siddhantlad.chefiecompile.DatabaseSource.MainActivity2;
@@ -54,9 +55,11 @@ private ArrayList<String> arrayList=new ArrayList<String>();
 adapter=new ArrayAdapter<String>(this, R.layout.simple_list_item_green,arrayList);
 // ImageView in your Activity
         ImageView imageView = (ImageView)findViewById(R.id.imageDisplay);
-        Glide.with(this /* context */)
+      /*  Glide.with(this *//* context *//*)
                 .load(storageReference)
-                .into(imageView);
+                .into(imageView);*/
+        Glide.with(this)
+                .load(storageReference).apply(new RequestOptions().placeholder(R.drawable.lunchpic)).into(imageView);
         mDatabase.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {

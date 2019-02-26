@@ -3,6 +3,8 @@ package com.example.siddhantlad.chefiecompile.DatabaseSource;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -55,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     //a list to store all the artist from firebase database
     List<Artist> artists;
     ArrayList<String> my_array_of_selected_ingredients,all_ingredients;
-
+    NetworkInfo activeNetworkInfo;
     //our database reference object
     public static DatabaseReference databaseArtists;
     @Override
@@ -82,24 +84,30 @@ public class MainActivity extends AppCompatActivity {
         RecipeActivityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int TotalItems=listViewArtists.getAdapter().getCount();
-                //Checking all true booleans
-                for(int AtItem = 0; AtItem < TotalItems; AtItem++){
-                    Artist artist = artists.get(AtItem);
-                    String CheckingName=artist.getArtistName().toString();
-                    try{
-                        if (myMap.get(CheckingName)){
-                            //Toast.makeText(MainActivity.this, CheckingName+" was added", Toast.LENGTH_SHORT).show();
-                            my_array_of_selected_ingredients.add(CheckingName);
+                isNetworkAvailable();
+                if (activeNetworkInfo != null) {
+                    RecipeActivityButton.setText("Check Recipes");
+                    int TotalItems = listViewArtists.getAdapter().getCount();
+                    //Checking all true booleans
+                    for (int AtItem = 0; AtItem < TotalItems; AtItem++) {
+                        Artist artist = artists.get(AtItem);
+                        String CheckingName = artist.getArtistName().toString();
+                        try {
+                            if (myMap.get(CheckingName)) {
+                                //Toast.makeText(MainActivity.this, CheckingName+" was added", Toast.LENGTH_SHORT).show();
+                                my_array_of_selected_ingredients.add(CheckingName);
+                            }
+                        } catch (Exception e) {
+
                         }
-                    }catch (Exception e){
 
                     }
 
+                    IntentTransfer();
+                }else {
+                    RecipeActivityButton.setText("No Network");
                 }
-
-                IntentTransfer();
-               }
+            }
         });
 
 
@@ -430,4 +438,10 @@ public void IntentTransfer(){
     my_array_of_selected_ingredients.clear();
 
    }
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
 }

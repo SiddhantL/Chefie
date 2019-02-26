@@ -86,59 +86,58 @@ public class RecipeActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 Count=0;
-        mDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(final DataSnapshot dataSnapshot) {
-                recipes.clear();
+mDatabase.addValueEventListener(new ValueEventListener() {
+    @Override
+    public void onDataChange(final DataSnapshot dataSnapshot) {
+        recipes.clear();
 
-                for (final DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    final RecipeArtist recipeartist = postSnapshot.getValue(RecipeArtist.class);
-                    recipes.add(recipeartist);
-                    remove=true;
-                    final String name =postSnapshot.getKey().toString().trim();
-                    final String nameFinal=name.substring(1);
-                    adapterListName.add(nameFinal);
-                    final DatabaseReference dataref= FirebaseDatabase.getInstance().getReference().child("recipes").child(name);
-                    dataref.addValueEventListener(new ValueEventListener() {
+        for (final DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+            final RecipeArtist recipeartist = postSnapshot.getValue(RecipeArtist.class);
+            recipes.add(recipeartist);
+            remove=true;
+            final String name =postSnapshot.getKey().toString().trim();
+            final String nameFinal=name.substring(1);
+            adapterListName.add(nameFinal);
+            final DatabaseReference dataref= FirebaseDatabase.getInstance().getReference().child("recipes").child(name);
+            dataref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
+                    Count=Count+1;
+   //             Toast.makeText(context, Count, Toast.LENGTH_SHORT).show();
+                    for (DataSnapshot postSnapshot1 : dataSnapshot1.getChildren()) {
+                        final int CountSave=Count;
+                        final String names = postSnapshot1.getKey().toString().trim();
+                        dataref.child(names).addValueEventListener(new ValueEventListener() {
                         @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
-                            Count=Count+1;
-   //                         Toast.makeText(context, Count, Toast.LENGTH_SHORT).show();
-                            for (DataSnapshot postSnapshot1 : dataSnapshot1.getChildren()) {
-                                final int CountSave=Count;
-                                final String names = postSnapshot1.getKey().toString().trim();
-                    dataref.child(names).addValueEventListener(new ValueEventListener() {
-                        @Override
-                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot2) {
-                                        Boolean removeCheck=false;
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot2) {
+                            Boolean removeCheck=false;
                             remove=true;
-                                        if (dataSnapshot2.getValue() != null) {
-                                            if (!names.equals("artistName")) {
-                                                String ingredientName = dataSnapshot2.getValue().toString().trim();
-                                                String recipeName = nameFinal;
+                            if (dataSnapshot2.getValue() != null) {
+                                if (!names.equals("artistName")) {
+                                    String ingredientName = dataSnapshot2.getValue().toString().trim();
+                                    String recipeName = nameFinal;
                                  //9/14 Remove               Toast.makeText(RecipeActivity.this, recipeName + ": " + ingredientName, Toast.LENGTH_SHORT).show();
-                                                try {
-                                                    if (!my_array_of_selected_ingredients.isEmpty()) {
-                                                        if (my_array_of_selected_ingredients.contains(ingredientName)) {
-                                                   //9/14         Toast.makeText(context, recipeName + ": Yes", Toast.LENGTH_SHORT).show();
-                                                        } else {
-                                                            if (remove){
-                                                              //  Toast.makeText(context, recipeName + ": No" + " " + CountSave, Toast.LENGTH_SHORT).show();
-                                                                recipes.remove(recipeartist);
-                                                                adapterListName.remove(recipeName);
-                                                                listViewRecipes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                    try {
+                                        if (!my_array_of_selected_ingredients.isEmpty()) {
+                                            if (my_array_of_selected_ingredients.contains(ingredientName)) {
+                                                //9/14         Toast.makeText(context, recipeName + ": Yes", Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                if (remove){
+                                                    //  Toast.makeText(context, recipeName + ": No" + " " + CountSave, Toast.LENGTH_SHORT).show();
+                                                    recipes.remove(recipeartist);
+                                                    adapterListName.remove(recipeName);
+                                                    listViewRecipes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                                                     @Override
-                                                                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                                                        Intent intent = new Intent(getApplicationContext(), DisplayRecipeInfo.class);
-                                                                        intent.putExtra("RecipeName",adapterListName.get(i).toString().trim()/*"CheckImage"*/);
-                                                                        Toast.makeText(RecipeActivity.this, adapterListName.get(i), Toast.LENGTH_SHORT).show();
-                                                                        startActivity(intent);
+                                                                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) { Intent intent = new Intent(getApplicationContext(), DisplayRecipeInfo.class);
+                                                                    intent.putExtra("RecipeName",adapterListName.get(i).toString().trim()/*"CheckImage"*/);
+                                                                    Toast.makeText(RecipeActivity.this, adapterListName.get(i), Toast.LENGTH_SHORT).show();
+                                                                    startActivity(intent);
                                                                     }
-                                                                });
+                                                    });
 
                                                                 //recipes.remove(CountSave-1);
-                                                                 artistAdapter.notifyDataSetChanged();
-                                                            remove=false;}else{}
+                                                    artistAdapter.notifyDataSetChanged();
+                                                    remove=false;}else{}
                                                            /*9/14 removeList.add(CountSave);
                                                                HashSet<Integer> hashSet = new HashSet<Integer>();
                                                                hashSet.addAll(removeList);
@@ -167,49 +166,46 @@ Count=0;
                                                 Toast.makeText(context, "Crash", Toast.LENGTH_SHORT).show();
                                                 //  recipes.remove(listViewRecipes.getItemAtPosition(CountSave));
                                             }catch (Exception e){}*/
-                                                        }
-                                                    } else {
-                                                        //---@@   Toast.makeText(context, "null value", Toast.LENGTH_SHORT).show();
-                                                    }
-
-                                                } catch (Exception E) {
-                                                }
                                             }
+                                            } else {
+                                            //---@@   Toast.makeText(context, "null value", Toast.LENGTH_SHORT).show();
                                         }
-                                    }
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                    }
-                                });
+                                        } catch (Exception E) {
+                                        }
+                                        }
                             }
-
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                    }
+                        });
                         }
+
+                }
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                        }
-                    });
-
-                }
-                artistAdapter = new RecipeArtistList(RecipeActivity.this,recipes);
-                listViewRecipes.setAdapter(artistAdapter);
-                for (int Counting=0;Counting<=listViewRecipes.getAdapter().getCount()-1;Counting++){
-                   /* RecipeArtist artist = recipes.get(Counting);
-                    try {
-                        Intent intent=new Intent(RecipeActivity.this,RecipeArtist.class);
-                        Toast.makeText(context, artist.getArtistName(), Toast.LENGTH_SHORT).show();
-                    }catch (Exception E){
-                        Toast.makeText(context, "CRASH", Toast.LENGTH_SHORT).show();
-                    }*/
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+                    }
+            });
 
             }
+            artistAdapter = new RecipeArtistList(RecipeActivity.this,recipes);
+        listViewRecipes.setAdapter(artistAdapter);
+        for (int Counting=0;Counting<=listViewRecipes.getAdapter().getCount()-1;Counting++){
+            /* RecipeArtist artist = recipes.get(Counting);
+                   try {
+                       Intent intent=new Intent(RecipeActivity.this,RecipeArtist.class);
+                       Toast.makeText(context, artist.getArtistName(), Toast.LENGTH_SHORT).show();
+                   }catch (Exception E){
+                       Toast.makeText(context, "CRASH", Toast.LENGTH_SHORT).show();
+                   }*/
+            }
+    }
 
+    @Override
+    public void onCancelled(DatabaseError databaseError) {
+
+        }
         });
-     }
+    }
 }

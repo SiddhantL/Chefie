@@ -15,12 +15,15 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.siddhantlad.chefiecompile.DatabaseSource.ArtistActivity;
 import com.example.siddhantlad.chefiecompile.DatabaseSource.RecipeArtist;
 import com.example.siddhantlad.chefiecompile.DatabaseSource.RecipeArtistList;
@@ -31,6 +34,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -59,9 +64,9 @@ public class RecipeActivity extends AppCompatActivity {
         Intent intent = getIntent();
         my_array_of_selected_ingredients = intent.getStringArrayListExtra("my_array_of_selected_ingredients");
         mDatabase = FirebaseDatabase.getInstance().getReference("recipes");
-        context=this;
+        context = this;
         removeList = new ArrayList<>();
-        adapterListName=new ArrayList<String>();
+        adapterListName = new ArrayList<String>();
         spinnerType = (Spinner) findViewById(R.id.spinnerGenres);
         listViewRecipes = (ListView) findViewById(R.id.listViewArtists);
         recipes = new ArrayList<>();

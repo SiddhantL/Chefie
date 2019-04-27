@@ -4,9 +4,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.siddhantlad.chefiecompile.R;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
@@ -29,9 +34,13 @@ public class RecipeArtistList extends ArrayAdapter<RecipeArtist> {
 
         TextView textViewName = (TextView) listViewItem.findViewById(R.id.tv_language);
       //  TextView textViewGenre = (TextView) listViewItem.findViewById(R.id.textViewGenre);
-
+        ImageView cardImage =(ImageView)listViewItem.findViewById(R.id.im_language);
         RecipeArtist artist = artists.get(position);
         textViewName.setText(artist.getArtistName());
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images/" + artist.getArtistName().toString() + ".jpg");
+        Glide.with(this.context)
+                .load(storageReference).apply(new RequestOptions().placeholder(R.drawable.lunchpic)).into(cardImage);
+
         //textViewGenre.setText(artist.getArtistGenre());
 
         return listViewItem;

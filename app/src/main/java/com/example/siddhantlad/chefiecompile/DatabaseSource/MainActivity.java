@@ -46,7 +46,8 @@ public class MainActivity extends AppCompatActivity {
 
             //we will use these constants later to pass the artist name and id to another activity
             //view objects
-    SearchView editTextName;
+//    SearchView editTextName;
+    SearchView search;
     Spinner spinnerGenre;
     Button buttonAddArtist, RecipeActivityButton;
     TextView artistname;
@@ -56,9 +57,9 @@ public class MainActivity extends AppCompatActivity {
     public static String Checks;
     //a list to store all the artist from firebase database
     List<Artist> artists;
-    ArrayList<String> my_array_of_selected_ingredients,all_ingredients;
+    ArrayList<String> my_array_of_selected_ingredients,concencated_ingredients,backup;
     NetworkInfo activeNetworkInfo;
-    //our database reference object
+    //
     public static DatabaseReference databaseArtists;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,18 +69,46 @@ public class MainActivity extends AppCompatActivity {
         databaseArtists = FirebaseDatabase.getInstance().getReference("artists");
         //getting views
         my_array_of_selected_ingredients = new ArrayList<String>();
-        all_ingredients = new ArrayList<String>();
         Context context = this;
         final ArrayAdapter<String> adapter_Selected = new ArrayAdapter<String>(context,R.layout.layout_artist_list,my_array_of_selected_ingredients);
         myMap = new HashMap();
-        editTextName = (SearchView) findViewById(R.id.editTextName);
+       search = (SearchView) findViewById(R.id.editTextName);
         spinnerGenre = (Spinner) findViewById(R.id.spinnerGenres);
         artistname=(TextView)findViewById(R.id.textView1);
         listViewArtists = (ListView) findViewById(R.id.listViewArtists);
+        concencated_ingredients=new ArrayList<String>();
+        backup=new ArrayList<String>();
         RecipeActivityButton = (Button) findViewById(R.id.recipeButton);
         buttonAddArtist = (Button) findViewById(R.id.buttonAddArtist);
         //list to store artists
         artists = new ArrayList<>();
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (!TextUtils.isEmpty(search.getQuery().toString()) || !search.getQuery().toString().equals("")) {
+                    for (int i = 0; i < concencated_ingredients.size(); i++) {
+                        if (!concencated_ingredients.get(i).contains(search.getQuery().toString())) {
+                            concencated_ingredients.remove(i);
+                            final ArrayAdapter<String> concencatedAdapter = new ArrayAdapter<String>(MainActivity.this, R.layout.simple_list_item_white, concencated_ingredients);
+                            concencatedAdapter.notifyDataSetChanged();
+                            listViewArtists.setAdapter(concencatedAdapter);
+                        } else {
+                            Toast.makeText(MainActivity.this, "It's a match", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }else{
+                    concencated_ingredients.clear();
+                    concencated_ingredients.addAll(backup);
+                }
+                return false;
+            }
+        });
+
      //   IntentTransfer();
         RecipeActivityButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -253,7 +282,11 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 //clearing the previous artist list
                 artists.clear();
-                editTextName.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                concencated_ingredients.clear();
+                backup.clear();
+                /*
+                This Method works when you type the complete item to search for
+                    editTextName.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                     @Override
                     public boolean onQueryTextSubmit(String query) {
                         return false;
@@ -275,17 +308,21 @@ public class MainActivity extends AppCompatActivity {
                                         Artist artist = filter.getValue(Artist.class);
                                         //adding artist to the list
                                         artists.add(artist);
+                                        concencated_ingredients.add(artist.getArtistName().toString().trim());
                                         final ArtistList artistAdapter = new ArtistList(MainActivity.this, artists);
+                                        final ArrayAdapter<String> concencatedAdapter=new ArrayAdapter<String>(MainActivity.this, R.layout.simple_list_item_white,concencated_ingredients);
                                         artistAdapter.notifyDataSetChanged();
+                                        concencatedAdapter.notifyDataSetChanged();
                                         //attaching adapter to the listview
                                         //Checking all true booleans
+
+                                        concencated_ingredients.add(dataSnapshot.getKey().toString().trim());
+
                                         for (int AtItems = 0; AtItems < artistAdapter.getCount(); AtItems++) {
                                             artist = artists.get(AtItems);
                                             String CheckingName = artist.getArtistName().toString();
-                                            all_ingredients.add(CheckingName);
                                         }
-                                        final ArrayAdapter arrayAdapt = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, all_ingredients);
-                                        listViewArtists.setAdapter(artistAdapter);
+                                       listViewArtists.setAdapter(concencatedAdapter);
                                     }
 
                                 }
@@ -301,45 +338,48 @@ public class MainActivity extends AppCompatActivity {
                                 Artist artist = postSnapshot.getValue(Artist.class);
                                 //adding artist to the list
                                 artists.add(artist);
+                                concencated_ingredients.add(artist.getArtistName().toString().trim());
                             }
 
                             //creating adapter
                             final ArtistList artistAdapter = new ArtistList(MainActivity.this, artists);
+                            final ArrayAdapter<String> concencatedAdapter=new ArrayAdapter<String>(MainActivity.this, R.layout.simple_list_item_white,concencated_ingredients);
                             artistAdapter.notifyDataSetChanged();
+                            concencatedAdapter.notifyDataSetChanged();
                             //attaching adapter to the listview
                             //Checking all true booleans
                             for (int AtItems = 0; AtItems < artistAdapter.getCount(); AtItems++) {
                                 Artist artist = artists.get(AtItems);
                                 String CheckingName = artist.getArtistName().toString();
-                                all_ingredients.add(CheckingName);
                             }
-                            final ArrayAdapter arrayAdapt = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, all_ingredients);
-                            listViewArtists.setAdapter(artistAdapter);
+                            listViewArtists.setAdapter(concencatedAdapter);
                         }
 
                         return false;
                     }
-                });
+                });*/
                 //iterating through all the nodes
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     //getting artist
                     Artist artist = postSnapshot.getValue(Artist.class);
                     //adding artist to the list
+                    concencated_ingredients.add(artist.getArtistName().toString().trim());
+                    backup.add(artist.getArtistName().toString().trim());
                     artists.add(artist);
                 }
 
                 //creating adapter
                 final ArtistList artistAdapter = new ArtistList(MainActivity.this, artists);
+                final ArrayAdapter<String> concencatedAdapter=new ArrayAdapter<String>(MainActivity.this, R.layout.simple_list_item_white,concencated_ingredients);
                 artistAdapter.notifyDataSetChanged();
+                concencatedAdapter.notifyDataSetChanged();
                 //attaching adapter to the listview
                 //Checking all true booleans
                 for (int AtItems = 0; AtItems < artistAdapter.getCount(); AtItems++) {
                     Artist artist = artists.get(AtItems);
                     String CheckingName = artist.getArtistName().toString();
-                    all_ingredients.add(CheckingName);
                 }
-                final ArrayAdapter arrayAdapt = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, all_ingredients);
-                listViewArtists.setAdapter(artistAdapter);
+                listViewArtists.setAdapter(concencatedAdapter);
                            }
             @Override
             public void onCancelled(DatabaseError databaseError) {

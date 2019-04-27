@@ -48,6 +48,7 @@ private ArrayList<String> arrayList=new ArrayList<String>();
         listview=(ListView)findViewById(R.id.listViewStep);
         mDatabase = FirebaseDatabase.getInstance().getReference("steps/"+RecipeName);
         TextView nameDisplayTV=(TextView)findViewById(R.id.nameDisplay);
+
         nameDisplayTV.setText(RecipeName);
         Toast.makeText(this, RecipeName, Toast.LENGTH_SHORT).show();
         StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images/"+RecipeName+".jpg");

@@ -30,9 +30,27 @@
         tools:layout_editor_absoluteY="75dp" />
 
     <ListView
+        android:id="@+id/listViewStep"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/textView12"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
+        android:layout_marginBottom="61dp"></ListView>
+
+    <RatingBar
+        android:id="@+id/ratingBar3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/imageDisplay"
-        android:id="@+id/listViewStep"></ListView>
+        android:layout_centerHorizontal="true"
+        android:text="TextView"
+        android:textColor="#000000" />
 </RelativeLayout>

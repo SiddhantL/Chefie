@@ -125,18 +125,6 @@ IntentTransfer();
                 myMap.put(Checks, true);
                 myMap.put("Orange",true);
                 Toast.makeText(MainActivity2.this, Checks, Toast.LENGTH_SHORT).show();
-
-           /* try {
-                if (myMap.get("Sugar")==true){
-                    Toast.makeText(MainActivity.this, "Yes", Toast.LENGTH_SHORT).show();
-                }else if (myMap.get("Kale")&&(myMap.get("Sugar"))){
-                    Toast.makeText(MainActivity.this, "OKayy", Toast.LENGTH_SHORT).show();
-                }
-            }catch (Exception e){
-
-            }*/
-//Boolean Check=myMap.get(artist.getArtistName());
-
             }
         });
 

@@ -16,16 +16,16 @@
         android:layout_marginTop="146dp"
         android:background="@drawable/circular_button"
         android:backgroundTint="#38444F"
-        android:text="My Recipes"
+        android:text="User Recipes"
         android:textColor="#ffffff" />
 
- <!--   <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="match_parent"
-        android:layout_height="171dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:background="@android:color/holo_blue_light" />-->
+    <!--   <ImageView
+           android:id="@+id/imageView3"
+           android:layout_width="match_parent"
+           android:layout_height="171dp"
+           android:layout_alignParentStart="true"
+           android:layout_alignParentTop="true"
+           android:background="@android:color/holo_blue_light" />-->
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="match_parent"
@@ -72,7 +72,7 @@
         android:layout_alignStart="@+id/textView9"
         android:layout_below="@+id/textView9"
         android:paddingTop="45dp"
-        android:text="Contact"
+        android:text="Message"
         android:textColor="#000000" />
 
     <EditText
@@ -83,7 +83,6 @@
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/textViewb"
         android:layout_marginEnd="8dp"
-        android:text="9082003007"
         android:textColor="#000000"
         android:textSize="20sp" />
 
@@ -115,7 +114,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="128dp"
-        android:text="My Rating"
+        android:text="User Rating"
         android:textColor="#000000"
         android:textSize="20sp" />
 
@@ -127,52 +126,4 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="-128dp"
         android:isIndicator="true" />
-    <com.getbase.floatingactionbutton.FloatingActionsMenu
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        app:fab_addButtonColorNormal="@android:color/holo_green_light"
-        app:fab_addButtonColorPressed="@android:color/holo_green_dark"
-        app:fab_addButtonPlusIconColor="@android:color/white"
-        app:fab_labelStyle="@style/customFab">
-
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabAction1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fab_addButtonColorNormal="@android:color/holo_blue_dark"
-            app:fab_addButtonColorPressed="@android:color/holo_blue_bright"
-            app:fab_icon="@drawable/ic_search_black_24dp"
-            app:fab_size="mini"
-            app:fab_title="Search Recipes" />
-
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabAction2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fab_addButtonColorNormal="@android:color/holo_blue_dark"
-            app:fab_addButtonColorPressed="@android:color/holo_blue_bright"
-            app:fab_icon="@drawable/ic_add_black_24dp"
-            app:fab_size="mini"
-            app:fab_title="Add Recipes" />
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabAction4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_info_outline_black_24dp"
-            app:fab_addButtonColorNormal="@android:color/holo_blue_dark"
-            app:fab_addButtonColorPressed="@android:color/holo_blue_bright"
-            app:fab_size="mini"
-            app:fab_title="About Us" />
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabAction3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_exit_to_app_black_24dp"
-            app:fab_addButtonColorNormal="@android:color/holo_blue_dark"
-            app:fab_addButtonColorPressed="@android:color/holo_blue_bright"
-            app:fab_size="mini"
-            app:fab_title="Log Out" />
-    </com.getbase.floatingactionbutton.FloatingActionsMenu>
 </RelativeLayout>

@@ -11,10 +11,14 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.siddhantlad.chefiecompile.DatabaseSource.ImageUploader;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class AddRecipeFab extends AppCompatActivity {
 
@@ -24,17 +28,20 @@ public class AddRecipeFab extends AppCompatActivity {
     EditText editText;
     public ArrayList<EditModel> editModelArrayList;
     ArrayList<String> my_array_of_selected_ingredients;
-    DatabaseReference mDatabase,mNewDatabase;
+    DatabaseReference mDatabase,mNewDatabase,creditDatabase,RecipeByNameDatabase;
+    FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_recipe_fab);
-
         lv = (ListView) findViewById(R.id.listView);
         btn = (Button) findViewById(R.id.btn);
         mDatabase = FirebaseDatabase.getInstance().getReference("recipes");
+        RecipeByNameDatabase = FirebaseDatabase.getInstance().getReference("RecipeByName");
+        creditDatabase = FirebaseDatabase.getInstance().getReference("credits");
         mNewDatabase= FirebaseDatabase.getInstance().getReference("steps");
         editModelArrayList = populateList();
+        mAuth=FirebaseAuth.getInstance();
         customeAdapter = new SpinnerAdapter(this,editModelArrayList);
         lv.setAdapter(customeAdapter);
 editText=(EditText)findViewById(R.id.editText);
@@ -44,17 +51,15 @@ editText=(EditText)findViewById(R.id.editText);
                 Intent intent = new Intent(AddRecipeFab.this,ImageUploader.class);
                 intent.putExtra("nameOfRecipe",editText.getText().toString());
                 startActivity(intent);
-                //int CountLast = lv.getAdapter().getCount();
-                String RecipeNameNew = "-" + editText.getText().toString().trim();
-                /*for (int Count = 0; Count <= CountLast - 1; Count++) {
-                    String name = my_array_of_selected_ingredients.get(Count);
-                    mDatabase.child(RecipeNameNew).push().setValue(name);
-
-                }*/
+               String RecipeNameNew = "-" + editText.getText().toString().trim();
                 for (int counter=0;counter<my_array_of_selected_ingredients.size();counter++){
                     String name = my_array_of_selected_ingredients.get(counter);
                     mDatabase.child(RecipeNameNew).push().setValue(name);
                     mDatabase.child(RecipeNameNew).child("artistName").setValue(editText.getText().toString());
+                    creditDatabase.child(editText.getText().toString().trim()).child("author").setValue(mAuth.getCurrentUser().getUid());
+                    creditDatabase.child(editText.getText().toString().trim()).child("Username").setValue(mAuth.getCurrentUser().getDisplayName());
+                    RecipeByNameDatabase.child(mAuth.getCurrentUser().getUid()).child(RecipeNameNew).child("artistName").setValue(editText.getText().toString());
+                    // mDatabase.child(RecipeNameNew).child("artistAuthor").setValue();
                     EditModel editModel = new EditModel();
                     editModel.setEditTextValue(String.valueOf(counter));
                    mNewDatabase.child(editText.getText().toString().trim()).child(Integer.toString(counter)).setValue(my_array_of_selected_ingredients.get(counter)+": "+editModelArrayList.get(counter).getEditTextValue());
@@ -67,13 +72,7 @@ editText=(EditText)findViewById(R.id.editText);
     private ArrayList<EditModel> populateList(){
 
         ArrayList<EditModel> list = new ArrayList<>();
-
-      /*  for(int i = 0; i < 8; i++){
-            EditModel editModel = new EditModel();
-            editModel.setEditTextValue(String.valueOf(i));
-            list.add(editModel);
-        }*/
-        Intent intent = getIntent();
+       Intent intent = getIntent();
         my_array_of_selected_ingredients = intent.getStringArrayListExtra("my_array_of_selected_ingredients");
         for(int i = 0; i < my_array_of_selected_ingredients.size(); i++){
             EditModel editModel = new EditModel();
@@ -85,138 +84,3 @@ editText=(EditText)findViewById(R.id.editText);
     }
 
 }
-
-/*
-
-import android.content.Context;
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Spinner;
-import android.widget.Toast;
-
-import com.example.siddhantlad.chefiecompile.DatabaseSource.ImageUploader;
-import com.example.siddhantlad.chefiecompile.DatabaseSource.RecipeActivity;
-import com.example.siddhantlad.chefiecompile.R;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.ArrayList;
-import java.util.List;
-
-public class AddRecipeFab extends AppCompatActivity {
-    ListView listView;
-    EditText editText;
-    int CountLast;
-    Button ContinueBtn;
-    String id;
-    ArrayList<String> my_array_of_selected_ingredients;
-    Context context;
-    DatabaseReference mDatabase,mNewDatabase;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_recipe_fab);
-        mDatabase = FirebaseDatabase.getInstance().getReference("recipes");
-        mNewDatabase=FirebaseDatabase.getInstance().getReference("steps");
-        listView=(ListView) findViewById(R.id.listView);
-        editText=(EditText)findViewById(R.id.RecipeName);
-        ContinueBtn=(Button)findViewById(R.id.continueBtn);
-        context=this;
-        FillListView();
-        id = mDatabase.push().getKey();
-        //Adding Multiple Action for one Item
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-              my_array_of_selected_ingredients.add(my_array_of_selected_ingredients.get(position));
-                return false;
-            }
-        });
-        //---
-        ContinueBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!TextUtils.isEmpty(editText.getText().toString()) && !my_array_of_selected_ingredients.isEmpty()) {
-                    try {
-                        int CountLast = listView.getAdapter().getCount();
-                        String RecipeNameNew = "-" + editText.getText().toString().trim();
-                        for (int Count = 0; Count <= CountLast - 1; Count++) {
-                            String name = my_array_of_selected_ingredients.get(Count);
-                            mDatabase.child(RecipeNameNew).push().setValue(name);
-                            String recipeNameFinal = RecipeNameNew.substring(1);
-                            mDatabase.child(RecipeNameNew).child("artistName").setValue(recipeNameFinal);
-                            Intent AllRecipe = new Intent(AddRecipeFab.this, ImageUploader.class);
-                            AllRecipe.putExtra("nameOfRecipe",editText.getText().toString());
-                            startActivity(AllRecipe);
-                        }
-                    } catch (Exception e) {
-                    }
-                } else {
-                    Toast.makeText(context, "Add a name for the new recipe", Toast.LENGTH_SHORT).show();
-                    Intent AllRecipe = new Intent(AddRecipeFab.this, ImageUploader.class);
-                    AllRecipe.putExtra("my_array_of_selected_ingredients", my_array_of_selected_ingredients);
-                    //startActivity(AllRecipe);
-                }
-                int total=my_array_of_selected_ingredients.size();
-                for (int i = 1; i <= total; i++) {
-                    Spinner spinner = (Spinner)findViewById(R.id.row_item_spinner);
-                   // Spinner spinnerPos = (Spinner)findViewById(R.id.row_item_spinner_position);
-                    mNewDatabase.child(editText.getText().toString()).child(Integer.toString(i)).setValue(
-                            spinner.getSelectedItem().toString()+" "+listView.getItemAtPosition(i-1)*/
-/*+spinnerPos.getSelectedItem().toString()*//*
-);
-                }
-            }
-
-        });
-    }
-    public void FillListView(){
-        Intent intent = getIntent();
-        my_array_of_selected_ingredients = intent.getStringArrayListExtra("my_array_of_selected_ingredients");
-        ArrayAdapter<String> adapter_Selected = new ArrayAdapter<String>(context,R.layout.simple_list_item_white,my_array_of_selected_ingredients);
-        try {
-            ArrayList<String> mSpinnerData = new ArrayList<>();
-            mSpinnerData.add("Action");
-            mSpinnerData.add("Add");
-            mSpinnerData.add("Boil");
-            mSpinnerData.add("Chop");
-            mSpinnerData.add("Dice");
-            mSpinnerData.add("Bake");
-            mSpinnerData.add("Heat");
-            mSpinnerData.add("Cool");
-            mSpinnerData.add("Microwave");
-            mSpinnerData.add("Soak");
-            mSpinnerData.add("Dry");
-            mSpinnerData.add("Bake");
-            mSpinnerData.add("Fry");
-           */
-/* ArrayList<String> mSpinnerDataPosition = new ArrayList<>();
-            mSpinnerDataPosition.add("Position");
-            for (int x=1;x<=my_array_of_selected_ingredients.size();x++){
-                mSpinnerDataPosition.add(Integer.toString(x));
-            }*//*
-
-           */
-/* mSpinnerDataPosition.add("1");
-            mSpinnerDataPosition.add("2");
-            mSpinnerDataPosition.add("3");
-            mSpinnerDataPosition.add("4");*//*
-
-            SpinnerAdapter adapterPosition = new SpinnerAdapter(my_array_of_selected_ingredients, mSpinnerData,this);
-            listView.setAdapter(adapterPosition);
-         //   SpinnerAdapter adapter = new SpinnerAdapter(my_array_of_selected_ingredients, mSpinnerData, this);
-          //  listView.setAdapter(adapter);
-           // listView.setAdapter(adapter_Selected);
-        }catch (Exception e){}
-
-    }
-}
-*/

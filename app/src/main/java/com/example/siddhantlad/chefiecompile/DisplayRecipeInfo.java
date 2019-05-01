@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -19,6 +20,7 @@ import com.example.siddhantlad.chefiecompile.DatabaseSource.Artist;
 import com.example.siddhantlad.chefiecompile.DatabaseSource.ArtistList;
 import com.example.siddhantlad.chefiecompile.DatabaseSource.MainActivity2;
 import com.example.siddhantlad.chefiecompile.DatabaseSource.RecipeArtist;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,10 +34,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DisplayRecipeInfo extends AppCompatActivity {
-DatabaseReference mDatabase;
+DatabaseReference mDatabase,creditDatabase;
 List<Artist> artists;
 ListView listview;
+FirebaseAuth mAuth;
 private ArrayAdapter<String>adapter;
+TextView authortv;
 private ListView listView;
 private ArrayList<String> arrayList=new ArrayList<String>();
     @Override
@@ -46,10 +50,42 @@ private ArrayList<String> arrayList=new ArrayList<String>();
         String RecipeName = intent.getExtras().getString("RecipeName");
         artists = new ArrayList<>();
         listview=(ListView)findViewById(R.id.listViewStep);
+        authortv=(TextView)findViewById(R.id.textView12);
         mDatabase = FirebaseDatabase.getInstance().getReference("steps/"+RecipeName);
+        creditDatabase = FirebaseDatabase.getInstance().getReference("credits/"+RecipeName);
         TextView nameDisplayTV=(TextView)findViewById(R.id.nameDisplay);
-
         nameDisplayTV.setText(RecipeName);
+        authortv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                creditDatabase.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        Author author = dataSnapshot.getValue(Author.class);
+                        Intent profile=new Intent(DisplayRecipeInfo.this,ProfileActivity.class);
+                        profile.putExtra("uuid",author.getAuthor().toString());
+                        startActivity(profile);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
+        });
+        creditDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                       Author author = dataSnapshot.getValue(Author.class);
+                       authortv.setText(author.getUsername().toString());
+                        }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         Toast.makeText(this, RecipeName, Toast.LENGTH_SHORT).show();
         StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images/"+RecipeName+".jpg");
         StorageReference storageReferencePlaceholder = FirebaseStorage.getInstance().getReference().child("images/Empty.jpg");

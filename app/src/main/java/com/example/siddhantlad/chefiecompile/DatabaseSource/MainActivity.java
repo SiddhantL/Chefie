@@ -3,6 +3,7 @@ package com.example.siddhantlad.chefiecompile.DatabaseSource;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.method.KeyListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
@@ -21,6 +23,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -52,7 +55,11 @@ public class MainActivity extends AppCompatActivity {
     Button buttonAddArtist, RecipeActivityButton;
     TextView artistname;
     String newText;
+    RatingBar rBar;
+    EditText selectedET;
     ListView listViewArtists;
+    View views;
+    String selectedString;
     public Map<String, Boolean> myMap;
     public static String Checks;
     //a list to store all the artist from firebase database
@@ -68,11 +75,23 @@ public class MainActivity extends AppCompatActivity {
         //getting the reference of artists node
         databaseArtists = FirebaseDatabase.getInstance().getReference("artists");
         //getting views
+        rBar=(RatingBar)findViewById(R.id.ratingBar);
+      /*  rBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Add Your Own Recipe's To Change Your Rating", Toast.LENGTH_SHORT).show();
+            }
+        });*/
         my_array_of_selected_ingredients = new ArrayList<String>();
+        selectedET=(EditText)findViewById(R.id.selectedEditText);
+        selectedET.setKeyListener(null);
+        selectedET.setTag(selectedET.getKeyListener());
+        selectedET.setKeyListener((KeyListener) selectedET.getTag());
         Context context = this;
+        selectedString=new String();
         final ArrayAdapter<String> adapter_Selected = new ArrayAdapter<String>(context,R.layout.layout_artist_list,my_array_of_selected_ingredients);
         myMap = new HashMap();
-       search = (SearchView) findViewById(R.id.editTextName);
+        search = (SearchView) findViewById(R.id.editTextName);
         spinnerGenre = (Spinner) findViewById(R.id.spinnerGenres);
         artistname=(TextView)findViewById(R.id.textView1);
         listViewArtists = (ListView) findViewById(R.id.listViewArtists);
@@ -98,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
                             concencatedAdapter.notifyDataSetChanged();
                             listViewArtists.setAdapter(concencatedAdapter);
                         } else {
-                            Toast.makeText(MainActivity.this, "It's a match", Toast.LENGTH_SHORT).show();
+                           // Toast.makeText(MainActivity.this, "It's a match", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }else{
@@ -152,131 +171,43 @@ public class MainActivity extends AppCompatActivity {
         listViewArtists.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-               view.setSelected(true);
-                view.setBackgroundColor(Color.rgb(42,182,247));
+                view.setSelected(true);
+                views=view;
+                //view.setBackgroundColor(Color.rgb(42,182,247));
                 Artist artist = artists.get(i);
                 Checks=artist.getArtistName().toString();
-                myMap.put("Banana",true);
-                myMap.put(Checks, true);
-                myMap.put("Orange",true);
-                Toast.makeText(MainActivity.this, Checks, Toast.LENGTH_SHORT).show();
-           /* try {
-                if (myMap.get("Sugar")==true){
-                    Toast.makeText(MainActivity.this, "Yes", Toast.LENGTH_SHORT).show();
-                }else if (myMap.get("Kale")&&(myMap.get("Sugar"))){
-                    Toast.makeText(MainActivity.this, "OKayy", Toast.LENGTH_SHORT).show();
+              //  myMap.put("Banana",true);
+                    if (myMap.get(Checks)!=null){
+                        listViewArtists.setItemChecked(i,false);
+                    //    view.setBackgroundResource(R.drawable.gradient);
+                        myMap.remove(Checks);
+                        Toast.makeText(MainActivity.this, Checks+" Removed", Toast.LENGTH_SHORT).show();
+                        selectedString=selectedString.replace(Checks+",","");
+                        selectedET.setText(selectedString);
+                    }else {
+                        myMap.put(Checks, true);
+                        Toast.makeText(MainActivity.this, Checks+" Added", Toast.LENGTH_SHORT).show();
+                        listViewArtists.setItemChecked(i,true);
+                        selectedString=selectedString+Checks+",";
+                        selectedET.setText(selectedString);
+                    }
+                    //myMap.put("Orange",true);
+
                 }
-            }catch (Exception e){
+                });
 
-            }*/
-//Boolean Check=myMap.get(artist.getArtistName());
-
-            }
-        });
 
         //adding an onclicklistener to button
         buttonAddArtist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //calling the method addArtist()
-                //the method is defined below
-                //this method is actually performing the write operation
-             //   addArtist();
-            }
+              }
         });
+}
 
-        /*
-        ListView Animation
-        Animation animation = AnimationUtils.loadAnimation(MainActivity.this,  R.anim.push_up_in);
-       listViewArtists.startAnimation(animation);*/
-    }
-
-    /*
-     * This method is saving a new artist to the
-     * Firebase Realtime Database
-     * */
-   /* private void addArtist() {
-        //getting the values to save
-        String name = editTextName.getText().toString().trim();
-        String genre = spinnerGenre.getSelectedItem().toString();
-
-        //checking if the value is provided
-        if (!TextUtils.isEmpty(name)) {
-
-            //getting a unique id using push().getKey() method
-            //it will create a unique id and we will use it as the Primary Key for our Artist
-            String id = databaseArtists.push().getKey();
-
-            //creating an Artist Object
-            Artist artist = new Artist(id, name, genre);
-
-            //Saving the Artist
-            databaseArtists.child(id).setValue(artist);
-
-            //setting edittext to blank again
-            editTextName.setText("");
-
-            //displaying a success toast
-            Toast.makeText(this, "Recipe added", Toast.LENGTH_LONG).show();
-        } else {
-            //if the value is not given displaying a toast
-            Toast.makeText(this, "Please enter a name", Toast.LENGTH_LONG).show();
-        }
-    }
-*/
     @Override
     protected void onStart() {
         super.onStart();
-        //attaching value event listener
-       /*ListView Animation
-        Animation animation = AnimationUtils.loadAnimation(MainActivity.this,  R.anim.push_up_in);
-        listViewArtists.startAnimation(animation);*/
-
-       /* editTextName.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-              //  artists.clear();
-                DatabaseReference reference = FirebaseDatabase.getInstance().getReference("artists");
-                Query query = reference.orderByChild("artistName").equalTo(newText);
-                query.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        artists.clear();
-                        if (dataSnapshot.exists()) {
-
-                            for (DataSnapshot issue : dataSnapshot.getChildren()) {
-                                // do with your result
-                                Artist artist = issue.getValue(Artist.class);
-                                //adding artist to the list
-                                artists.add(artist);
-                            }
-                            final ArtistList artistAdapter = new ArtistList(MainActivity.this, artists);
-                            //attaching adapter to the listview
-                            //Checking all true booleans
-                            for (int AtItems = 0; AtItems < artistAdapter.getCount(); AtItems++) {
-                                Artist artist = artists.get(AtItems);
-                                String CheckingName = artist.getArtistName().toString();
-                                all_ingredients.add(CheckingName);
-                            }
-                            final ArrayAdapter arrayAdapt = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, all_ingredients);
-                            listViewArtists.setAdapter(artistAdapter);
-                        }
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-                return false;
-            }
-        });*/
-
         databaseArtists.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
@@ -284,80 +215,6 @@ public class MainActivity extends AppCompatActivity {
                 artists.clear();
                 concencated_ingredients.clear();
                 backup.clear();
-                /*
-                This Method works when you type the complete item to search for
-                    editTextName.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                    @Override
-                    public boolean onQueryTextSubmit(String query) {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onQueryTextChange(String newTexts) {
-                        newText = newTexts;
-                        if (!TextUtils.isEmpty(newText)) {
-                            artists.clear();
-                            int filter;
-                            filter=newText.length();
-                            Query querys = (databaseArtists.orderByChild("artistName").equalTo(newText));
-                            querys.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    for (DataSnapshot filter : dataSnapshot.getChildren()) {
-                                        //getting artist
-                                        Artist artist = filter.getValue(Artist.class);
-                                        //adding artist to the list
-                                        artists.add(artist);
-                                        concencated_ingredients.add(artist.getArtistName().toString().trim());
-                                        final ArtistList artistAdapter = new ArtistList(MainActivity.this, artists);
-                                        final ArrayAdapter<String> concencatedAdapter=new ArrayAdapter<String>(MainActivity.this, R.layout.simple_list_item_white,concencated_ingredients);
-                                        artistAdapter.notifyDataSetChanged();
-                                        concencatedAdapter.notifyDataSetChanged();
-                                        //attaching adapter to the listview
-                                        //Checking all true booleans
-
-                                        concencated_ingredients.add(dataSnapshot.getKey().toString().trim());
-
-                                        for (int AtItems = 0; AtItems < artistAdapter.getCount(); AtItems++) {
-                                            artist = artists.get(AtItems);
-                                            String CheckingName = artist.getArtistName().toString();
-                                        }
-                                       listViewArtists.setAdapter(concencatedAdapter);
-                                    }
-
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                }
-                            });
-                        } if (TextUtils.isEmpty(newText)) {
-                            for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                                //getting artist
-                                Artist artist = postSnapshot.getValue(Artist.class);
-                                //adding artist to the list
-                                artists.add(artist);
-                                concencated_ingredients.add(artist.getArtistName().toString().trim());
-                            }
-
-                            //creating adapter
-                            final ArtistList artistAdapter = new ArtistList(MainActivity.this, artists);
-                            final ArrayAdapter<String> concencatedAdapter=new ArrayAdapter<String>(MainActivity.this, R.layout.simple_list_item_white,concencated_ingredients);
-                            artistAdapter.notifyDataSetChanged();
-                            concencatedAdapter.notifyDataSetChanged();
-                            //attaching adapter to the listview
-                            //Checking all true booleans
-                            for (int AtItems = 0; AtItems < artistAdapter.getCount(); AtItems++) {
-                                Artist artist = artists.get(AtItems);
-                                String CheckingName = artist.getArtistName().toString();
-                            }
-                            listViewArtists.setAdapter(concencatedAdapter);
-                        }
-
-                        return false;
-                    }
-                });*/
                 //iterating through all the nodes
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     //getting artist

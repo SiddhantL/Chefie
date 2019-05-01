@@ -121,14 +121,11 @@ mDatabase.addValueEventListener(new ValueEventListener() {
                                 if (!names.equals("artistName")) {
                                     String ingredientName = dataSnapshot2.getValue().toString().trim();
                                     String recipeName = nameFinal;
-                                 //9/14 Remove               Toast.makeText(RecipeActivity.this, recipeName + ": " + ingredientName, Toast.LENGTH_SHORT).show();
-                                    try {
+                                 try {
                                         if (!my_array_of_selected_ingredients.isEmpty()) {
                                             if (my_array_of_selected_ingredients.contains(ingredientName)) {
-                                                //9/14         Toast.makeText(context, recipeName + ": Yes", Toast.LENGTH_SHORT).show();
                                             } else {
                                                 if (remove){
-                                                    //  Toast.makeText(context, recipeName + ": No" + " " + CountSave, Toast.LENGTH_SHORT).show();
                                                     recipes.remove(recipeartist);
                                                     adapterListName.remove(recipeName);
                                                     listViewRecipes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -140,40 +137,10 @@ mDatabase.addValueEventListener(new ValueEventListener() {
                                                                     }
                                                     });
 
-                                                                //recipes.remove(CountSave-1);
                                                     artistAdapter.notifyDataSetChanged();
                                                     remove=false;}else{}
-                                                           /*9/14 removeList.add(CountSave);
-                                                               HashSet<Integer> hashSet = new HashSet<Integer>();
-                                                               hashSet.addAll(removeList);
-                                                               removeList.clear();
-                                                               removeList.addAll(hashSet);
-                                                               int RemoveProcessCount=removeList.size();
-                                                              recipes.remove(2);
-                                                            artistAdapter.notifyDataSetChanged();*/
-                                                               /*9/14 for (int z=0;z<=RemoveProcessCount;z++){
-                                                                   String size=Integer.toString(removeList.get(z))+": "+Integer.toString(z);
-                                                                   recipes.remove(removeList.get(z));
-                                                                   artistAdapter.notifyDataSetChanged();
-                                                                   Toast.makeText(context, size, Toast.LENGTH_SHORT).show();
-                                                               }*/
-
-                                                           /*9/14 if (remove) {
-                                                               Toast.makeText(context, recipes.indexOf(recipeName), Toast.LENGTH_SHORT).show();
-                                                               recipes.remove(recipes.indexOf(recipeName));
-                                                               artistAdapter.notifyDataSetChanged();
-                                                               remove=false;
-                                                           }*/
-                                            /*try {
-                                                recipes.remove(recipes.get(CountSave));
-                                                listViewRecipes.invalidate();
-                                              //  ((BaseAdapter) listViewRecipes.getAdapter()).notifyDataSetChanged();
-                                                Toast.makeText(context, "Crash", Toast.LENGTH_SHORT).show();
-                                                //  recipes.remove(listViewRecipes.getItemAtPosition(CountSave));
-                                            }catch (Exception e){}*/
                                             }
                                             } else {
-                                            //---@@   Toast.makeText(context, "null value", Toast.LENGTH_SHORT).show();
                                         }
                                         } catch (Exception E) {
                                         }
@@ -197,13 +164,6 @@ mDatabase.addValueEventListener(new ValueEventListener() {
             artistAdapter = new RecipeArtistList(RecipeActivity.this,recipes);
         listViewRecipes.setAdapter(artistAdapter);
         for (int Counting=0;Counting<=listViewRecipes.getAdapter().getCount()-1;Counting++){
-            /* RecipeArtist artist = recipes.get(Counting);
-                   try {
-                       Intent intent=new Intent(RecipeActivity.this,RecipeArtist.class);
-                       Toast.makeText(context, artist.getArtistName(), Toast.LENGTH_SHORT).show();
-                   }catch (Exception E){
-                       Toast.makeText(context, "CRASH", Toast.LENGTH_SHORT).show();
-                   }*/
             }
     }
 

@@ -24,7 +24,7 @@ public class LoginActivity extends AppCompatActivity {
 TextView SignUpText;
     Button loginbtn;
     EditText userEmailEdit,UserPasswordEdit;
-
+    FirebaseUser user;
     //String Fields
     public static String userEmailString;
     String userPasswordString;
@@ -70,8 +70,13 @@ SignUpText.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()){
-                                startActivity(new Intent(LoginActivity.this,Welcome.class));
-                            }else {
+                                user=mAuth.getCurrentUser();
+                                if (user.getDisplayName()==null){
+                                    startActivity(new Intent(LoginActivity.this, DisplayName.class));
+                                }else {
+                                    startActivity(new Intent(LoginActivity.this, Welcome.class));
+                                }
+                                }else {
                                 Toast.makeText(LoginActivity.this, "User Login Failed", Toast.LENGTH_LONG).show();
                             }
                         }

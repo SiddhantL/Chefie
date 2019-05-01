@@ -62,7 +62,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/buttonAddArtist"
         android:fontFamily="sans-serif-smallcaps"
-        android:text="Ingredients"
+        android:text="Select Available Ingredients"
         android:textAlignment="center"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
         android:textColor="#000000" />
@@ -81,10 +81,11 @@
     <ListView
         android:id="@+id/listViewArtists"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="396dp"
+        android:layout_above="@+id/recipeButton"
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/editTextName"
-        android:layout_above="@+id/recipeButton"
+        android:layout_marginBottom="45dp"
         android:divider="#DFE3EA"
         android:dividerHeight="8dp"
         android:visibility="visible" />
@@ -99,5 +100,16 @@
         android:backgroundTint="#38444f"
         android:textColor="#ffffff"
         android:text="Check Recipes" />
+
+    <EditText
+        android:id="@+id/selectedEditText"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_above="@+id/recipeButton"
+        android:layout_alignParentStart="true"
+        android:background="#ffffff"
+        android:ems="10"
+        android:hint="Selected Ingredients"
+        android:inputType="textPersonName" />
 
 </RelativeLayout>

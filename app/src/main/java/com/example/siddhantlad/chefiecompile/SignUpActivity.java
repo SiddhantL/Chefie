@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,7 +41,29 @@ EditText userEmailEdit,userPasswordEdit,userName;
         userPasswordEdit=(EditText)findViewById(R.id.PasswordeditText);
         userName=(EditText)findViewById(R.id.NameEditText);
         mDatabase = FirebaseDatabase.getInstance().getReference("users");
-
+                    createUser.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            final String userNameS=userName.getText().toString().toString().trim();
+                            String userEmailString=userEmailEdit.getText().toString().trim();
+                            String userPasswordString=userPasswordEdit.getText().toString().trim();
+                            if (!TextUtils.isEmpty(userEmailString) && (!TextUtils.isEmpty(userPasswordString)) && (!TextUtils.isEmpty(userNameS))){
+                                mAuth.createUserWithEmailAndPassword(userEmailString,userPasswordString).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (task.isSuccessful()){
+                                      //      Toast.makeText(SignUpActivity.this, "Account Created", Toast.LENGTH_LONG).show();
+                                            mDatabase.child(user.getUid()).child("Name").setValue(userNameS);
+                                            mDatabase.child(user.getUid()).child("Email").setValue(user.getEmail());
+                                            startActivity(new Intent(SignUpActivity.this,DisplayName.class));
+                                        }else {
+                                            Toast.makeText(SignUpActivity.this, "Account could not be created", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    });
         //Assign Instances
         mAuth= FirebaseAuth.getInstance();
         mAuthListener=new FirebaseAuth.AuthStateListener() {
@@ -49,36 +73,36 @@ EditText userEmailEdit,userPasswordEdit,userName;
                 if(user!=null){
                     startActivity(new Intent(SignUpActivity.this,Welcome.class));
                 }else{
-
+                    createUser.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            final String userNameS=userName.getText().toString().toString().trim();
+                            String userEmailString=userEmailEdit.getText().toString().trim();
+                            String userPasswordString=userPasswordEdit.getText().toString().trim();
+                            if (!TextUtils.isEmpty(userEmailString) && (!TextUtils.isEmpty(userPasswordString)) && (!TextUtils.isEmpty(userNameS))){
+                                mAuth.createUserWithEmailAndPassword(userEmailString,userPasswordString).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (task.isSuccessful()){
+                                        //    Toast.makeText(SignUpActivity.this, "Account Created", Toast.LENGTH_LONG).show();
+                                            mDatabase.child(user.getUid()).child("Name").setValue(userNameS);
+                                            mDatabase.child(user.getUid()).child("Email").setValue(user.getEmail());
+                                            startActivity(new Intent(SignUpActivity.this,DisplayName.class));
+                                        }else {
+                                            Toast.makeText(SignUpActivity.this, "Account could not be created", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    });
                 }
             }
         };
 
         //OnClick Listeners
 
-        createUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-final String userNameS=userName.getText().toString().toString().trim();
-String userEmailString=userEmailEdit.getText().toString().trim();
-String userPasswordString=userPasswordEdit.getText().toString().trim();
-if (!TextUtils.isEmpty(userEmailString) && (!TextUtils.isEmpty(userPasswordString)) && (!TextUtils.isEmpty(userNameS))){
-    mAuth.createUserWithEmailAndPassword(userEmailString,userPasswordString).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-        @Override
-        public void onComplete(@NonNull Task<AuthResult> task) {
-          if (task.isSuccessful()){
-              Toast.makeText(SignUpActivity.this, "Account Created", Toast.LENGTH_LONG).show();
-              mDatabase.child(user.getUid()).child("-Name").setValue(userNameS);
-              mDatabase.child(user.getUid()).child("-Email").setValue(user.getEmail());
-              startActivity(new Intent(SignUpActivity.this,Welcome.class));
-          }else {
-              Toast.makeText(SignUpActivity.this, "Account could not be created", Toast.LENGTH_SHORT).show();
-          }
-        }
-    });
-}
-            }
-        });
+
 
         MoveToLogin.setOnClickListener(new View.OnClickListener() {
             @Override

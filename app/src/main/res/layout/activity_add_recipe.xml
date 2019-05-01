@@ -6,13 +6,14 @@
     android:layout_height="match_parent"
     android:background="#DFE3EA"
     tools:context=".DatabaseSource.AddRecipeActivity">
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/buttonAddArtist"
         android:fontFamily="sans-serif-smallcaps"
-        android:text="Available Ingredients"
+        android:text="Selected Ingredients"
         android:textAlignment="center"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
         android:textColor="#000000" />

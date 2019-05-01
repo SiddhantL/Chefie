@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,37 +36,44 @@ Button logOutBtn,breakfastActivity;
     FirebaseUser user;
     FirebaseAuth.AuthStateListener mAuthListener;
     DatabaseReference mDatabase;
-    TextView nameDispl;
+    EditText username, mail,contact;
+    com.getbase.floatingactionbutton.FloatingActionButton fabSearch,fabLog,fabAdd;
     //TextView display;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-        breakfastActivity=(Button) findViewById(R.id.breakfastOpt);
-        addRecipeFab=(Button)findViewById(R.id.addRecipeFab);
-        nameDispl=(TextView)findViewById(R.id.name);
+        fabSearch=(com.getbase.floatingactionbutton.FloatingActionButton)findViewById(R.id.fabAction1);
+        fabAdd=(com.getbase.floatingactionbutton.FloatingActionButton)findViewById(R.id.fabAction2);
+        fabLog=(com.getbase.floatingactionbutton.FloatingActionButton)findViewById(R.id.fabAction3);
         user = FirebaseAuth.getInstance().getCurrentUser();
+        username=(EditText)findViewById(R.id.textView8);
+        mail=(EditText)findViewById(R.id.textView9);
+        contact=(EditText)findViewById(R.id.textView10);
+        username.setKeyListener(null);
+        mail.setKeyListener(null);
+        contact.setKeyListener(null);
+        mail.setText(user.getEmail().toString());
+        if (user.getDisplayName()!=null) {
+            username.setText(user.getDisplayName().toString());
+
+        }else{
+
+        }
         //nameDispl.setText(user.getEmail().toString());
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        addRecipeFab.setOnClickListener(new View.OnClickListener() {
+        fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent addRecipeFabIntent=new Intent(Welcome.this,MainActivity2.class);
                 startActivity(addRecipeFabIntent);
-               /* Blurry.with(Welcome.this)
-                        .radius(10)
-                        .sampling(8)
-                        .color(Color.argb(66, 255, 255, 0))
-                        .async()
-                        .onto(rootView);*/
 
             }
         });
-    logOutBtn=(Button)findViewById(R.id.logoutbtn);
      //   display=(TextView)findViewById(R.id.textView);
 
     //OnClick Listener
-        logOutBtn.setOnClickListener(new View.OnClickListener() {
+        fabLog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 mAuth.signOut();
@@ -74,7 +82,7 @@ startActivity(new Intent(Welcome.this,LoginActivity.class));
             }
         });
 
-        breakfastActivity.setOnClickListener(new View.OnClickListener() {
+        fabSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent MainAct=new Intent(Welcome.this,MainActivity.class);

@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     EditText selectedET;
     ListView listViewArtists;
     View views;
+    ArrayAdapter<String> concencatedAdapter;
     String selectedString;
     public Map<String, Boolean> myMap;
     public static String Checks;
@@ -175,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
                 views=view;
                 //view.setBackgroundColor(Color.rgb(42,182,247));
                 Artist artist = artists.get(i);
-                Checks=artist.getArtistName().toString();
+                Checks=concencated_ingredients.get(i).toString();
               //  myMap.put("Banana",true);
                     if (myMap.get(Checks)!=null){
                         listViewArtists.setItemChecked(i,false);
@@ -227,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
 
                 //creating adapter
                 final ArtistList artistAdapter = new ArtistList(MainActivity.this, artists);
-                final ArrayAdapter<String> concencatedAdapter=new ArrayAdapter<String>(MainActivity.this, R.layout.simple_list_item_white,concencated_ingredients);
+                concencatedAdapter=new ArrayAdapter<String>(MainActivity.this, R.layout.simple_list_item_white,concencated_ingredients);
                 artistAdapter.notifyDataSetChanged();
                 concencatedAdapter.notifyDataSetChanged();
                 //attaching adapter to the listview
@@ -242,7 +243,7 @@ public class MainActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-
+listViewArtists.setAdapter(concencatedAdapter);
     }
 
 

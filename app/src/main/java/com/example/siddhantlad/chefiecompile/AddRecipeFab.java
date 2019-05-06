@@ -58,6 +58,7 @@ editText=(EditText)findViewById(R.id.editText);
                     mDatabase.child(RecipeNameNew).child("artistName").setValue(editText.getText().toString());
                     creditDatabase.child(editText.getText().toString().trim()).child("author").setValue(mAuth.getCurrentUser().getUid());
                     creditDatabase.child(editText.getText().toString().trim()).child("Username").setValue(mAuth.getCurrentUser().getDisplayName());
+                    creditDatabase.child(editText.getText().toString().trim()).child("Email").setValue(mAuth.getCurrentUser().getEmail().toString());
                     RecipeByNameDatabase.child(mAuth.getCurrentUser().getUid()).child(RecipeNameNew).child("artistName").setValue(editText.getText().toString());
                     // mDatabase.child(RecipeNameNew).child("artistAuthor").setValue();
                     EditModel editModel = new EditModel();

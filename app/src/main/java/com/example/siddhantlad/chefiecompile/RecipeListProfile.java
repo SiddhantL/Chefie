@@ -19,13 +19,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RecipeListProfile extends AppCompatActivity {
     ListView listViewProfile;
     DatabaseReference mRecipeByName;
-    ArrayList<String> recipeNames;
+    List<String> recipeNames;
+    List<String> all_profile_recipes;
     int Count;
     ArrayAdapter<String> recipeAdapter;
+    RecipeProfileList adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,7 @@ public class RecipeListProfile extends AppCompatActivity {
         listViewProfile = (ListView) findViewById(R.id.listViewProfile);
         Intent intent = getIntent();
         String uuid = intent.getStringExtra("uuid");
+        all_profile_recipes=new ArrayList<String>();
         mRecipeByName = FirebaseDatabase.getInstance().getReference("RecipeByName/"+uuid);
         recipeNames = new ArrayList<String>();
         recipeAdapter = new ArrayAdapter<String>(this, R.layout.layout_artist_list, recipeNames);
@@ -41,11 +45,16 @@ public class RecipeListProfile extends AppCompatActivity {
         mRecipeByName.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
+                all_profile_recipes.clear();
                 for (final DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Count++;
                     String name = postSnapshot.getKey().toString().trim();
                     Toast.makeText(RecipeListProfile.this, Integer.toString(Count), Toast.LENGTH_SHORT).show();
                     Toast.makeText(RecipeListProfile.this, name, Toast.LENGTH_LONG).show();
+                    String subName=name.substring(1);
+                    all_profile_recipes.add(subName);
+                    adapter=new RecipeProfileList(RecipeListProfile.this,all_profile_recipes);
+                    listViewProfile.setAdapter(adapter);
                //name contains all Recipe names, use the names and create another Datatree of same recipes but no - or use artistname method to take information of all recipes
                     //Or just copy Display Recipe info onClick for opening the Recipe and to show display picture using name and name is already saved as name
                 }
@@ -56,6 +65,17 @@ public class RecipeListProfile extends AppCompatActivity {
 
             }
         });
+
+        listViewProfile.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) { Intent intent = new Intent(getApplicationContext(), DisplayRecipeInfo.class);
+            String filterIntent=adapter.getItem(i);
+            intent.putExtra("RecipeName",filterIntent.toString().trim());/*"CheckImage"*/
+                Toast.makeText(RecipeListProfile.this,filterIntent.toString(), Toast.LENGTH_SHORT).show();
+                startActivity(intent);
+            }
+        });
+
     }
 }
 

@@ -66,10 +66,24 @@
             android:name=".DisplayRecipeInfo"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".NextActivity" />
-        <activity android:name=".DisplayName" />
-        <activity android:name=".ProfileActivity" />
-        <activity android:name=".RecipeListProfile"></activity>
+        <activity android:name=".NextActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".DisplayName"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".ProfileActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".RecipeListProfile"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".FollowerUsersProfile"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".FollowingUserProfile"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
     </application>
 
 </manifest>

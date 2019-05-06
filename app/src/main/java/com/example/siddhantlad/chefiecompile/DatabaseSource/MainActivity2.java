@@ -121,9 +121,9 @@ IntentTransfer();
                 row.setBackgroundColor(Color.rgb(42,182,247));
                 Artist artist = artists.get(i);
                 Checks=artist.getArtistName().toString();
-                myMap.put("Banana",true);
+                //myMap.put("Banana",true);
                 myMap.put(Checks, true);
-                myMap.put("Orange",true);
+                //myMap.put("Orange",true);
                 Toast.makeText(MainActivity2.this, Checks, Toast.LENGTH_SHORT).show();
             }
         });

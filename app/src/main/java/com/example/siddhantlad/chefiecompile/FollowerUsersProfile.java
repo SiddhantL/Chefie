@@ -46,7 +46,7 @@ ListView listUsers;
                      @Override
                      public void onDataChange(@NonNull DataSnapshot dataSnapshot2) {
                              Author author=dataSnapshot2.getValue(Author.class);
-                             Toast.makeText(FollowerUsersProfile.this, author.getUsername(), Toast.LENGTH_SHORT).show();
+                             //Toast.makeText(FollowerUsersProfile.this, author.getUsername(), Toast.LENGTH_SHORT).show();
                              followers.add(author.getUsername());
                          emails.add(author.getEmail());
                          ArrayAdapter<String>  adapter=new ArrayAdapter<String>(FollowerUsersProfile.this,R.layout.simple_list_item_white,followers);

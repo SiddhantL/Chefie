@@ -81,11 +81,11 @@
     <ListView
         android:id="@+id/listViewArtists"
         android:layout_width="match_parent"
-        android:layout_height="396dp"
+        android:layout_height="409dp"
         android:layout_above="@+id/recipeButton"
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/editTextName"
-        android:layout_marginBottom="45dp"
+        android:layout_marginBottom="32dp"
         android:divider="#DFE3EA"
         android:dividerHeight="8dp"
         android:visibility="visible" />
@@ -110,6 +110,7 @@
         android:background="#ffffff"
         android:ems="10"
         android:hint="Selected Ingredients"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:textSize="30sp" />
 
 </RelativeLayout>

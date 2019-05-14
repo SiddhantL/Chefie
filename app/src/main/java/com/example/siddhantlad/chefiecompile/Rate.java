@@ -3,17 +3,17 @@ import com.google.firebase.database.IgnoreExtraProperties;
 
 @IgnoreExtraProperties
 public class Rate {
-    private Float rating;
+    private Double rating;
 
     public Rate(){
         //this constructor is required
     }
 
-    public Rate(Float rating) {
+    public Rate(Double rating) {
         this.rating = rating;
     }
 
-    public Float getRating() {
+    public Double getRating() {
         return rating;
     }
 }

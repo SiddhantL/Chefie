@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     Spinner spinnerGenre;
     Button buttonAddArtist, RecipeActivityButton;
     TextView artistname;
-    String newText;
+    String newText,theOne;
     RatingBar rBar;
     EditText selectedET;
     ListView listViewArtists;
@@ -67,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
     List<Artist> artists;
     ArrayList<String> my_array_of_selected_ingredients,concencated_ingredients,backup;
     NetworkInfo activeNetworkInfo;
+    ArrayList<String> match,savetheOne;
+    ArrayAdapter<String> matchAdapter;
     //
     public static DatabaseReference databaseArtists;
     @Override
@@ -102,6 +104,9 @@ public class MainActivity extends AppCompatActivity {
         buttonAddArtist = (Button) findViewById(R.id.buttonAddArtist);
         //list to store artists
         artists = new ArrayList<>();
+        match=new ArrayList<String>();
+        savetheOne=new ArrayList<String>();
+        theOne=new String();
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -111,19 +116,27 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 if (!TextUtils.isEmpty(search.getQuery().toString()) || !search.getQuery().toString().equals("")) {
-                    for (int i = 0; i < concencated_ingredients.size(); i++) {
-                        if (!concencated_ingredients.get(i).contains(search.getQuery().toString())) {
+                    concencatedAdapter.getFilter().filter(newText);
+                    /* for (int i = 0; i < concencated_ingredients.size(); i++) {
+                        if (!concencated_ingredients.get(i).toLowerCase().contains(search.getQuery().toString().toLowerCase()
+                        )) {
+
                             concencated_ingredients.remove(i);
                             final ArrayAdapter<String> concencatedAdapter = new ArrayAdapter<String>(MainActivity.this, R.layout.simple_list_item_white, concencated_ingredients);
                             concencatedAdapter.notifyDataSetChanged();
                             listViewArtists.setAdapter(concencatedAdapter);
+                            savetheOne=concencated_ingredients;
                         } else {
                            // Toast.makeText(MainActivity.this, "It's a match", Toast.LENGTH_SHORT).show();
                         }
-                    }
-                }else{
-                    concencated_ingredients.clear();
+                    }*/
+                    concencatedAdapter.notifyDataSetChanged();
+                    listViewArtists.setAdapter(concencatedAdapter);
+                }else{ concencated_ingredients.clear();
                     concencated_ingredients.addAll(backup);
+                    final ArrayAdapter<String> concencatedAdapter = new ArrayAdapter<String>(MainActivity.this, R.layout.simple_list_item_white, concencated_ingredients);
+                    concencatedAdapter.notifyDataSetChanged();
+                    listViewArtists.setAdapter(concencatedAdapter);
                 }
                 return false;
             }
@@ -136,6 +149,11 @@ public class MainActivity extends AppCompatActivity {
                 isNetworkAvailable();
                 if (activeNetworkInfo != null) {
                     RecipeActivityButton.setText("Check Recipes");
+                    concencated_ingredients.clear();
+                    concencated_ingredients.addAll(backup);
+                    final ArrayAdapter<String> concencatedAdapter = new ArrayAdapter<String>(MainActivity.this, R.layout.simple_list_item_white, concencated_ingredients);
+                    concencatedAdapter.notifyDataSetChanged();
+                    listViewArtists.setAdapter(concencatedAdapter);
                     int TotalItems = listViewArtists.getAdapter().getCount();
                     //Checking all true booleans
                     for (int AtItem = 0; AtItem < TotalItems; AtItem++) {
@@ -176,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
                 views=view;
                 //view.setBackgroundColor(Color.rgb(42,182,247));
                 Artist artist = artists.get(i);
-                Checks=concencated_ingredients.get(i).toString();
+                Checks=concencatedAdapter.getItem(i).toString();
               //  myMap.put("Banana",true);
                     if (myMap.get(Checks)!=null){
                         listViewArtists.setItemChecked(i,false);

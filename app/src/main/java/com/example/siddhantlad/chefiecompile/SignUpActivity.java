@@ -71,7 +71,7 @@ EditText userEmailEdit,userPasswordEdit,userName;
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 user= firebaseAuth.getCurrentUser();
                 if(user!=null){
-                    startActivity(new Intent(SignUpActivity.this,Welcome.class));
+                    startActivity(new Intent(SignUpActivity.this,DisplayName.class));
                 }else{
                     createUser.setOnClickListener(new View.OnClickListener() {
                         @Override

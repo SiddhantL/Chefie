@@ -14,6 +14,6 @@ public class SelectedItems extends AppCompatActivity {
         setContentView(R.layout.activity_selected_items);
         Bundle bundle = getIntent().getExtras();
         String Checks = bundle.getString("Checks");
-        Toast.makeText(this, Checks, Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, Checks, Toast.LENGTH_LONG).show();
     }
 }

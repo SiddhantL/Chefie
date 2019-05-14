@@ -26,7 +26,7 @@ public class FollowingUserProfile extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_follwer_users);
+        setContentView(R.layout.activity_following_user_profile);
         final Intent intent = getIntent();
         final String uuid = intent.getStringExtra("uuid");
         final String name = intent.getStringExtra("nameProfile");

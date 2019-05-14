@@ -50,9 +50,11 @@ public class RecipeActivity extends AppCompatActivity {
     Context context;
     RecipeArtistList artistAdapter;
     String name;
+    TextView empty,emptyAdd;
     ListView listViewRecipes;
     List<RecipeArtist> recipes,filter;
-    ArrayList<String> my_array_of_selected_ingredients;
+    ArrayList<String> my_array_of_selected_ingredients,lowercase_my_array_of_selected_ingredients;
+    ImageView noResult;
     ArrayList<String> adapterListName;
     int Count,CountSave;
     Boolean remove;
@@ -62,9 +64,16 @@ public class RecipeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
         Intent intent = getIntent();
+        lowercase_my_array_of_selected_ingredients=new ArrayList<String>();
         my_array_of_selected_ingredients = intent.getStringArrayListExtra("my_array_of_selected_ingredients");
+        for (int z=0;z<my_array_of_selected_ingredients.size();z++){
+         lowercase_my_array_of_selected_ingredients.add(my_array_of_selected_ingredients.get(z).toLowerCase());
+        }
         mDatabase = FirebaseDatabase.getInstance().getReference("recipes");
         context = this;
+        empty=(TextView)findViewById(R.id.textView23);
+        emptyAdd=(TextView)findViewById(R.id.textView24);
+        noResult=(ImageView)findViewById(R.id.imageView5);
         removeList = new ArrayList<>();
         adapterListName = new ArrayList<String>();
         spinnerType = (Spinner) findViewById(R.id.spinnerGenres);
@@ -123,16 +132,21 @@ mDatabase.addValueEventListener(new ValueEventListener() {
                                     String recipeName = nameFinal;
                                  try {
                                         if (!my_array_of_selected_ingredients.isEmpty()) {
-                                            if (my_array_of_selected_ingredients.contains(ingredientName)) {
+                                            if (lowercase_my_array_of_selected_ingredients.contains(ingredientName.toLowerCase())) {
                                             } else {
                                                 if (remove){
                                                     recipes.remove(recipeartist);
+                                                    if (recipes.isEmpty()){
+noResult.setVisibility(View.VISIBLE);
+                                                        empty.setVisibility(View.VISIBLE);
+                                     emptyAdd.setVisibility(View.VISIBLE);
+                                                    }
                                                     adapterListName.remove(recipeName);
                                                     listViewRecipes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                                                     @Override
                                                                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) { Intent intent = new Intent(getApplicationContext(), DisplayRecipeInfo.class);
                                                                     intent.putExtra("RecipeName",adapterListName.get(i).toString().trim()/*"CheckImage"*/);
-                                                                    Toast.makeText(RecipeActivity.this, adapterListName.get(i), Toast.LENGTH_SHORT).show();
+                                                                    //Toast.makeText(RecipeActivity.this, adapterListName.get(i), Toast.LENGTH_SHORT).show();
                                                                     startActivity(intent);
                                                                     }
                                                     });

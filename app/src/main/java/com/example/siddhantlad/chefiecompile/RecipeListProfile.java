@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.siddhantlad.chefiecompile.DatabaseSource.RecipeActivity;
@@ -26,6 +28,8 @@ public class RecipeListProfile extends AppCompatActivity {
     DatabaseReference mRecipeByName;
     List<String> recipeNames;
     List<String> all_profile_recipes;
+    TextView empty,emptyAdd;
+    ImageView noResult;
     int Count;
     ArrayAdapter<String> recipeAdapter;
     RecipeProfileList adapter;
@@ -42,6 +46,10 @@ public class RecipeListProfile extends AppCompatActivity {
         recipeNames = new ArrayList<String>();
         recipeAdapter = new ArrayAdapter<String>(this, R.layout.layout_artist_list, recipeNames);
         Count=0;
+        empty=(TextView)findViewById(R.id.textView23);
+        emptyAdd=(TextView)findViewById(R.id.textView24);
+        noResult=(ImageView)findViewById(R.id.imageView5);
+
         mRecipeByName.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
@@ -49,14 +57,22 @@ public class RecipeListProfile extends AppCompatActivity {
                 for (final DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Count++;
                     String name = postSnapshot.getKey().toString().trim();
-                    Toast.makeText(RecipeListProfile.this, Integer.toString(Count), Toast.LENGTH_SHORT).show();
-                    Toast.makeText(RecipeListProfile.this, name, Toast.LENGTH_LONG).show();
+                 //   Toast.makeText(RecipeListProfile.this, Integer.toString(Count), Toast.LENGTH_SHORT).show();
+                  //  Toast.makeText(RecipeListProfile.this, name, Toast.LENGTH_LONG).show();
                     String subName=name.substring(1);
                     all_profile_recipes.add(subName);
                     adapter=new RecipeProfileList(RecipeListProfile.this,all_profile_recipes);
                     listViewProfile.setAdapter(adapter);
+
                //name contains all Recipe names, use the names and create another Datatree of same recipes but no - or use artistname method to take information of all recipes
                     //Or just copy Display Recipe info onClick for opening the Recipe and to show display picture using name and name is already saved as name
+                }
+                if (all_profile_recipes.isEmpty()){
+                    noResult.setVisibility(View.VISIBLE);
+                    empty.setVisibility(View.VISIBLE);
+                    emptyAdd.setVisibility(View.VISIBLE);
+                }else{
+                    noResult.setVisibility(View.GONE);
                 }
             }
 
@@ -71,7 +87,7 @@ public class RecipeListProfile extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) { Intent intent = new Intent(getApplicationContext(), DisplayRecipeInfo.class);
             String filterIntent=adapter.getItem(i);
             intent.putExtra("RecipeName",filterIntent.toString().trim());/*"CheckImage"*/
-                Toast.makeText(RecipeListProfile.this,filterIntent.toString(), Toast.LENGTH_SHORT).show();
+           //     Toast.makeText(RecipeListProfile.this,filterIntent.toString(), Toast.LENGTH_SHORT).show();
                 startActivity(intent);
             }
         });

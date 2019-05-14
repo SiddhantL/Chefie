@@ -58,7 +58,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                         }
                     }catch (Exception e){}
                 }else{
-                    Toast.makeText(context, "Add a name for the new recipe", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(context, "Add a name for the new recipe", Toast.LENGTH_SHORT).show();
                     Intent AllRecipe=new Intent(AddRecipeActivity.this,RecipeActivity.class);
                     AllRecipe.putExtra("my_array_of_selected_ingredients",my_array_of_selected_ingredients);
                     startActivity(AllRecipe);

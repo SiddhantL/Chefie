@@ -8,14 +8,13 @@
 
     <EditText
         android:id="@+id/editText2"
-        android:layout_width="281dp"
+        android:layout_width="314dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView4"
-        android:layout_centerHorizontal="true"
+        android:layout_above="@id/textView25"
+        android:layout_centerInParent="true"
         android:ems="10"
-        android:hint="Username"
+        android:hint="eg- Jack"
         android:inputType="textPersonName"
-        android:paddingTop="100dp"
         tools:layout_editor_absoluteX="85dp"
         tools:layout_editor_absoluteY="295dp" />
 
@@ -57,14 +56,14 @@
 
     <EditText
         android:id="@+id/editText3"
-        android:layout_width="281dp"
+        android:layout_width="315dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editText2"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="175dp"
         android:ems="10"
-        android:hint="Phone Number"
-        android:inputType="phone"
-        android:paddingTop="30dp" />
+        android:hint="eg- Follow me on Insta @siddhantlad"
+        android:inputType="text" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -76,4 +75,25 @@
         android:layout_marginBottom="30dp"
         android:progress="50"
         android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/textView25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/editText3"
+        android:layout_alignStart="@+id/editText2"
+        android:paddingTop="20dp"
+        android:text="Message For Viewers"
+        android:textColor="#000000" />
+
+    <TextView
+        android:id="@+id/textView26"
+        android:layout_width="wrap_content"
+        android:layout_height="84dp"
+        android:layout_above="@+id/editText2"
+        android:layout_alignStart="@+id/editText2"
+        android:layout_below="@+id/imageView4"
+        android:paddingTop="64dp"
+        android:text="Username"
+        android:textColor="#000000" />
 </RelativeLayout>

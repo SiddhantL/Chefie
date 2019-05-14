@@ -23,20 +23,19 @@
         android:id="@+id/uploadImage"
         android:layout_width="250dp"
         android:layout_height="250dp"
-        android:src="@drawable/lunchpic"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="83dp"
+        android:src="@drawable/lunchpic" />
 
     <TextView
         android:id="@+id/nameRec"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/uploadImage"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="102dp"
         android:fontFamily="sans-serif-smallcaps"
         android:text="TextView"
-        android:layout_below="@+id/uploadImage"
         android:textAppearance="@android:style/TextAppearance.Material.Large" />
 
     <Button
@@ -51,6 +50,27 @@
         android:text="Select Image"
         android:textColor="#ffffff" />
 
+    <TextView
+        android:id="@+id/textView21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/editText5"
+        android:layout_alignParentStart="true"
+        android:text="Add YouTube Link"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/editText5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="104dp"
+        android:ems="10"
+        android:hint="YouTube Link"
+        android:inputType="textPersonName" />
 
 
 </RelativeLayout>

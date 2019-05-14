@@ -2,6 +2,7 @@ package com.example.siddhantlad.chefiecompile;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
@@ -40,6 +42,7 @@ DatabaseReference mDatabase,creditDatabase,rateDatabase;
 List<Artist> artists;
 ListView listview;
 RatingBar rateBar;
+Button youTubeClick;
 FirebaseAuth mAuth;
 private ArrayAdapter<String>adapter;
 TextView authortv;
@@ -55,6 +58,7 @@ private ArrayList<String> arrayList=new ArrayList<String>();
         artists = new ArrayList<>();
         listview=(ListView)findViewById(R.id.listViewStep);
         mAuth= FirebaseAuth.getInstance();
+        youTubeClick=(Button)findViewById(R.id.button3);
         authortv=(TextView)findViewById(R.id.textView12);
         mDatabase = FirebaseDatabase.getInstance().getReference("steps/"+RecipeName);
         creditDatabase = FirebaseDatabase.getInstance().getReference("credits/"+RecipeName);
@@ -78,7 +82,7 @@ private ArrayList<String> arrayList=new ArrayList<String>();
                                 Summation=Double.parseDouble(Value)+Summation;
                                 NoValue=Double.parseDouble(Long.toString(dataSnapshot.getChildrenCount()));
                                Average=Double.parseDouble(Summation.toString())/Double.parseDouble(NoValue.toString());
-                                Toast.makeText(DisplayRecipeInfo.this, Double.toString(Average), Toast.LENGTH_SHORT).show();
+             //                   Toast.makeText(DisplayRecipeInfo.this, Double.toString(Average), Toast.LENGTH_SHORT).show();
                             }
                         }
 
@@ -99,7 +103,7 @@ private ArrayList<String> arrayList=new ArrayList<String>();
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating,
                                         boolean fromUser) {
-                Toast.makeText(DisplayRecipeInfo.this, Float.toString(rating), Toast.LENGTH_SHORT).show();
+      //          Toast.makeText(DisplayRecipeInfo.this, Float.toString(rating), Toast.LENGTH_SHORT).show();
                 String id=mAuth.getCurrentUser().getUid();
                 rateDatabase.child(id).child("rating").setValue(rating);
             }
@@ -137,8 +141,8 @@ private ArrayList<String> arrayList=new ArrayList<String>();
 
             }
         });
-        Toast.makeText(this, RecipeName, Toast.LENGTH_SHORT).show();
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images/"+RecipeName+".jpg");
+      //  Toast.makeText(this, RecipeName, Toast.LENGTH_SHORT).show();
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images/"+RecipeName+"/"+RecipeName+".jpg");
         StorageReference storageReferencePlaceholder = FirebaseStorage.getInstance().getReference().child("images/Empty.jpg");
 adapter=new ArrayAdapter<String>(this, R.layout.simple_list_item_green,arrayList);
 // ImageView in your Activity
@@ -147,7 +151,7 @@ adapter=new ArrayAdapter<String>(this, R.layout.simple_list_item_green,arrayList
                 .load(storageReference)
                 .into(imageView);*/
         Glide.with(this)
-                .load(storageReference).apply(new RequestOptions().placeholder(R.drawable.lunchpic)).into(imageView);
+                .load(storageReference).apply(new RequestOptions().placeholder(R.drawable.wrap_lunchpic)).into(imageView);
         mDatabase.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -177,6 +181,32 @@ adapter.notifyDataSetChanged();
             }
         });
         listview.setAdapter(adapter);
+        youTubeClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                creditDatabase.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        final Author author = dataSnapshot.getValue(Author.class);
+                        if (author.getYouTube() != null) {
+                            Intent intent = new Intent(Intent.ACTION_VIEW);
+                            intent.setData(Uri.parse(author.getYouTube()));
+                            Toast.makeText(DisplayRecipeInfo.this, author.getYouTube(), Toast.LENGTH_SHORT).show();
+                            intent.setPackage("com.google.android.youtube");
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(DisplayRecipeInfo.this, "No Video Available", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
+        });
 
     }
 }

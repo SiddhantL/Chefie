@@ -1,29 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context=".FollowerUsersProfile">
-
-<TextView
-    android:id="@+id/textView16"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_below="@id/buttonAddArtist"
-    android:fontFamily="sans-serif-smallcaps"
-    android:text="Followers"
-    android:textAlignment="center"
-    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-    android:textColor="#000000" />
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:context=".FollowerUsersProfile">
 
-<ListView
-    android:id="@+id/listViewFollow"
-    android:layout_width="match_parent"
-    android:layout_height="536dp"
-    android:layout_alignParentBottom="true"
-    android:layout_alignParentStart="true"
-    tools:layout_editor_absoluteX="8dp"
-    tools:layout_editor_absoluteY="8dp" />
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/buttonAddArtist"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="Followers"
+        android:textAlignment="center"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        android:textColor="#000000" />
+
+    <ListView
+        android:id="@+id/listViewFollow"
+        android:layout_width="match_parent"
+        android:layout_height="536dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView16"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp" />
 
 </RelativeLayout>

@@ -2,22 +2,22 @@ package com.example.siddhantlad.chefiecompile;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 @IgnoreExtraProperties
-public class UserInfo {
-    private String Phone;
+public class UserDetails {
+    private String Message;
     private String Username;
     private String Email;
-    public UserInfo(){
+    public UserDetails(){
         //this constructor is required
     }
 
-    public UserInfo(String Phone, String Username, String Email) {
-        this.Phone = Phone;
+    public UserDetails(String Message, String Username, String Email) {
+        this.Message = Message;
         this.Username=Username;
         this.Email=Email;
     }
 
-    public String getPhone() {
-        return Phone;
+    public String getMessage() {
+        return Message;
     }
     public String getUsername() {
         return Username;

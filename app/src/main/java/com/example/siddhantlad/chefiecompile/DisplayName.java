@@ -29,7 +29,7 @@ public class DisplayName extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener mAuthListener;
     ImageView prof_image;
-    EditText displayName,displayPhone;
+    EditText displayName,displayMessage;
     Button confirm;
     UserProfileChangeRequest profileUpdates;
     DatabaseReference mDatabase;
@@ -38,7 +38,7 @@ public class DisplayName extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_name);
         displayName=(EditText)findViewById(R.id.editText2);
-        displayPhone=(EditText)findViewById(R.id.editText3);
+        displayMessage=(EditText)findViewById(R.id.editText3);
         prof_image=(ImageView)findViewById(R.id.imageView4);
         mDatabase = FirebaseDatabase.getInstance().getReference("users");
         confirm=(Button)findViewById(R.id.button);
@@ -74,9 +74,9 @@ public class DisplayName extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (errorTV.getVisibility() == View.INVISIBLE) {
-                    if (!TextUtils.isEmpty(displayName.getText()) || !displayName.getText().toString().equals("") || !TextUtils.isEmpty(displayPhone.getText()) || !displayPhone.getText().toString().equals("")) {
+                    if (!TextUtils.isEmpty(displayName.getText()) || !displayName.getText().toString().equals("") || !TextUtils.isEmpty(displayMessage.getText()) || !displayMessage.getText().toString().equals("")) {
                         mDatabase.child(user.getUid()).child("Username").setValue(displayName.getText().toString());
-                        mDatabase.child(user.getUid()).child("Phone").setValue(displayPhone.getText().toString());
+                        mDatabase.child(user.getUid()).child("Message").setValue(displayMessage.getText().toString());
                         profileUpdates=new UserProfileChangeRequest.Builder().setDisplayName(displayName.getText().toString()).setPhotoUri(Uri.parse("https://")).build();
                         user.updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override

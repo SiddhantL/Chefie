@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff"
     tools:context=".DisplayName">
 
     <EditText
@@ -22,7 +23,7 @@
         android:id="@+id/imageView4"
         android:layout_width="320dp"
         android:layout_height="161dp"
-        android:layout_alignParentTop="true"
+        android:layout_above="@+id/textView26"
         android:layout_centerHorizontal="true"
         android:elevation="@dimen/fab_size_normal"
         app:srcCompat="@drawable/chefieicon"
@@ -35,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/button"
         android:layout_centerHorizontal="true"
-        android:paddingBottom="15dp"
+        android:paddingBottom="25dp"
         android:text="TextView"
         android:textColor="@android:color/holo_red_light"
         android:textSize="18sp"
@@ -82,18 +83,17 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/editText3"
         android:layout_alignStart="@+id/editText2"
-        android:paddingTop="20dp"
+        android:paddingTop="40dp"
         android:text="Message For Viewers"
         android:textColor="#000000" />
 
     <TextView
         android:id="@+id/textView26"
         android:layout_width="wrap_content"
-        android:layout_height="84dp"
+        android:layout_height="wrap_content"
         android:layout_above="@+id/editText2"
         android:layout_alignStart="@+id/editText2"
-        android:layout_below="@+id/imageView4"
-        android:paddingTop="64dp"
+        android:paddingTop="50dp"
         android:text="Username"
         android:textColor="#000000" />
 </RelativeLayout>

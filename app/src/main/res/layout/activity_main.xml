@@ -104,13 +104,13 @@
     <EditText
         android:id="@+id/selectedEditText"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_above="@+id/recipeButton"
         android:layout_alignParentStart="true"
         android:background="#ffffff"
         android:ems="10"
         android:hint="Selected Ingredients"
         android:inputType="textPersonName"
-        android:textSize="30sp" />
+        android:textSize="24sp" />
 
 </RelativeLayout>

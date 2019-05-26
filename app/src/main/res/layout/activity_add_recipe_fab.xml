@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
-    tools:context="com.example.siddhantlad.chefiecompile.AddRecipeFab">
+    tools:context="com.snltech.siddhantlad.chefiecompile.AddRecipeFab">
 
     <TextView
         android:id="@+id/textView5"
@@ -67,6 +67,7 @@
         android:id="@+id/textView15"
         android:layout_width="105dp"
         android:layout_height="34dp"
+        android:layout_alignLeft="@+id/editText"
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/textView5"
         android:layout_marginBottom="86dp"
@@ -78,9 +79,11 @@
         android:id="@+id/editText4"
         android:layout_width="265dp"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/textView28"
         android:layout_alignBottom="@+id/textView15"
         android:layout_alignEnd="@+id/textView5"
         android:layout_marginEnd="-10dp"
+        android:layout_toRightOf="@+id/textView15"
         android:ems="10"
         android:hint="example: Add basil for taste if available"
         android:inputType="textPersonName" />
@@ -88,10 +91,9 @@
     <EditText
         android:id="@+id/textView28"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="40sp"
         android:layout_above="@+id/btn"
         android:layout_alignStart="@+id/textView5"
-        android:layout_below="@+id/textView15"
         android:layout_marginTop="-86dp"
         android:background="#ffffff"
         android:ems="10"

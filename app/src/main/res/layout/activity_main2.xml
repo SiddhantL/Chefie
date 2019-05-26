@@ -34,8 +34,8 @@
         android:id="@+id/recipeButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/textView18"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView17"
         android:layout_marginTop="-79dp"
         android:background="@drawable/circular_button"
         android:backgroundTint="#38444f"
@@ -45,14 +45,15 @@
     <EditText
         android:id="@+id/textView17"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/recipeButton"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="79dp"
+        android:layout_marginBottom="97dp"
         android:background="#ffffff"
         android:hint="Selected Ingredients"
         android:textColor="#000000"
-        android:textSize="30sp" />
+        android:textSize="24sp" />
 
     <SearchView
         android:id="@+id/searchQuery"
@@ -75,14 +76,14 @@
 
     <TextView
         android:id="@+id/textView18"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/recipeButton"
-        android:layout_below="@+id/recipeButton"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:text="CAN'T FIND INGREDIENT?"
+        android:textAlignment="center"
         android:textColor="#8b0000"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
     <Button

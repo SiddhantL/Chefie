@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:764122988157:android:8017983cf98b1272",
         "android_client_info": {
-          "package_name": "com.example.siddhantlad.chefiecompile"
+          "package_name": "com.snltech.siddhantlad.chefiecompile"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "764122988157-gcefo6am6ron40ljs2dkhe3cbe47anl2.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.siddhantlad.chefiecompile",
+            "package_name": "com.snltech.siddhantlad.chefiecompile",
             "certificate_hash": "8a6782dd769c133a4d2cc072200beede8eb8d5ad"
           }
         },
@@ -58,7 +58,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:764122988157:android:759dc256955c0957",
         "android_client_info": {
-          "package_name": "com.example.siddhantlad.databasesource"
+          "package_name": "com.snltech.siddhantlad.databasesource"
         }
       },
       "oauth_client": [
@@ -66,7 +66,7 @@
           "client_id": "764122988157-mv3ojtv8juur8hmoopfkl1dnmd0um6p7.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.siddhantlad.databasesource",
+            "package_name": "com.snltech.siddhantlad.databasesource",
             "certificate_hash": "8a6782dd769c133a4d2cc072200beede8eb8d5ad"
           }
         },
@@ -106,7 +106,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:764122988157:android:f07b91850f7bb281",
         "android_client_info": {
-          "package_name": "com.example.siddhantlad.databasetest"
+          "package_name": "com.snltech.siddhantlad.databasetest"
         }
       },
       "oauth_client": [
@@ -114,7 +114,7 @@
           "client_id": "764122988157-05gkhpqnfat7oms1bfskphs8ed8t9unr.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.siddhantlad.databasetest",
+            "package_name": "com.snltech.siddhantlad.databasetest",
             "certificate_hash": "8a6782dd769c133a4d2cc072200beede8eb8d5ad"
           }
         },

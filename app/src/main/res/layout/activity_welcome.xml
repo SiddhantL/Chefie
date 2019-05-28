@@ -7,11 +7,45 @@
     android:background="#FFFFFF"
     tools:context=".Welcome">
 
+    <Button
+        android:id="@+id/myRecipes2"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="146dp"
+        android:background="@drawable/circular_button"
+        android:backgroundTint="#38444F"
+        android:text="My Recipes"
+        android:textColor="#ffffff"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="match_parent"
+        android:layout_height="171dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/backgradient"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="220dp"
+        android:layout_height="134dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:elevation="@android:dimen/app_icon_size"
+        android:visibility="gone"
+        app:srcCompat="@drawable/chefieicon" />
+
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        android:visibility="visible">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -211,54 +245,56 @@
         android:background="@drawable/fab_label_black_background"
         android:text="Click Here"
         android:textColor="@android:color/white" />
-        <com.getbase.floatingactionbutton.FloatingActionsMenu
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        app:fab_addButtonColorNormal="@android:color/holo_green_light"
+        app:fab_addButtonColorPressed="@android:color/holo_green_dark"
+        app:fab_addButtonPlusIconColor="@android:color/white"
+        app:fab_labelStyle="@style/customFab">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabAction1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/menu"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            app:fab_addButtonColorNormal="@android:color/holo_green_light"
-            app:fab_addButtonColorPressed="@android:color/holo_green_dark"
-            app:fab_addButtonPlusIconColor="@android:color/white"
-            app:fab_labelStyle="@style/customFab">
-            <com.getbase.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fabAction1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:fab_addButtonColorNormal="@android:color/holo_blue_dark"
-                app:fab_addButtonColorPressed="@android:color/holo_blue_bright"
-                app:fab_icon="@drawable/ic_search_black_24dp"
-                app:fab_size="mini"
-                app:fab_title="Search Recipes" />
+            app:fab_addButtonColorNormal="@android:color/holo_blue_dark"
+            app:fab_addButtonColorPressed="@android:color/holo_blue_bright"
+            app:fab_icon="@drawable/ic_search_black_24dp"
+            app:fab_size="normal"
+            app:fab_title="Search Recipes" />
 
-            <com.getbase.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fabAction2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:fab_addButtonColorNormal="@android:color/holo_blue_dark"
-                app:fab_addButtonColorPressed="@android:color/holo_blue_bright"
-                app:fab_icon="@drawable/ic_add_black_24dp"
-                app:fab_size="mini"
-                app:fab_title="Add Recipes" />
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabAction2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_addButtonColorNormal="@android:color/holo_blue_dark"
+            app:fab_addButtonColorPressed="@android:color/holo_blue_bright"
+            app:fab_icon="@drawable/ic_add_black_24dp"
+            app:fab_size="normal"
+            app:fab_title="Add Recipes" />
 
-            <com.getbase.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fabAction4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_info_outline_black_24dp"
-                app:fab_addButtonColorNormal="@android:color/holo_blue_dark"
-                app:fab_addButtonColorPressed="@android:color/holo_blue_bright"
-                app:fab_size="mini"
-                app:fab_title="About Us" />
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabAction4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_addButtonColorNormal="@android:color/holo_blue_dark"
+            app:fab_addButtonColorPressed="@android:color/holo_blue_bright"
+            app:fab_size="normal"
+            app:fab_icon="@drawable/ic_info_outline_black_24dp"
+            app:fab_title="About Us"/>
 
-            <com.getbase.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fabAction3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_exit_to_app_black_24dp"
-                app:fab_addButtonColorNormal="@android:color/holo_blue_dark"
-                app:fab_addButtonColorPressed="@android:color/holo_blue_bright"
-                app:fab_size="mini"
-                app:fab_title="Log Out" />
-        </com.getbase.floatingactionbutton.FloatingActionsMenu>
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabAction3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_icon="@drawable/ic_exit_to_app_black_24dp"
+            app:fab_addButtonColorNormal="@android:color/holo_blue_dark"
+            app:fab_addButtonColorPressed="@android:color/holo_blue_bright"
+            app:fab_size="normal"
+            app:fab_title="Log Out" />
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
 </RelativeLayout>

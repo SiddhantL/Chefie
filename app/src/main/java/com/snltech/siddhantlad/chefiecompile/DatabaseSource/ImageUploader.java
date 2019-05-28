@@ -69,31 +69,32 @@ TextView nameRec;
         protected void onCreate(@Nullable Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_image_uploader);
-            image = (ImageView) findViewById(R.id.uploadImage);
-checkFilePermissions();
-            imageSelect = (Button) findViewById(R.id.buttonSelect);
-            nameRec=(TextView)findViewById(R.id.nameRec);
-            YoutubeText=(EditText)findViewById(R.id.editText5);
+            try {
+                image = (ImageView) findViewById(R.id.uploadImage);
+                checkFilePermissions();
+                imageSelect = (Button) findViewById(R.id.buttonSelect);
+                nameRec = (TextView) findViewById(R.id.nameRec);
+                YoutubeText = (EditText) findViewById(R.id.editText5);
             /*btnBack = (Button) findViewById(R.id.btnBackImage);
             btnNext = (Button) findViewById(R.id.btnNextImage);*/
-            btnUpload = (Button) findViewById(R.id.btnUploadImage);
-           // imageName = (EditText) findViewById(R.id.imageName);
-            pathArray = new ArrayList<>();
-            mProgressDialog = new ProgressDialog(ImageUploader.this);
-            auth = FirebaseAuth.getInstance();
-            mStorageRef = FirebaseStorage.getInstance().getReference();
-            Intent intent = getIntent();
-            final String nameOfRecipe = intent.getStringExtra("nameOfRecipe");
-            creditDatabase = FirebaseDatabase.getInstance().getReference("credits/"+nameOfRecipe);
-nameRec.setText(nameOfRecipe);
-imageSelect.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(i, PICK_IMAGE);
+                btnUpload = (Button) findViewById(R.id.btnUploadImage);
+                // imageName = (EditText) findViewById(R.id.imageName);
+                pathArray = new ArrayList<>();
+                mProgressDialog = new ProgressDialog(ImageUploader.this);
+                auth = FirebaseAuth.getInstance();
+                mStorageRef = FirebaseStorage.getInstance().getReference();
+                Intent intent = getIntent();
+                final String nameOfRecipe = intent.getStringExtra("nameOfRecipe");
+                creditDatabase = FirebaseDatabase.getInstance().getReference("credits/" + nameOfRecipe);
+                nameRec.setText(nameOfRecipe);
+                imageSelect.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startActivityForResult(i, PICK_IMAGE);
 
-    }
-});
+                    }
+                });
          /*   btnBack.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -116,11 +117,11 @@ imageSelect.setOnClickListener(new View.OnClickListener() {
                 }
             });*/
 
-            btnUpload.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+                btnUpload.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
 
-                        if (YoutubeText.getText()!=null){
+                        if (YoutubeText.getText() != null||!YoutubeText.getText().toString().equals("")||!YoutubeText.getText().toString().equals(" ")||!TextUtils.isEmpty(YoutubeText.getText().toString())) {
                             creditDatabase.child("YouTube").setValue(YoutubeText.getText().toString());
                         }
                         Log.d(TAG, "onClick: Uploading Image.");
@@ -134,7 +135,7 @@ imageSelect.setOnClickListener(new View.OnClickListener() {
                         String name = nameOfRecipe;
                         if (!TextUtils.isEmpty(name)) {
                             Uri uri = Uri.fromFile(new File(picturePath));
-                            StorageReference storageReference = mStorageRef.child("images/" + name +"/"+name+ ".jpg");
+                            StorageReference storageReference = mStorageRef.child("images/" + name + "/" + name + ".jpg");
                             storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                 @Override
                                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -142,8 +143,8 @@ imageSelect.setOnClickListener(new View.OnClickListener() {
                                     //   Uri downloadUrl = taskSnapshot.getDownloadUrl();
                                     toastMessage("Recipe Uploaded");
                                     mProgressDialog.dismiss();
-                                    Intent displayYourRecipe=new Intent(ImageUploader.this, DisplayRecipeInfo.class);
-                                   displayYourRecipe.putExtra("RecipeName",nameOfRecipe);
+                                    Intent displayYourRecipe = new Intent(ImageUploader.this, DisplayRecipeInfo.class);
+                                    displayYourRecipe.putExtra("RecipeName", nameOfRecipe);
                                     startActivity(displayYourRecipe);
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
@@ -159,9 +160,12 @@ imageSelect.setOnClickListener(new View.OnClickListener() {
                         }
 
 
-                }
-            });
+                    }
+                });
 
+            }catch (Exception E){
+                Toast.makeText(this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+            }
         }
 
         /**

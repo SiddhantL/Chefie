@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.snltech.siddhantlad.chefiecompile.DatabaseSource.MainActivity2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,7 @@ public class RecipeListProfile extends AppCompatActivity {
     List<String> recipeNames;
     List<String> all_profile_recipes;
     TextView empty,emptyAdd;
+    Button addRec;
     ImageView noResult;
     int Count;
     ArrayAdapter<String> recipeAdapter;
@@ -37,6 +40,13 @@ public class RecipeListProfile extends AppCompatActivity {
         setContentView(R.layout.activity_recipe_list_profile);
         listViewProfile = (ListView) findViewById(R.id.listViewProfile);
         Intent intent = getIntent();
+        addRec=(Button)findViewById(R.id.addButt);
+        addRec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(RecipeListProfile.this, MainActivity2.class));
+            }
+        });
         String uuid = intent.getStringExtra("uuid");
         all_profile_recipes=new ArrayList<String>();
         mRecipeByName = FirebaseDatabase.getInstance().getReference("RecipeByName/"+uuid);
@@ -68,8 +78,10 @@ public class RecipeListProfile extends AppCompatActivity {
                     noResult.setVisibility(View.VISIBLE);
                     empty.setVisibility(View.VISIBLE);
                     emptyAdd.setVisibility(View.VISIBLE);
+                    addRec.setVisibility(View.VISIBLE);
                 }else{
                     noResult.setVisibility(View.GONE);
+                    addRec.setVisibility(View.GONE);
                 }
             }
 

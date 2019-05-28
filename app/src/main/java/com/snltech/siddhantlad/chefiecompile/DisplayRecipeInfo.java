@@ -46,38 +46,77 @@ private ArrayList<String> arrayList=new ArrayList<String>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_display_recipe_info);
-        Intent intent = getIntent();
-        final String RecipeName = intent.getExtras().getString("RecipeName");
-        artists = new ArrayList<>();
-        listview=(ListView)findViewById(R.id.listViewStep);
-        mAuth= FirebaseAuth.getInstance();
-        youTubeClick=(Button)findViewById(R.id.button3);
-        authortv=(TextView)findViewById(R.id.textView12);
-        mDatabase = FirebaseDatabase.getInstance().getReference("steps/"+RecipeName);
-        creditDatabase = FirebaseDatabase.getInstance().getReference("credits/"+RecipeName);
-        rateBar=(RatingBar)findViewById(R.id.ratingBar3);
-        rateDatabase = FirebaseDatabase.getInstance().getReference("rate/"+RecipeName);
-        TextView nameDisplayTV=(TextView)findViewById(R.id.nameDisplay);
-        nameDisplayTV.setText(RecipeName);
-        //   CountMean=0;
-        rateDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
-                for (final DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    String rates = postSnapshot.getKey().toString().trim();
-                    Summation=0.0;
-                    rateDatabase.child(rates).addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot2) {
-                            for(final DataSnapshot postSnapshot2 : dataSnapshot2.getChildren()){
-                            String Value=String.valueOf(postSnapshot2.getValue());
-                               //Toast.makeText(DisplayRecipeInfo.this, Value, Toast.LENGTH_SHORT).show();
-                                Summation=Double.parseDouble(Value)+Summation;
-                                NoValue=Double.parseDouble(Long.toString(dataSnapshot.getChildrenCount()));
-                               Average=Double.parseDouble(Summation.toString())/Double.parseDouble(NoValue.toString());
-             //                   Toast.makeText(DisplayRecipeInfo.this, Double.toString(Average), Toast.LENGTH_SHORT).show();
+            setContentView(R.layout.activity_display_recipe_info);
+        try {
+            Intent intent = getIntent();
+            final String RecipeName = intent.getExtras().getString("RecipeName");
+            artists = new ArrayList<>();
+            listview = (ListView) findViewById(R.id.listViewStep);
+            mAuth = FirebaseAuth.getInstance();
+            youTubeClick = (Button) findViewById(R.id.button3);
+            authortv = (TextView) findViewById(R.id.textView12);
+            mDatabase = FirebaseDatabase.getInstance().getReference("steps/" + RecipeName);
+            creditDatabase = FirebaseDatabase.getInstance().getReference("credits/" + RecipeName);
+            rateBar = (RatingBar) findViewById(R.id.ratingBar3);
+            rateDatabase = FirebaseDatabase.getInstance().getReference("rate/" + RecipeName);
+            TextView nameDisplayTV = (TextView) findViewById(R.id.nameDisplay);
+            nameDisplayTV.setText(RecipeName);
+            //   CountMean=0;
+
+            rateDatabase.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
+                    for (final DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        String rates = postSnapshot.getKey().toString().trim();
+                        Summation = 0.0;
+                        rateDatabase.child(rates).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot2) {
+                                for (final DataSnapshot postSnapshot2 : dataSnapshot2.getChildren()) {
+                                    String Value = String.valueOf(postSnapshot2.getValue());
+                                    //Toast.makeText(DisplayRecipeInfo.this, Value, Toast.LENGTH_SHORT).show();
+                                    Summation = Double.parseDouble(Value) + Summation;
+                                    NoValue = Double.parseDouble(Long.toString(dataSnapshot.getChildrenCount()));
+                                    Average = Double.parseDouble(Summation.toString()) / Double.parseDouble(NoValue.toString());
+                                    //                   Toast.makeText(DisplayRecipeInfo.this, Double.toString(Average), Toast.LENGTH_SHORT).show();
+                                }
                             }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+            rateBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                @Override
+                public void onRatingChanged(RatingBar ratingBar, float rating,
+                                            boolean fromUser) {
+                    //          Toast.makeText(DisplayRecipeInfo.this, Float.toString(rating), Toast.LENGTH_SHORT).show();
+                    String id = mAuth.getCurrentUser().getUid();
+                    rateDatabase.child(id).child("rating").setValue(rating);
+                    Toast.makeText(DisplayRecipeInfo.this, "You Rated This Recipe " + Float.toString(rating) + " Stars", Toast.LENGTH_SHORT).show();
+                }
+            });
+            authortv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    creditDatabase.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            Author author = dataSnapshot.getValue(Author.class);
+                            Intent profile = new Intent(DisplayRecipeInfo.this, ProfileActivity.class);
+                            profile.putExtra("uuid", author.getAuthor().toString());
+                            profile.putExtra("nameProfile", author.getUsername().toString());
+                            profile.putExtra("emailProfile", author.getEmail().toString());
+                            startActivity(profile);
                         }
 
                         @Override
@@ -86,121 +125,88 @@ private ArrayList<String> arrayList=new ArrayList<String>();
                         }
                     });
                 }
-                          }
+            });
+            creditDatabase.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Author author = dataSnapshot.getValue(Author.class);
+                    authortv.setText(author.getUsername().toString());
+                }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
-        rateBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float rating,
-                                        boolean fromUser) {
-      //          Toast.makeText(DisplayRecipeInfo.this, Float.toString(rating), Toast.LENGTH_SHORT).show();
-                String id=mAuth.getCurrentUser().getUid();
-                rateDatabase.child(id).child("rating").setValue(rating);
-            }
-        });
-        authortv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                creditDatabase.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        Author author = dataSnapshot.getValue(Author.class);
-                        Intent profile=new Intent(DisplayRecipeInfo.this,ProfileActivity.class);
-                        profile.putExtra("uuid",author.getAuthor().toString());
-                        profile.putExtra("nameProfile",author.getUsername().toString());
-                        profile.putExtra("emailProfile",author.getEmail().toString());
-                        startActivity(profile);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-            }
-        });
-        creditDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                       Author author = dataSnapshot.getValue(Author.class);
-                       authortv.setText(author.getUsername().toString());
-                        }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-      //  Toast.makeText(this, RecipeName, Toast.LENGTH_SHORT).show();
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images/"+RecipeName+"/"+RecipeName+".jpg");
-        StorageReference storageReferencePlaceholder = FirebaseStorage.getInstance().getReference().child("images/Empty.jpg");
-adapter=new ArrayAdapter<String>(this, R.layout.simple_list_item_green,arrayList);
+                }
+            });
+            //  Toast.makeText(this, RecipeName, Toast.LENGTH_SHORT).show();
+            StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images/" + RecipeName + "/" + RecipeName + ".jpg");
+            StorageReference storageReferencePlaceholder = FirebaseStorage.getInstance().getReference().child("images/Empty.jpg");
+            adapter = new ArrayAdapter<String>(this, R.layout.simple_list_item_green, arrayList);
 // ImageView in your Activity
-        ImageView imageView = (ImageView)findViewById(R.id.imageDisplay);
-      /*  Glide.with(this *//* context *//*)
+            ImageView imageView = (ImageView) findViewById(R.id.imageDisplay);
+            /*  Glide.with(this *//* context *//*)
                 .load(storageReference)
                 .into(imageView);*/
-        Glide.with(this)
-                .load(storageReference).apply(new RequestOptions().placeholder(R.drawable.wrap_lunchpic)).into(imageView);
-        mDatabase.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-String string= dataSnapshot.getValue(String.class);
-arrayList.add(string);
-adapter.notifyDataSetChanged();
-            }
+            Glide.with(this)
+                    .load(storageReference).apply(new RequestOptions().placeholder(R.drawable.wrap_lunchpic)).into(imageView);
+            mDatabase.addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                    String string = dataSnapshot.getValue(String.class);
+                    arrayList.add(string);
+                    adapter.notifyDataSetChanged();
+                }
 
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
-            }
+                }
 
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
 
-            }
+                }
 
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
-            }
+                }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
-        listview.setAdapter(adapter);
-        youTubeClick.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                creditDatabase.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        final Author author = dataSnapshot.getValue(Author.class);
-                        if (author.getYouTube() != null) {
-                            Intent intent = new Intent(Intent.ACTION_VIEW);
-                            intent.setData(Uri.parse(author.getYouTube()));
-                            Toast.makeText(DisplayRecipeInfo.this, author.getYouTube(), Toast.LENGTH_SHORT).show();
-                            intent.setPackage("com.google.android.youtube");
-                            startActivity(intent);
-                        } else {
-                            Toast.makeText(DisplayRecipeInfo.this, "No Video Available", Toast.LENGTH_SHORT).show();
+                }
+            });
+            listview.setAdapter(adapter);
+            youTubeClick.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    creditDatabase.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            final Author author = dataSnapshot.getValue(Author.class);
+                            if (author.getYouTube() != null) {
+                                Intent intent = new Intent(Intent.ACTION_VIEW);
+                                intent.setData(Uri.parse(author.getYouTube()));
+                                Toast.makeText(DisplayRecipeInfo.this, author.getYouTube(), Toast.LENGTH_SHORT).show();
+                                intent.setPackage("com.google.android.youtube");
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(DisplayRecipeInfo.this, "No Video Available", Toast.LENGTH_SHORT).show();
+                            }
+
                         }
 
-                    }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        }
+                    });
+                }
+            });
 
-                    }
-                });
-            }
-        });
-
+        }catch (Exception E){
+            Toast.makeText(this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+        }
     }
-}
+    }

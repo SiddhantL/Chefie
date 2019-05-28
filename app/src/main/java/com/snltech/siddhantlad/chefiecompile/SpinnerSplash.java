@@ -35,7 +35,6 @@ public class SpinnerSplash extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.spinner_splash);
-        pBar = (ProgressBar) findViewById(R.id.progressBar);
         mDatabase = FirebaseDatabase.getInstance().getReference("users");
         mAuth = FirebaseAuth.getInstance();
         img = (ImageView) findViewById(R.id.imgvw);

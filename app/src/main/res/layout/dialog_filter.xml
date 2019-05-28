@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView29"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView31"
+        android:paddingBottom="20dp"
+        android:text="The Filter Will Allow The Ingredients To Vary By The Number Of Ingredients Selected By You"
+        android:textAlignment="center"
+        android:textColor="#444444" />
+
+    <TextView
+        android:id="@+id/textView31"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:fontFamily="sans-serif-smallcaps"
+        android:paddingTop="20dp"
+        android:text="Add Filter For Search"
+        android:textAlignment="center"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        android:textColor="#000000" />
+
+    <!--<EditText
+        android:id="@+id/editText6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView29"
+        android:layout_centerHorizontal="true"
+        android:ems="4"
+        android:hint="0-10"
+        android:inputType="number"
+        android:maxLength="2"
+        android:text="0"
+        android:textAlignment="center" />-->
+    <SeekBar
+        android:id="@+id/editText6"
+        android:layout_below="@+id/textView29"
+        android:max="10"
+        android:progress="0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/btn2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView37"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/circular_button"
+        android:backgroundTint="#38444f"
+        android:text="Wide Search"
+        android:textColor="#ffffff" />
+
+    <TextView
+        android:id="@+id/textView38"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/btn2"
+        android:paddingBottom="20dp"
+        android:paddingTop="10dp"
+        android:text="Select A Number Between 1 to 10 The Greater The Number The More Results It Will Show And The Accuracy Will Decrease"
+        android:textAlignment="center"
+        android:textColor="#000000" />
+
+    <TextView
+        android:id="@+id/textView37"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editText6"
+        android:layout_centerHorizontal="true"
+        android:text="0"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+</RelativeLayout>

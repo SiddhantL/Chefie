@@ -56,7 +56,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"
-        android:paddingLeft="10dp"
         android:text="Sign Up"
         android:textColor="#000000"
         android:textSize="20sp"
@@ -113,4 +112,5 @@
         android:text="Forgot Password?"
         android:textColor="#000000"
         android:textStyle="bold" />
+
 </RelativeLayout>

@@ -6,26 +6,13 @@
     android:layout_height="match_parent"
     android:background="#ffffff">
 
-    <EditText
-        android:id="@+id/editText2"
-        android:layout_width="314dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="187dp"
-        android:ems="10"
-        android:hint="eg- Jack"
-        android:inputType="textPersonName"
-        tools:layout_editor_absoluteX="85dp"
-        tools:layout_editor_absoluteY="295dp" />
-
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="161dp"
         android:layout_height="130dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:elevation="@dimen/fab_size_normal"
         app:srcCompat="@drawable/chefieicon"
         tools:layout_editor_absoluteX="18dp"
@@ -41,7 +28,7 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/circular_button"
         android:backgroundTint="#38444f"
-        android:text="Let's Get Cookin'!"
+        android:text="Change Message"
         android:textColor="#ffffff"
         tools:layout_editor_absoluteX="148dp"
         tools:layout_editor_absoluteY="411dp" />
@@ -50,8 +37,9 @@
         android:id="@+id/editText3"
         android:layout_width="315dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView25"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="193dp"
         android:ems="10"
         android:hint="eg- Follow me on Insta @siddhantlad"
         android:inputType="text" />
@@ -60,19 +48,10 @@
         android:id="@+id/textView25"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/editText2"
-        android:layout_below="@+id/editText2"
+        android:layout_alignStart="@+id/editText3"
+        android:layout_below="@+id/imageView4"
         android:paddingTop="20dp"
         android:text="Message For Viewers"
         android:textColor="#000000" />
 
-    <TextView
-        android:id="@+id/textView26"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/editText2"
-        android:layout_below="@+id/imageView4"
-        android:paddingTop="30dp"
-        android:text="Username"
-        android:textColor="#000000" />
 </RelativeLayout>

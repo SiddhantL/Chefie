@@ -40,6 +40,7 @@
             android:background="#ffffff"
             android:paddingBottom="60dp"
             android:text="TextView"
+            android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="18sp" />
 
@@ -63,6 +64,7 @@
             android:background="#ffffff"
             android:paddingBottom="60dp"
             android:text="TextView"
+            android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="18sp" />
 
@@ -86,6 +88,7 @@
             android:background="#ffffff"
             android:paddingBottom="60dp"
             android:text="TextView"
+            android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="18sp" />
 

@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -64,79 +65,126 @@ public class MainActivity2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         //getting the reference of artists node
-        databaseArtists = FirebaseDatabase.getInstance().getReference("artists");
-        addSpontaneous=(Button)findViewById(R.id.button2);
-        //getting views
-        concencated_ingredients=new ArrayList<String>();
-        my_array_of_selected_ingredients = new ArrayList<String>();
-        selected=new ArrayList<String>();
-        search=(SearchView)findViewById(R.id.searchQuery);
-        querySave=new String();
-        selectedET=(EditText)findViewById(R.id.textView17);
-        Context context = this;
-        backup=new ArrayList<String>();
-        selectedET.setKeyListener(null);
-        selectedET.setTag(selectedET.getKeyListener());
-        selectedET.setKeyListener((KeyListener) selectedET.getTag());
-        addArtistText=(TextView)findViewById(R.id.textView18);
-        final ArrayAdapter<String> adapter_Selected = new ArrayAdapter<String>(context,android.R.layout.simple_list_item_1,my_array_of_selected_ingredients);
-        myMap = new HashMap();
-        editTextName = (EditText) findViewById(R.id.editTextName);
-        spinnerGenre = (Spinner) findViewById(R.id.spinnerGenres);
-        artistname=(TextView)findViewById(R.id.textView1);
-        listViewArtists = (ListView) findViewById(R.id.listViewArtists);
-        selectedString=new String();
-        RecipeActivityButton = (Button) findViewById(R.id.recipeButton);
-        buttonAddArtist = (Button) findViewById(R.id.buttonAddArtist);
-        //list to store artists
-        artists = new ArrayList<>();
-        addSpontaneous.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addArtist();
-            }
-        });
-        addArtistText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity2.this, IngredientAdder.class));
-            }
-        });
-        RecipeActivityButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int TotalItems=listViewArtists.getAdapter().getCount();
-                                //Checking all true booleans
-                for(int AtItem = 0; AtItem < TotalItems; AtItem++){
-                    Artist artist = artists.get(AtItem);
-                    String CheckingName=artist.getArtistName().toString();
-                    try{
-                        if (myMap.get(CheckingName)){
-                           //Toast.makeText(MainActivity.this, CheckingName+" was added", Toast.LENGTH_SHORT).show();
-                           my_array_of_selected_ingredients.add(CheckingName);
+        try {
+            databaseArtists = FirebaseDatabase.getInstance().getReference("artists");
+            addSpontaneous = (Button) findViewById(R.id.button2);
+            //getting views
+            concencated_ingredients = new ArrayList<String>();
+            my_array_of_selected_ingredients = new ArrayList<String>();
+            selected = new ArrayList<String>();
+            search = (SearchView) findViewById(R.id.searchQuery);
+            querySave = new String();
+            selectedET = (EditText) findViewById(R.id.textView17);
+            Context context = this;
+            backup = new ArrayList<String>();
+            selectedET.setKeyListener(null);
+            selectedET.setTag(selectedET.getKeyListener());
+            selectedET.setKeyListener((KeyListener) selectedET.getTag());
+            addArtistText = (TextView) findViewById(R.id.textView18);
+            final ArrayAdapter<String> adapter_Selected = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, my_array_of_selected_ingredients);
+            myMap = new HashMap();
+            editTextName = (EditText) findViewById(R.id.editTextName);
+            spinnerGenre = (Spinner) findViewById(R.id.spinnerGenres);
+            artistname = (TextView) findViewById(R.id.textView1);
+            listViewArtists = (ListView) findViewById(R.id.listViewArtists);
+            selectedString = new String();
+            RecipeActivityButton = (Button) findViewById(R.id.recipeButton);
+            buttonAddArtist = (Button) findViewById(R.id.buttonAddArtist);
+            //list to store artists
+            artists = new ArrayList<>();
+            addSpontaneous.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    addArtist();
+                }
+            });
+            addArtistText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity2.this);
+                    View mView = getLayoutInflater().inflate(R.layout.dialog_ingredient, null);
+                    mBuilder.setView(mView);
+                    final AlertDialog dialog = mBuilder.create();
+                    dialog.show();
+                   final DatabaseReference databaseArtists = FirebaseDatabase.getInstance().getReference("artists");
+                   Button buttonAddArtist = (Button) mView.findViewById(R.id.buttonAddArtist);
+                   final Spinner spinnerGenre = (Spinner) mView.findViewById(R.id.spinnerGenres);
+                   final EditText editTextName = (EditText) mView.findViewById(R.id.editTextName);
+                    buttonAddArtist.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            //getting the values to save
+                            String name = editTextName.getText().toString().trim();
+                            String genre = spinnerGenre.getSelectedItem().toString();
+
+                            //checking if the value is provided
+                            if (!TextUtils.isEmpty(name)) {
+
+                                //getting a unique id using push().getKey() method
+                                //it will create a unique id and we will use it as the Primary Key for our Artist
+                                String id = "-"+editTextName.getText().toString().toLowerCase();
+
+                                //creating an Artist Object
+                                Artist artist = new Artist(id, name, genre);
+
+                                //Saving the Artist
+                                databaseArtists.child(id).setValue(artist);
+
+                                //setting edittext to blank again
+                                //displaying a success toast
+                                Toast.makeText(MainActivity2.this, "Ingredient added", Toast.LENGTH_LONG).show();
+                                dialog.cancel();
+                                myMap.put(Checks, true);
+                                Toast.makeText(MainActivity2.this, editTextName.getText().toString() + " Added", Toast.LENGTH_SHORT).show();
+                                selectedString = selectedString + editTextName.getText().toString() + ",";
+                                selected.add(editTextName.getText().toString());
+                                selectedET.setText(selectedString);
+                            } else {
+                                //if the value is not given displaying a toast
+                                Toast.makeText(MainActivity2.this, "Please enter a name", Toast.LENGTH_LONG).show();
+                            }
+
                         }
-                    }catch (Exception e){
+                    });
+                }
+
+            });
+            RecipeActivityButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int TotalItems = listViewArtists.getAdapter().getCount();
+                    //Checking all true booleans
+                    for (int AtItem = 0; AtItem < TotalItems; AtItem++) {
+                        Artist artist = artists.get(AtItem);
+                        String CheckingName = artist.getArtistName().toString();
+                        try {
+                            if (myMap.get(CheckingName)) {
+                                //Toast.makeText(MainActivity.this, CheckingName+" was added", Toast.LENGTH_SHORT).show();
+                                my_array_of_selected_ingredients.add(CheckingName);
+                            }
+                        } catch (Exception e) {
+
+                        }
 
                     }
-
+                    IntentTransfer();
                 }
-IntentTransfer();
-            }
-        });
+            });
 
 
-        listViewArtists.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-               Artist artist = artists.get(i);
+            listViewArtists.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    Artist artist = artists.get(i);
 
-                showUpdateDeleteDialog(artist.getArtistId(), artist.getArtistName());
-                return true;
-            }
-        });
-        listViewArtists.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    showUpdateDeleteDialog(artist.getArtistId(), artist.getArtistName());
+                    return true;
+                }
+            });
+            listViewArtists.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    view.setSelected(true);
                 /*//getting the selected artist
                 //creating an intent
                 Intent intent = new Intent(getApplicationContext(), ArtistActivity.class);
@@ -146,62 +194,62 @@ IntentTransfer();
                 //starting the activity with intent
                 startActivity(intent);
                 */
-                view.setSelected(true);
-                row=view;
-                Artist artist = artists.get(i);
-                Checks=concencatedAdapter.getItem(i).toString();
 
-               // row.setBackgroundColor(Color.rgb(42,182,247));
-                if (myMap.get(Checks)!=null){
-                    listViewArtists.setItemChecked(i,false);
-                    //    view.setBackgroundResource(R.drawable.gradient);
-                    myMap.remove(Checks);
-                    Toast.makeText(MainActivity2.this, Checks+" Removed", Toast.LENGTH_SHORT).show();
-                    selectedString=selectedString.replace(Checks+",","");
-                    selectedET.setText(selectedString);
-                    selected.remove(Checks);
-                }else {
-                    myMap.put(Checks, true);
-                    Toast.makeText(MainActivity2.this, Checks+" Added", Toast.LENGTH_SHORT).show();
-                    listViewArtists.setItemChecked(i,true);
-                    selectedString=selectedString+Checks+",";
-                    selected.add(Checks);
-                    selectedET.setText(selectedString);
+                    row = view;
+                    Artist artist = artists.get(i);
+                    Checks = concencatedAdapter.getItem(i).toString();
+
+                    // row.setBackgroundColor(Color.rgb(42,182,247));
+                    if (myMap.get(Checks) != null) {
+                        listViewArtists.setItemChecked(i, false);
+                        //    view.setBackgroundResource(R.drawable.gradient);
+                        myMap.remove(Checks);
+                        Toast.makeText(MainActivity2.this, Checks + " Removed", Toast.LENGTH_SHORT).show();
+                        selectedString = selectedString.replace(Checks + ",", "");
+                        selectedET.setText(selectedString);
+                        selected.remove(Checks);
+                    } else {
+                        myMap.put(Checks, true);
+                        Toast.makeText(MainActivity2.this, Checks + " Added", Toast.LENGTH_SHORT).show();
+                        listViewArtists.setItemChecked(i, true);
+                        selectedString = selectedString + Checks + ",";
+                        selected.add(Checks);
+                        selectedET.setText(selectedString);
+                    }
+
+                    //myMap.put("Banana",true);
+                    //   myMap.put(Checks, true);
+                    //myMap.put("Orange",true);
+                    // Toast.makeText(MainActivity2.this, Checks, Toast.LENGTH_SHORT).show();
                 }
+            });
 
-                //myMap.put("Banana",true);
-             //   myMap.put(Checks, true);
-                //myMap.put("Orange",true);
-               // Toast.makeText(MainActivity2.this, Checks, Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        //adding an onclicklistener to button
+            //adding an onclicklistener to button
 
 
-        Animation animation = AnimationUtils.loadAnimation(MainActivity2.this,  R.anim.push_up_in);
+            Animation animation = AnimationUtils.loadAnimation(MainActivity2.this, R.anim.push_up_in);
 //       listViewArtists.startAnimation(animation);
 
-        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                if (concencatedAdapter.isEmpty()) {
-                    addSpontaneous.setVisibility(View.VISIBLE);
-                    addSpontaneous.setText("Add " + query + " To Ingredients List");
-                    querySave=query;
-                } else if (!concencatedAdapter.isEmpty()){
-                    addSpontaneous.setVisibility(View.GONE);
-                }
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                if (!TextUtils.isEmpty(search.getQuery().toString()) || !search.getQuery().toString().equals("")) {
-                    if (concencatedAdapter.getCount()!=0){
+            search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    if (concencatedAdapter.isEmpty()) {
+                        addSpontaneous.setVisibility(View.VISIBLE);
+                        addSpontaneous.setText("Add " + query + " To Ingredients List");
+                        querySave = query;
+                    } else if (!concencatedAdapter.isEmpty()) {
                         addSpontaneous.setVisibility(View.GONE);
                     }
-                   concencatedAdapter.getFilter().filter(newText);
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    if (!TextUtils.isEmpty(search.getQuery().toString()) || !search.getQuery().toString().equals("")) {
+                        if (concencatedAdapter.getCount() != 0) {
+                            addSpontaneous.setVisibility(View.GONE);
+                        }
+                        concencatedAdapter.getFilter().filter(newText);
 
                     /*for (int i = 0; i < concencated_ingredients.size(); i++) {
                         if (!concencated_ingredients.get(i).toLowerCase().contains(search.getQuery().toString().toLowerCase())) {
@@ -213,19 +261,22 @@ IntentTransfer();
                             // Toast.makeText(MainActivity.this, "It's a match", Toast.LENGTH_SHORT).show();
                         }
                     }*/
-                    concencatedAdapter.notifyDataSetChanged();
-                listViewArtists.setAdapter(concencatedAdapter);
+                        concencatedAdapter.notifyDataSetChanged();
+                        listViewArtists.setAdapter(concencatedAdapter);
 
-                }else{
-                    concencated_ingredients.clear();
-                    concencated_ingredients.addAll(backup);
-                    final ArrayAdapter<String> concencatedAdapter = new ArrayAdapter<String>(MainActivity2.this, R.layout.simple_list_item_white, concencated_ingredients);
-                    concencatedAdapter.notifyDataSetChanged();
-                    listViewArtists.setAdapter(concencatedAdapter);
+                    } else {
+                        concencated_ingredients.clear();
+                        concencated_ingredients.addAll(backup);
+                        final ArrayAdapter<String> concencatedAdapter = new ArrayAdapter<String>(MainActivity2.this, R.layout.simple_list_item_white, concencated_ingredients);
+                        concencatedAdapter.notifyDataSetChanged();
+                        listViewArtists.setAdapter(concencatedAdapter);
+                    }
+                    return false;
                 }
-                return false;
-            }
-        });
+            });
+        }catch (Exception E){
+            Toast.makeText(this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+        }
     }
 
     /*
@@ -240,38 +291,42 @@ IntentTransfer();
         //attaching value event listener
       /*  Animation animation = AnimationUtils.loadAnimation(MainActivity2.this,  R.anim.push_up_in);
         listViewArtists.startAnimation(animation);*/
-        databaseArtists.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+      try {
+          databaseArtists.addValueEventListener(new ValueEventListener() {
+              @Override
+              public void onDataChange(DataSnapshot dataSnapshot) {
 
-                //clearing the previous artist list
-                artists.clear();
-concencated_ingredients.clear();
-backup.clear();
-                //iterating through all the nodes
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    //getting artist
-                    Artist artist = postSnapshot.getValue(Artist.class);
-                    concencated_ingredients.add(artist.getArtistName().toString().trim());
-                    backup.add(artist.getArtistName().toString().trim());
-                    concencatedAdapter=new ArrayAdapter<String>(MainActivity2.this, R.layout.simple_list_item_white,concencated_ingredients);
-                    concencatedAdapter.notifyDataSetChanged();
-                    //adding artist to the list
-                    artists.add(artist);
-                }
+                  //clearing the previous artist list
+                  artists.clear();
+                  concencated_ingredients.clear();
+                  backup.clear();
+                  //iterating through all the nodes
+                  for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                      //getting artist
+                      Artist artist = postSnapshot.getValue(Artist.class);
+                      concencated_ingredients.add(artist.getArtistName().toString().trim());
+                      backup.add(artist.getArtistName().toString().trim());
+                      concencatedAdapter = new ArrayAdapter<String>(MainActivity2.this, R.layout.simple_list_item_white, concencated_ingredients);
+                      concencatedAdapter.notifyDataSetChanged();
+                      //adding artist to the list
+                      artists.add(artist);
+                  }
 
-                //creating adapter
-                ArtistList artistAdapter = new ArtistList(MainActivity2.this, artists);
-                //attaching adapter to the listview
-                listViewArtists.setAdapter(concencatedAdapter);
-            }
+                  //creating adapter
+                  ArtistList artistAdapter = new ArtistList(MainActivity2.this, artists);
+                  //attaching adapter to the listview
+                  listViewArtists.setAdapter(concencatedAdapter);
+              }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+              @Override
+              public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
-        listViewArtists.setAdapter(concencatedAdapter);
+              }
+          });
+          listViewArtists.setAdapter(concencatedAdapter);
+      }catch (Exception E){
+          Toast.makeText(this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+      }
     }
 
     private boolean updateArtist(String id, String name, String genre) {

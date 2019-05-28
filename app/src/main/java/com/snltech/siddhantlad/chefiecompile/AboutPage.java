@@ -32,41 +32,45 @@ ArrayAdapter<String> arrayAdapt;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_page);
-        AboutMeTextSet=(TextView)findViewById(R.id.textView32);
-        AboutChefieTextSet=(TextView)findViewById(R.id.textView34);
-        AboutSNLTextSet=(TextView)findViewById(R.id.textView36);
-        list=(ListView)findViewById(R.id.listView);
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("ceoImage/"+"ceoImage.jpg");
-        StorageReference storageReferencePlaceholder = FirebaseStorage.getInstance().getReference().child("images/Empty.jpg");
-        aboutMe= FirebaseDatabase.getInstance().getReference("AboutMe");
-        arrays=new ArrayList<String>();
-        arrays.add("Version 1.0");
-        arrayAdapt=new ArrayAdapter<String>(this,R.layout.simple_list_item_white,arrays);
-        list.setAdapter(arrayAdapt);
-        aboutMe.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                try {
-                    AboutDatabase aboutText = dataSnapshot.getValue(AboutDatabase.class);
-                    AboutMeTextSet.setText(aboutText.getAboutme().toString());
-                    AboutChefieTextSet.setText(aboutText.getAboutchefie().toString());
-                    AboutSNLTextSet.setText(aboutText.getAboutsnltech().toString());
-                }catch (Exception E){
-                    Toast.makeText(AboutPage.this, "Error Occurred", Toast.LENGTH_SHORT).show();
+        try {
+            AboutMeTextSet = (TextView) findViewById(R.id.textView32);
+            AboutChefieTextSet = (TextView) findViewById(R.id.textView34);
+            AboutSNLTextSet = (TextView) findViewById(R.id.textView36);
+            list = (ListView) findViewById(R.id.listView);
+            StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("ceoImage/" + "ceoImage.jpg");
+            StorageReference storageReferencePlaceholder = FirebaseStorage.getInstance().getReference().child("images/Empty.jpg");
+            aboutMe = FirebaseDatabase.getInstance().getReference("AboutMe");
+            arrays = new ArrayList<String>();
+            arrays.add("Version 1.1.1");
+            arrayAdapt = new ArrayAdapter<String>(this, R.layout.simple_list_item_white, arrays);
+            list.setAdapter(arrayAdapt);
+            aboutMe.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    try {
+                        AboutDatabase aboutText = dataSnapshot.getValue(AboutDatabase.class);
+                        AboutMeTextSet.setText(aboutText.getAboutme().toString());
+                        AboutChefieTextSet.setText(aboutText.getAboutchefie().toString());
+                        AboutSNLTextSet.setText(aboutText.getAboutsnltech().toString());
+                    } catch (Exception E) {
+                        Toast.makeText(AboutPage.this, "Error Occurred", Toast.LENGTH_SHORT).show();
+                    }
+
                 }
 
-            }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-        ImageView imageView = (ImageView)findViewById(R.id.imageView6);
-        /*  Glide.with(this *//* context *//*)
+                }
+            });
+            ImageView imageView = (ImageView) findViewById(R.id.imageView6);
+            /*  Glide.with(this *//* context *//*)
                 .load(storageReference)
                 .into(imageView);*/
-        Glide.with(this)
-                .load(storageReference).apply(new RequestOptions().placeholder(R.drawable.coderimage)).into(imageView);
+            Glide.with(this)
+                    .load(storageReference).apply(new RequestOptions().placeholder(R.drawable.coderimage)).into(imageView);
+        }catch (Exception E){
+            Toast.makeText(this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+        }
     }
 }

@@ -1,3 +1,4 @@
+/*
 package com.snltech.siddhantlad.chefiecompile;
 
 import android.content.Intent;
@@ -37,57 +38,62 @@ public class DisplayName extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_name);
-        displayName=(EditText)findViewById(R.id.editText2);
-        displayMessage=(EditText)findViewById(R.id.editText3);
-        prof_image=(ImageView)findViewById(R.id.imageView4);
-        mDatabase = FirebaseDatabase.getInstance().getReference("users");
-        confirm=(Button)findViewById(R.id.button);
-       final TextView errorTV=(TextView)findViewById(R.id.errorTV);
-        profileUpdates=new UserProfileChangeRequest.Builder().setDisplayName(displayName.getText().toString()).setPhotoUri(Uri.parse("https://")).build();
-        user=FirebaseAuth.getInstance().getCurrentUser();
-        displayName.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        try {
+            displayName = (EditText) findViewById(R.id.editText2);
+            displayMessage = (EditText) findViewById(R.id.editText3);
+            prof_image = (ImageView) findViewById(R.id.imageView4);
+            mDatabase = FirebaseDatabase.getInstance().getReference("users");
+            confirm = (Button) findViewById(R.id.button);
+            final TextView errorTV = (TextView) findViewById(R.id.errorTV);
+            profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(displayName.getText().toString()).setPhotoUri(Uri.parse("https://")).build();
+            user = FirebaseAuth.getInstance().getCurrentUser();
+            displayName.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-               String userdtct=displayName.getText().toString();
-                if (userdtct.contains("&") || userdtct.contains("=") || userdtct.contains("-") || userdtct.contains("|") || userdtct.contains(";")
-                        || userdtct.contains("%") || userdtct.contains("/") || userdtct.contains("(") || userdtct.contains(")") || userdtct.contains(":")
-                        || userdtct.contains("{") || userdtct.contains("}") || userdtct.contains(" ") || userdtct.contains("!") || userdtct.contains(",") || userdtct.equals(""))
-                {
-                    errorTV.setText("Username can only contain letters, numbers, and underscore");
-                    errorTV.setVisibility(View.VISIBLE);
-                }else {
-                    errorTV.setVisibility(View.INVISIBLE);
                 }
-            }
 
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-        confirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (errorTV.getVisibility() == View.INVISIBLE) {
-                    if (!TextUtils.isEmpty(displayName.getText()) || !displayName.getText().toString().equals("") || !TextUtils.isEmpty(displayMessage.getText()) || !displayMessage.getText().toString().equals("")) {
-                        mDatabase.child(user.getUid()).child("Username").setValue(displayName.getText().toString());
-                        mDatabase.child(user.getUid()).child("Message").setValue(displayMessage.getText().toString());
-                        profileUpdates=new UserProfileChangeRequest.Builder().setDisplayName(displayName.getText().toString()).setPhotoUri(Uri.parse("https://")).build();
-                        user.updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                Toast.makeText(DisplayName.this, "Profile Created", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(DisplayName.this,Welcome.class));
-                            }
-                        });
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    String userdtct = displayName.getText().toString();
+                    if (userdtct.contains("&") || userdtct.contains("=") || userdtct.contains("-") || userdtct.contains("|") || userdtct.contains(";")
+                            || userdtct.contains("%") || userdtct.contains("/") || userdtct.contains("(") || userdtct.contains(")") || userdtct.contains(":")
+                            || userdtct.contains("{") || userdtct.contains("}") || userdtct.contains(" ") || userdtct.contains("!") || userdtct.contains(",") || userdtct.equals("")) {
+                        errorTV.setText("Username Can't Contain Spaces Or Special Characters");
+                        errorTV.setVisibility(View.VISIBLE);
+                    } else {
+                        errorTV.setVisibility(View.INVISIBLE);
                     }
-                }else{}
-            }
-        });
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+            confirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (errorTV.getVisibility() == View.INVISIBLE) {
+                        if (!TextUtils.isEmpty(displayName.getText()) || !displayName.getText().toString().equals("") || !TextUtils.isEmpty(displayMessage.getText()) || !displayMessage.getText().toString().equals("")) {
+                            mDatabase.child(user.getUid()).child("Username").setValue(displayName.getText().toString());
+                            mDatabase.child(user.getUid()).child("Message").setValue(displayMessage.getText().toString());
+                            profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(displayName.getText().toString()).setPhotoUri(Uri.parse("https://")).build();
+                            user.updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    Toast.makeText(DisplayName.this, "Profile Created", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(DisplayName.this, Welcome.class));
+                                }
+                            });
+                        }
+                    } else {
+                    }
+                }
+            });
+        }catch (Exception E){
+            Toast.makeText(this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+        }
     }
 }
+*/

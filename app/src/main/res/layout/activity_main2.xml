@@ -36,7 +36,6 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/textView18"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="-79dp"
         android:background="@drawable/circular_button"
         android:backgroundTint="#38444f"
         android:text="Continue"
@@ -47,11 +46,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/recipeButton"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="97dp"
         android:background="#ffffff"
+        android:ems="10"
         android:hint="Selected Ingredients"
+        android:inputType="textPersonName"
         android:textColor="#000000"
         android:textSize="24sp" />
 
@@ -60,16 +59,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_below="@+id/textView1" />
+        android:layout_below="@+id/textView1"
+        android:background="#ffffff" />
 
     <ListView
         android:id="@+id/listViewArtists"
         android:layout_width="match_parent"
-        android:layout_height="353dp"
+        android:layout_height="274dp"
         android:layout_above="@+id/textView17"
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/searchQuery"
-        android:layout_marginBottom="-2dp"
+        android:layout_marginBottom="2dp"
         android:divider="#DFE3EA"
         android:dividerHeight="8dp"
         android:visibility="visible" />
@@ -77,12 +77,12 @@
     <TextView
         android:id="@+id/textView18"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:text="CAN'T FIND INGREDIENT?"
         android:textAlignment="center"
-        android:textColor="#8b0000"
+        android:textColor="#000000"
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -97,4 +97,20 @@
         android:text="Button"
         android:textColor="#ffffff"
         android:visibility="gone" />
+
+    <View
+        android:id="@+id/divider4"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/textView17"
+        android:background="#000000" />
+
+    <View
+        android:id="@+id/divider5"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignBottom="@+id/searchQuery"
+        android:layout_alignParentStart="true"
+        android:background="#000000" />
 </RelativeLayout>

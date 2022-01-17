@@ -1,12 +1,5 @@
 # Chefie
-This Application Is Out For Download.
-It contains Feature's Such As-:
-- Searching Recipe's With Ingredient's Available Now
-- Adding Recipe's To Our Database
-- Following User's
-- Rating Recipe's
-- Adding Image's And YouTube Video's To Recipe's
-- Wide Search
+
 
 <img src="https://play-lh.googleusercontent.com/O-3aci04u-O4UQS9KPOZVgNK_a5menXIQWU9mKlBwXlc4zM-WhnKXprhEuR7jzH2giw=w720-h310-rw"/>
 <img src="https://play-lh.googleusercontent.com/DAUm1ZFEFdJtw_ysG7NmtKjkHOb9jk9lpwVXPZ1DQb9fyCi3W3NQ0lj3OsYYmckJiA=w720-h310-rw"/>
